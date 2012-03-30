@@ -5,7 +5,7 @@ var fs = require('fs')
 
 var app = module.exports = express.createServer(express.logger());
 
-var conditions = JSON.parse(fs.readFileSync('./data/conditions.json'));
+var conditions = JSON.parse(fs.readFileSync(__dirname + '/data/conditions.json'));
 
 // Configuration
 
