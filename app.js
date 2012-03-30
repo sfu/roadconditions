@@ -35,7 +35,24 @@ app.get('/', function(req, res) {
     });
 });
 
-app.get('/', routes.index);
+// API Routes
+app.get('/api/1/conditions/:key?', function(req, res) {
+    var data = {}, status = 200;
+    if (!req.param('key')) { 
+        data = conditions;
+    } else {
+        var key = req.param('key');
+        if (conditions.hasOwnProperty(key)) {
+            data[key] = conditions[key];
+            data['lastupdated'] = conditions.lastupdated;
+        } else {
+            status = 404;
+            data = {error: 'not found', key: key};
+        }
+    }
+    res.json(data, status);
+});
+
 
 app.listen(3001);
 console.log("Express server listening on port %d in %s mode", app.address().port, app.settings.env);
