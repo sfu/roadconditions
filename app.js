@@ -53,6 +53,9 @@ app.get('/api/1/conditions/:key?', function(req, res) {
     res.json(data, status);
 });
 
+// OH NO YOU DIDNT
+app.del('*', function(req, res) { res.send(405); });
+app.put('*', function(req, res) { res.send(405); });
 
 app.listen(3001);
 console.log("Express server listening on port %d in %s mode", app.address().port, app.settings.env);
