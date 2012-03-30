@@ -30,10 +30,7 @@ app.configure('production', function(){
 
 // HTML Routes
 app.get('/', function(req, res) {
-    fs.readFile('./public/index.html', 'utf-8', function(err, data) {
-        if (err) { res.send(404); }
-        res.send(data);
-    });
+    res.render('index');
 });
 
 // API Routes
