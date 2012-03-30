@@ -9,6 +9,8 @@ var express = require('express')
 var app = module.exports = express.createServer();
 var app = module.exports = express.createServer(express.logger());
 
+var conditions = JSON.parse(fs.readFileSync('./data/conditions.json'));
+
 // Configuration
 
 app.configure(function(){
