@@ -1,0 +1,96 @@
+<!doctype html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>SFU Road Conditions</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+    <script>
+    (function($,undefined){
+      '$:nomunge'; // Used by YUI compressor.
+  
+      $.fn.serializeObject = function(){
+        var obj = {};
+    
+        $.each( this.serializeArray(), function(i,o){
+          var n = o.name,
+            v = o.value;
+        
+            obj[n] = obj[n] === undefined ? v
+              : $.isArray( obj[n] ) ? obj[n].concat( v )
+              : [ obj[n], v ];
+        });
+    
+        return obj;
+      };
+    })(jQuery);
+    </script>
+</head>
+<body>
+	<h1>SFU Road Conditions</h1>
+    <form id="conditions" name="conditions" action="/api/1/conditions" method="POST">
+        <fieldset>
+            <legend>Campus Conditions</legend>
+            
+            <div>
+                <label for="campus">Campus</label>
+                <select id="campus">
+                    <option value="open" selected="selected">Open</option>
+                    <option value="closed">Closed</option>
+                </select>
+                <select name="campus_colour" id="campus_colour">
+                    <option value="black" selected="selected">Black</option>
+                    <option value="orange">Orange</option>
+                    <option value="red">Red</option>
+                </select>
+            </div>
+            
+            
+            <div>
+                <label for="university_roads">University Roads</label>
+                <select name="university_roads" id="university_roads">
+                    <option value="dry" selected="selected">Dry</option>
+                    <option value="wet">Wet</option>
+                </select>
+                <select name="university_roads_colour" id="university_roads_colour">
+                    <option value="black" selected="selected">Black</option>
+                    <option value="orange">Orange</option>
+                    <option value="red">Red</option>
+                </select>
+            </div>
+            
+            <div>
+                <label for="adjacent_roads">Adjacent Roads</label>
+                <select name="adjacent_roads" id="adjacent_roads">
+                    <option value="dry" selected="selected">Dry</option>
+                    <option value="wet">Wet</option>
+                </select>
+                <select name="adjacent_roads_colour" id="adjacent_roads_colour">
+                    <option value="black" selected="selected">Black</option>
+                    <option value="orange">Orange</option>
+                    <option value="red">Red</option>
+                </select>
+            </div>
+            
+            <div>
+                <label for="campus">Classes</label>
+                <select name="classes" id="classes">
+                    <option value="on schedule" selected="selected">On Schedule</option>
+                    <option value="cancelled">Cancelled</option>
+                </select>
+                <select name="classes_colour" id="classes_colour">
+                    <option value="black" selected="selected">Black</option>
+                    <option value="orange">Orange</option>
+                    <option value="red">Red</option>
+                </select>
+            </div>
+        </fieldset>
+        <fieldset>
+            <legend>Announcements</legend>
+            <textarea name="announcements" id="announcements" cols="30" rows="10"></textarea>
+        </fieldset>    
+
+        <input type="submit" value="Submit">
+    </form>
+    
+</body>
+</html>
