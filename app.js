@@ -1,6 +1,16 @@
 var fs = require('fs')
 ,   express = require('express')
 ,   hbs = require('hbs')
+,   moment = require('moment');
+
+hbs.handlebars.registerHelper('dateFormat', function(context, block) {
+  if (moment) {
+    var f = block.hash.format || "MMM Mo, YYYY";
+    return moment(new Date(context)).format(f);
+  } else {
+    return context;
+  };
+});
 
 var app = module.exports = express.createServer(express.logger());
 
