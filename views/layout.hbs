@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"> 
+	<title>Road and Traffic Report – Burnaby Campus – Simon Fraser University</title>
+	<link rel="stylesheet" href="css/conditions.css">
+	<script type="text/javascript" src="js/jquery-1.7.1.js"></script>
+	<script type="text/javascript" src="js/menus.js"></script>
+</head>
+
+<body>
+
+	<div id="container">
+		<div id="banner">
+			<a href="//www.sfu.ca">Simon Fraser University</a>
+		</div>
+		
+		<div id="globalNav">
+		        <ul id="campuses">
+		            <li class="sfu"><a href="//www.sfu.ca">sfu.ca</a></li>
+		            <li><a href="http://www.burnaby.sfu.ca">Burnaby</a></li>
+		            <li><a href="http://www.surrey.sfu.ca/">Surrey</a></li>
+
+		            <li class="last"><a href="http://www.vancouver.sfu.ca/">Vancouver</a></li>               
+		        </ul>
+
+		        <ul id="services">
+		            <li class="dropdown" id="online">
+		                <a class="tabs" href="//www.sfu.ca/onlineservices/">SFU Online</a>
+		            </li>
+		            <li class="dropdown" id="directory">
+		                <a class="tabs" href="//www.sfu.ca/dir/">A-Z Links</a>
+
+		            </li>
+		            <li class="last" id="search">
+		              <form action="//www.sfu.ca/search.html" class="search" method="GET">
+		                    <input id="s" name="q" type="text" value="Search sfu.ca"/>
+		                    <span class="button"><input id="submit" type="submit" value="Search"/></span>
+		              </form>
+		            </li>
+		        </ul>
+		</div>
+		<div id="content">
+            {{{ body }}}
+        </div>
+	</div>
+	
+	<div id="footer">
+        <ul>
+            <li>8888 University Drive, Burnaby, B.C. Canada V5A 1S6</li>
+            <li><a href="http://www.sfu.ca/webmaster/terms.html">Terms / Privacy</a></li>
+            <li><a href="http://www.sfu.ca/contact/index.html">Contact SFU</a></li>
+            <li><a href="http://www.sfu.ca/about/sitemap.html">SiteMap</a></li>
+            <li><a href="http://www.sfu.ca/security/sfuroadconditions/">Road Conditions</a></li>
+
+            <li>&copy; Simon Fraser University</li>
+        </ul>
+    </div>
+	
+
+</body>
+
+</html>
