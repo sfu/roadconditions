@@ -30,7 +30,7 @@ app.configure('production', function(){
 
 // HTML Routes
 app.get('/', function(req, res) {
-    res.render('index');
+    res.render('index', conditions);
 });
 
 // API Routes
