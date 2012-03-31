@@ -12,10 +12,17 @@ hbs.handlebars.registerHelper('dateFormat', function(context, block) {
   };
 });
 
+
 var app = module.exports = express.createServer(express.logger());
 
-var conditions = JSON.parse(fs.readFileSync(__dirname + '/data/conditions.json'));
-
+var conditionsJSON = __dirname + '/data/conditions.json';
+var conditions = JSON.parse(fs.readFileSync(conditionsJSON));
+fs.watch(conditionsJSON, function(event, filename) {
+    if (event === 'change') {
+        var conditions = JSON.parse(fs.readFileSync(conditionsJSON));
+        console.log('reloaded conditions', conditions);
+    }
+});
 // Configuration
 
 app.configure(function(){
