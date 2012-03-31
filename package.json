@@ -4,6 +4,6 @@
   , "private": true
   , "dependencies": {
       "express": "2.5.8",
-      "hogan": "1.0.5-dev"
+      "hbs": "1.0.1",
   }
 }

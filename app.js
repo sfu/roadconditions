@@ -1,7 +1,6 @@
 var fs = require('fs')
 ,   express = require('express')
-,   hogan = require('hogan')
-,   hoganadapter = require('./hogan-adapter');
+,   hbs = require('hbs')
 
 var app = module.exports = express.createServer(express.logger());
 
@@ -10,10 +9,8 @@ var conditions = JSON.parse(fs.readFileSync(__dirname + '/data/conditions.json')
 // Configuration
 
 app.configure(function(){
-    app.set('view engine', 'hogan.js');
-    app.set('view options', {layout:false});
+    app.set('view engine', 'hbs');
     app.set('views', __dirname + '/views');
-    app.register('hogan.js', hoganadapter.init(hogan));
     app.use(express.bodyParser());
     app.use(express.methodOverride());
     app.use(express['static'](__dirname + '/public'));
