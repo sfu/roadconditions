@@ -18,7 +18,7 @@ body {
 }
 
 p {
-	padding:; 5px 0px 10px 0px;
+	padding: 5px 0px 10px 0px;
 }
 
 a img {
@@ -551,7 +551,8 @@ span.warning {
 
 /* Mobile Display */
 
-@media screen and (max-width: 480px) {
+/* Landscape & Portrait Common */
+@media screen and (min-device-width: 320px) and (max-device-width: 480px) {
 	
 	html {
 		width: auto;
@@ -561,11 +562,7 @@ span.warning {
 	body {
 	    border-top: none;
 		margin: 0;
-		width: 320px;
-	}
-	
-	#container {
-		width: 480px;
+		width: 100%;
 	}
 	
 	#banner a {
@@ -575,7 +572,7 @@ span.warning {
 	}
 	
 	#banner {
-		width: 480px;
+		width: 100%;
 		height: 65px;
 		border-left: none;
 	}
@@ -585,12 +582,11 @@ span.warning {
 	}
 	
 	#content {
-		padding-left: 40px;
+		padding-left: 25px;
 		padding-right: 0px;
 	}
 	
 	#title h1 {
-		width: 320px;
 		font-size: 28px;
 		line-height: 28px;
 	}
@@ -599,6 +595,8 @@ span.warning {
 		width: 432px;
 		margin-left: -40px;
 		padding-left: 40px;
+		padding-top: 10px;
+		margin-bottom: 15px;
 		border-left: none;
 	}
 	
@@ -615,7 +613,7 @@ span.warning {
 	#status .secondary {
 		float: none;
 		font-size: 14px;
-		width: 320px;
+		width: 100%;
 		padding-left: 0px;
 		margin-left: 0px;
 		height: auto;
@@ -655,14 +653,53 @@ span.warning {
 	
 	#footer {
 		font-size: 8px;
-		width: 480px;
+		width: 100%;
 	}
 	
 	#footer ul {
-		width: 320px;
+		width: 100%;
 	}
 	
 	#footer a {
 		font-size: 8px;
 	}
 }
+
+@media screen and (min-width: 321px) and (max-width: 480px) {
+	#container {
+		width: 480px;
+	}
+    
+    #title {
+        width: 447px;
+    }
+    
+    h3 {
+        width: 400px;
+    }
+    
+	#announcements, #announcements .primary, #announcements .secondary {
+		width: 380px;
+	}    
+    
+    #footer, #footer a {
+        font-size: 6px;
+    }
+}
+
+
+@media screen and (max-width: 320px) {
+	#container {
+		width: 320px;
+	}
+    
+    #title {
+        width: 287px;
+    }
+    
+    #title h1 {
+        font-size: 20px;
+    }
+}
+
+
