@@ -3,8 +3,8 @@
     <div class="primary">
                     
         <ul>
-            <li><h2>The university is <span class="{{ campus.status }}">{{ campus.condition }}</span></h2></li>
-            <li class="datestamp" data-lastupdated={{lastupdated}}>Report updated at <span>{{dateFormat lastupdated format="h:mm a [on] MMMM DD YYYY"}}<span></li>
+            <li><h2>The university is <span class="<%= campus.status %>"><%= campus.condition %></span></h2></li>
+            <li class="datestamp" data-lastupdated="<%= lastupdated %>">Report updated at <span><%= dateFormat(lastupdated, "h:mm a [on] MMMM DD YYYY") %><span></li>
         </ul>
                     
     </div>
@@ -12,11 +12,11 @@
     <div class="secondary">
                     
         <ul>
-            <li>University roads: <span class="{{ roads.status }}">{{ roads.condition }}</span></li>
-            <li>Adjacent roads: <span class="{{ adjacentroads.status }}">{{ adjacentroads.condition}}</span></li>
-            <li class="divider">Classes are: <span class="{{ classes.status }}">{{ classes.condition }}</span></li>
-            <li>Translink buses are: <span class="{{ transit.status }}">{{ transit.condition }}</span></li>
-            <li>Exams are: <span class="{{ exams.status }}">{{ exams.condition }}</span></li>
+            <li>University roads: <span class="<%= roads.status %>"><%= roads.condition %></span></li>
+            <li>Adjacent roads: <span class="<%= adjacentroads.status %>"><%= adjacentroads.condition %></span></li>
+            <li class="divider">Classes are: <span class="<%= classes.status %>"><%= classes.condition %></span></li>
+            <li>Translink buses are: <span class="<%= transit.status %>"><%= transit.condition %></span></li>
+            <li>Exams are: <span class="<%= exams.status %>"><%= exams.condition %></span></li>
         </ul>
             
     </div>
@@ -28,14 +28,14 @@
     <h3>Campus announcements</h3>
                 
     <div class="primary">        
-        {{{ announcements }}}
+        <%- announcements %>
     </div>
                 
                 
     <div class="secondary">
-        {{#each sidebar}}
-        <div>{{{this}}}</div>
-        {{/each}}
+        <% for (item in sidebar) { %>
+            <div><%- sidebar[item] %></div>
+        <% } %>
     </div>
                 
 </div>
@@ -60,14 +60,16 @@
             
 <div id="links">
     <h3>Other resources</h3>
-    {{#each links}}
+    <% for (i in links) { 
+        var thislink = links[i];
+    %>
         <div>
-            <h4>{{category}}</h4>
+            <h4><%= thislink.category %></h4>
             <ul>
-            {{#each this.links}}
-                <li><a href="{{url}}">{{text}}</a></li>
-            {{/each}}
+            <% for (i in thislink.links) {%>
+                <li><a href="<%= thislink.links[i].url %>"><%= thislink.links[i].text %></a></li>
+            <% } %>
             </ul>
         </div>
-    {{/each}}
+    <% } %>
 </div>
