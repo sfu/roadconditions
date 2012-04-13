@@ -47,6 +47,10 @@ app.get('/', function(req, res) {
     res.render('index', conditions);
 });
 
+app.get('/admin', function(req, res) {
+    res.render('admin', conditions);
+});
+
 // API Routes
 app.get('/api/1/conditions/:key?', function(req, res) {
     var data = {}, status = 200;
