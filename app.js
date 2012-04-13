@@ -1,6 +1,5 @@
 var fs = require('fs')
 ,   express = require('express')
-,   hbs = require('hbs')
 ,   moment = require('moment');
 
 hbs.handlebars.registerHelper('dateFormat', function(context, block) {
@@ -26,7 +25,6 @@ fs.watch(conditionsJSON, function(event, filename) {
 // Configuration
 
 app.configure(function(){
-    app.set('view engine', 'hbs');
     app.set('views', __dirname + '/views');
     app.use(express.bodyParser());
     app.use(express.methodOverride());
