@@ -25,6 +25,7 @@ fs.watch(conditionsJSON, function(event, filename) {
 // Configuration
 
 app.configure(function(){
+    app.set('view engine', 'ejs');
     app.set('views', __dirname + '/views');
     app.use(express.bodyParser());
     app.use(express.methodOverride());
