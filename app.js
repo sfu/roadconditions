@@ -2,16 +2,6 @@ var fs = require('fs')
 ,   express = require('express')
 ,   moment = require('moment');
 
-hbs.handlebars.registerHelper('dateFormat', function(context, block) {
-  if (moment) {
-    var f = block.hash.format || "MMM Mo, YYYY";
-    return moment(new Date(context)).format(f);
-  } else {
-    return context;
-  };
-});
-
-
 var app = module.exports = express.createServer(express.logger());
 
 var conditionsJSON = __dirname + '/data/conditions.json';
@@ -31,6 +21,15 @@ app.configure(function(){
     app.use(express.methodOverride());
     app.use(express['static'](__dirname + '/public'));
     app.enable('jsonp callback');
+    app.helpers({
+        dateFormat: function(date, format) {
+            if (moment) {
+                return moment(new Date(date)).format(format);
+            } else {
+                return date;
+            };
+        }
+    });
 });
 
 app.configure('development', function(){
