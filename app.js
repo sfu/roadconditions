@@ -71,6 +71,16 @@ app.get('/api/1/conditions/:key?', function(req, res) {
     res.json(data, status);
 });
 
+app.post('/api/1/conditions', function(req, res) {
+    var data = req.body;
+    var validate = conditionsSchema.validate(data);
+    if (validate.isError()) {
+        res.send(validate.getError());
+    } else {
+        res.send(data);
+    }    
+});
+
 // OH NO YOU DIDNT
 app.del('*', function(req, res) { res.send(405); });
 app.put('*', function(req, res) { res.send(405); });
