@@ -1,6 +1,7 @@
 var fs = require('fs')
 ,   express = require('express')
-,   moment = require('moment');
+,   moment = require('moment')
+,   schema = require('schema')('conditions');
 
 var app = module.exports = express.createServer(express.logger());
 
