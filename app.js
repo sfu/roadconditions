@@ -8,7 +8,7 @@ var app = module.exports = express.createServer(express.logger());
 var conditionsPath = __dirname + '/data/conditions.json'
 ,   conditions = JSON.parse(fs.readFileSync(conditionsPath))
 ,   schemaPath = __dirname + '/data/conditions_schema.json'
-,   conditionsSchema = JSON.parse(fs.readFileSync(schemaPath));
+,   conditionsSchema = schema.Schema.create(JSON.parse(fs.readFileSync(schemaPath)));
 
 fs.watch(conditionsPath, function(event, filename) {
     if (event === 'change') {
