@@ -1,0 +1,117 @@
+{
+    "additionalProperties": false,
+    "type": "object",
+    "properties": {
+        "campus": {
+            "type": "object",
+            "properties": {
+                "condition": {
+                    "type": "string"
+                },
+                "status": {
+                    "type": "string",
+                    "enum": [
+                        "normal",
+                        "warning",
+                        "alert"
+                    ]
+                }
+            }
+        },
+        "roads": {
+            "type": "object",
+            "properties": {
+                "condition": {
+                    "type": "string"
+                },
+                "status": {
+                    "type": "string",
+                    "enum": [
+                        "normal",
+                        "warning",
+                        "alert"
+                    ]
+                }
+            }
+        },
+        "adjacentroads": {
+            "type": "object",
+            "properties": {
+                "condition": {
+                    "type": "string"
+                },
+                "status": {
+                    "type": "string",
+                    "enum": [
+                        "normal",
+                        "warning",
+                        "alert"
+                    ]
+                }
+            }
+        },
+        "transit": {
+            "type": "object",
+            "properties": {
+                "condition": {
+                    "type": "string"
+                },
+                "status": {
+                    "type": "string",
+                    "enum": [
+                        "normal",
+                        "warning",
+                        "alert"
+                    ]
+                }
+            }
+        },
+        "classes": {
+            "type": "object",
+            "properties": {
+                "condition": {
+                    "type": "string"
+                },
+                "status": {
+                    "type": "string",
+                    "enum": [
+                        "normal",
+                        "warning",
+                        "alert"
+                    ]
+                }
+            }
+        },
+        "exams": {
+            "type": "object",
+            "properties": {
+                "condition": {
+                    "type": "string"
+                },
+                "status": {
+                    "type": "string",
+                    "enum": [
+                        "normal",
+                        "warning",
+                        "alert"
+                    ]
+                }
+            }
+        },
+        "announcements": {
+            "type": "string"
+        },
+        "sidebar": {
+            "type": "array",
+            "items": {
+                "type": "string"
+            }
+        },
+        "links": {
+            "type": "array",
+            "items": {
+                "type": "object"
+            }
+        }
+    }
+}
