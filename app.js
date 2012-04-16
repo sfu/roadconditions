@@ -5,11 +5,14 @@ var fs = require('fs')
 
 var app = module.exports = express.createServer(express.logger());
 
-var conditionsJSON = __dirname + '/data/conditions.json';
-var conditions = JSON.parse(fs.readFileSync(conditionsJSON));
-fs.watch(conditionsJSON, function(event, filename) {
+var conditionsPath = __dirname + '/data/conditions.json'
+,   conditions = JSON.parse(fs.readFileSync(conditionsPath))
+,   schemaPath = __dirname + '/data/conditions_schema.json'
+,   conditionsSchema = JSON.parse(fs.readFileSync(schemaPath));
+
+fs.watch(conditionsPath, function(event, filename) {
     if (event === 'change') {
-        var conditions = JSON.parse(fs.readFileSync(conditionsJSON));
+        var conditions = JSON.parse(fs.readFileSync(conditionsPath));
         console.log('reloaded conditions', conditions);
     }
 });
