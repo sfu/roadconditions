@@ -31,7 +31,7 @@ app.configure(function(){
                 return moment(new Date(date)).format(format);
             } else {
                 return date;
-            };
+            }
         }
     });
 });
@@ -56,13 +56,13 @@ app.get('/admin', function(req, res) {
 // API Routes
 app.get('/api/1/conditions/:key?', function(req, res) {
     var data = {}, status = 200;
-    if (!req.param('key')) { 
+    if (!req.param('key')) {
         data = conditions;
     } else {
         var key = req.param('key');
         if (conditions.hasOwnProperty(key)) {
             data[key] = conditions[key];
-            data['lastupdated'] = conditions.lastupdated;
+            data.lastupdated = conditions.lastupdated;
         } else {
             status = 404;
             data = {error: 'not found', key: key};
@@ -78,7 +78,7 @@ app.post('/api/1/conditions', function(req, res) {
         res.send(validate.getError());
     } else {
         res.send(data);
-    }    
+    }
 });
 
 // OH NO YOU DIDNT
