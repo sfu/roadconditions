@@ -25,6 +25,7 @@ console.log("Express server listening on port %d in %s mode", app.address().port
 app.configure(function(){
     app.set('view engine', 'ejs');
     app.set('views', __dirname + '/views');
+    app.use(express.favicon('public/favicon.ico'));
     express.logger.token('user', function(req, res) { var user = '-'; if (req.session && req.session.AUTH_USER) { user = req.session.AUTH_USER.user; } return user; });
     app.use(express.logger({format: ':remote-addr - :user [:date] ":method :url HTTP/:http-version" :status :res[content-length] ":referrer" ":user-agent"'}));
     app.use(express.cookieParser());
