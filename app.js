@@ -3,7 +3,7 @@ var fs = require('fs')
 ,   moment = require('moment')
 ,   schema = require('schema')('conditions')
 ,   cas = require('cas-sfu')
-,   app = module.exports = express.createServer(express.logger())
+,   app = module.exports = express.createServer()
 ,   conditionsPath = __dirname + '/data/conditions.json'
 ,   conditions = JSON.parse(fs.readFileSync(conditionsPath))
 ,   schemaPath = __dirname + '/data/conditions_schema.json'
@@ -26,7 +26,7 @@ app.configure(function(){
     app.set('view engine', 'ejs');
     app.set('views', __dirname + '/views');
     app.use(express.favicon('public/favicon.ico'));
-    express.logger.token('user', function(req, res) { var user = '-'; if (req.session && req.session.AUTH_USER) { user = req.session.AUTH_USER.user; } return user; });
+    express.logger.token('user', function(req, res) { var user = '-'; if (req.session && req.session.auth) { user = req.session.auth.user; } return user; });
     app.use(express.logger({format: ':remote-addr - :user [:date] ":method :url HTTP/:http-version" :status :res[content-length] ":referrer" ":user-agent"'}));
     app.use(express.cookieParser());
     app.use(express.session({secret: 'YJrJ2wfqWRfVsaBVVFDYDKtmjAjKAXZ7AZKDtoGzaTrZPDDp'}));
