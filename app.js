@@ -77,7 +77,7 @@ app.get('/', function(req, res) {
     res.render('index', conditions);
 });
 
-app.get('/admin', function(req, res) {
+app.get('/admin', loggedin, function(req, res) {
     res.render('admin', conditions);
 });
 
