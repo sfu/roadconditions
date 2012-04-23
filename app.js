@@ -83,7 +83,7 @@ app.get('/admin', loggedin, function(req, res) {
 
 // Authentication Routes
 app.get('/login', casauth, function(req, res) {
-    res.redirect(req.session.referer) || '/admin';
+    res.redirect(req.session.referer || '/admin');
 });
 
 app.get('/logout', function(req, res) {
