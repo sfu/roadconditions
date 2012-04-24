@@ -1,48 +1,48 @@
 <div id="status">
-            
+
     <div class="primary">
-                    
+
         <ul>
-            <li><h2>The university is <span class="<%= campus.status %>"><%= campus.condition %></span></h2></li>
+            <li><h2>The university is <span class="<%= conditions.campus.status %>"><%= conditions.campus.condition %></span></h2></li>
             <li class="datestamp" data-lastupdated="<%= lastupdated %>">Report updated at <span><%= dateFormat(lastupdated, "h:mm a [on] MMMM DD YYYY") %><span></li>
         </ul>
-                    
+
     </div>
-                
+
     <div class="secondary">
         <ul>
-            <li>University roads: <span class="<%= roads.status %>"><%= roads.condition %></span></li>
-            <li>Adjacent roads: <span class="<%= adjacentroads.status %>"><%= adjacentroads.condition %></span></li>
-            <li class="divider">Classes are: <span class="<%= classes.status %>"><%= classes.condition %></span></li>
-            <li>Translink buses are: <span class="<%= transit.status %>"><%= transit.condition %></span></li>
-            <li>Exams are: <span class="<%= exams.status %>"><%= exams.condition %></span></li>
+            <li>University roads: <span class="<%= conditions.roads.status %>"><%= conditions.roads.condition %></span></li>
+            <li>Adjacent roads: <span class="<%= conditions.adjacentroads.status %>"><%= conditions.adjacentroads.condition %></span></li>
+            <li class="divider">Classes are: <span class="<%= conditions.classes.status %>"><%= conditions.classes.condition %></span></li>
+            <li>Translink buses are: <span class="<%= conditions.transit.status %>"><%= conditions.transit.condition %></span></li>
+            <li>Exams are: <span class="<%= conditions.exams.status %>"><%= conditions.exams.condition %></span></li>
         </ul>
-            
+
     </div>
-            
+
 </div>
-            
+
 <div id="announcements">
-                
+
     <h3>Campus announcements</h3>
-                
-    <div class="primary">        
+
+    <div class="primary">
         <%- announcements %>
     </div>
-                
-                
+
+
     <div class="secondary">
         <% for (item in sidebar) { %>
             <div><%- sidebar[item] %></div>
         <% } %>
     </div>
-                
+
 </div>
-            
+
 <div id="webcams">
-                
+
     <h3>Burnaby webcams</h3>
-                
+
     <ul>
         <li><h4>University Drive North</h4>
             <a href="http://www.sfu.ca/itservices/technical/webcams/webcams_library.html"><img src="http://www.sfu.ca/~netops/webcams/libcam.jpg" alt="University Drive North" /></a>
@@ -54,12 +54,12 @@
             <a href="http://www.sfu.ca/itservices/technical/webcams/webcams_convo.html"><img src="http://www.sfu.ca/~netops/webcams/mallcam.jpg" alt="Convocation Mall" /></a>
         </li>
     </ul>
-            
+
 </div>
-            
+
 <div id="links">
     <h3>Other resources</h3>
-    <% for (i in links) { 
+    <% for (i in links) {
         var thislink = links[i];
     %>
         <div>
