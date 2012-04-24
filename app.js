@@ -94,7 +94,7 @@ app.get('/logout', function(req, res) {
 });
 
 // API Routes
-app.get('/api/1/conditions/:key?', function(req, res) {
+app.get('/api/1/current/:key?', function(req, res) {
     var data = {}, status = 200;
     if (!req.param('key')) {
         data = conditions;
@@ -111,7 +111,7 @@ app.get('/api/1/conditions/:key?', function(req, res) {
     res.json(data, status);
 });
 
-app.post('/api/1/conditions', function(req, res) {
+app.post('/api/1/current', function(req, res) {
     var data = req.body;
     var validate = conditionsSchema.validate(data);
     if (validate.isError()) {
