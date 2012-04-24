@@ -2,99 +2,104 @@
     "additionalProperties": false,
     "type": "object",
     "properties": {
-        "campus": {
+        "conditions": {
             "type": "object",
             "properties": {
-                "condition": {
-                    "type": "string"
+                "campus": {
+                    "type": "object",
+                    "properties": {
+                        "condition": {
+                            "type": "string"
+                        },
+                        "status": {
+                            "type": "string",
+                            "enum": [
+                                "normal",
+                                "warning",
+                                "alert"
+                            ]
+                        }
+                    }
                 },
-                "status": {
-                    "type": "string",
-                    "enum": [
-                        "normal",
-                        "warning",
-                        "alert"
-                    ]
-                }
-            }
-        },
-        "roads": {
-            "type": "object",
-            "properties": {
-                "condition": {
-                    "type": "string"
+                "roads": {
+                    "type": "object",
+                    "properties": {
+                        "condition": {
+                            "type": "string"
+                        },
+                        "status": {
+                            "type": "string",
+                            "enum": [
+                                "normal",
+                                "warning",
+                                "alert"
+                            ]
+                        }
+                    }
                 },
-                "status": {
-                    "type": "string",
-                    "enum": [
-                        "normal",
-                        "warning",
-                        "alert"
-                    ]
-                }
-            }
-        },
-        "adjacentroads": {
-            "type": "object",
-            "properties": {
-                "condition": {
-                    "type": "string"
+                "adjacentroads": {
+                    "type": "object",
+                    "properties": {
+                        "condition": {
+                            "type": "string"
+                        },
+                        "status": {
+                            "type": "string",
+                            "enum": [
+                                "normal",
+                                "warning",
+                                "alert"
+                            ]
+                        }
+                    }
                 },
-                "status": {
-                    "type": "string",
-                    "enum": [
-                        "normal",
-                        "warning",
-                        "alert"
-                    ]
-                }
-            }
-        },
-        "transit": {
-            "type": "object",
-            "properties": {
-                "condition": {
-                    "type": "string"
+                "transit": {
+                    "type": "object",
+                    "properties": {
+                        "condition": {
+                            "type": "string"
+                        },
+                        "status": {
+                            "type": "string",
+                            "enum": [
+                                "normal",
+                                "warning",
+                                "alert"
+                            ]
+                        }
+                    }
                 },
-                "status": {
-                    "type": "string",
-                    "enum": [
-                        "normal",
-                        "warning",
-                        "alert"
-                    ]
-                }
-            }
-        },
-        "classes": {
-            "type": "object",
-            "properties": {
-                "condition": {
-                    "type": "string"
+                "classes": {
+                    "type": "object",
+                    "properties": {
+                        "condition": {
+                            "type": "string"
+                        },
+                        "status": {
+                            "type": "string",
+                            "enum": [
+                                "normal",
+                                "warning",
+                                "alert"
+                            ]
+                        }
+                    }
                 },
-                "status": {
-                    "type": "string",
-                    "enum": [
-                        "normal",
-                        "warning",
-                        "alert"
-                    ]
-                }
-            }
-        },
-        "exams": {
-            "type": "object",
-            "properties": {
-                "condition": {
-                    "type": "string"
-                },
-                "status": {
-                    "type": "string",
-                    "enum": [
-                        "normal",
-                        "warning",
-                        "alert"
-                    ]
+                "exams": {
+                    "type": "object",
+                    "properties": {
+                        "condition": {
+                            "type": "string"
+                        },
+                        "status": {
+                            "type": "string",
+                            "enum": [
+                                "normal",
+                                "warning",
+                                "alert"
+                            ]
+                        }
+                    }
                 }
             }
         },
