@@ -47,7 +47,7 @@ app.configure(function(){
 
 app.configure('development', function(){
     app.use(express.errorHandler({ dumpExceptions: true, showStack: true }));
-    casService = 'http://localhost:' + app.address().port + '/login';
+    casService = 'http://icat-eryn.its.sfu.ca:' + app.address().port + '/login';
 });
 
 app.configure('production', function(){
