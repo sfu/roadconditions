@@ -41,6 +41,12 @@ app.configure(function(){
             } else {
                 return date;
             }
+    app.dynamicHelpers({
+        resources: function(req, res) {
+            return {
+                scripts: ['jquery-1.7.1.js', 'menus.js'],
+                css:['conditions.css']
+            };
         }
     });
 });
