@@ -41,6 +41,28 @@ app.configure(function(){
             } else {
                 return date;
             }
+        },
+        renderHeadTags: function(all) {
+            var templates = {
+                scripts: '<script src="/js/FILENAME"></script>',
+                css: '<link rel="stylesheet" href="css/FILENAME">'
+            }
+            ,   buf = '';
+            var rendertags = function(type, tmpl, arr) {
+                var buf = [];
+                for (var i = 0; i < arr.length; i++) {
+                    buf.push(tmpl.replace('FILENAME', arr[i]));
+                }
+                return buf.join('\n');
+            };
+            if (all) {
+                for (var type in all) {
+                    buf += rendertags(type, templates[type], all[type]);
+                }
+            }
+            return buf;
+        }
+    });
     app.dynamicHelpers({
         resources: function(req, res) {
             return {
