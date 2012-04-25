@@ -3,11 +3,9 @@
 
 <head>
 	<meta http-equiv="content-type" content="text/html; charset=UTF-8" />
-	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"> 
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 	<title>Road and Traffic Report – Burnaby Campus – Simon Fraser University</title>
-	<link rel="stylesheet" href="css/conditions.css">
-	<script type="text/javascript" src="js/jquery-1.7.1.js"></script>
-	<script type="text/javascript" src="js/menus.js"></script>
+    <%- renderHeadTags(resources) %>
 </head>
 
 <body>
@@ -16,14 +14,14 @@
 		<div id="banner">
 			<a href="//www.sfu.ca">Simon Fraser University</a>
 		</div>
-		
+
 		<div id="globalNav">
 		        <ul id="campuses">
 		            <li class="sfu"><a href="//www.sfu.ca">sfu.ca</a></li>
 		            <li><a href="http://www.burnaby.sfu.ca">Burnaby</a></li>
 		            <li><a href="http://www.surrey.sfu.ca/">Surrey</a></li>
 
-		            <li class="last"><a href="http://www.vancouver.sfu.ca/">Vancouver</a></li>               
+		            <li class="last"><a href="http://www.vancouver.sfu.ca/">Vancouver</a></li>
 		        </ul>
 
 		        <ul id="services">
@@ -50,7 +48,7 @@
             <%- body %>
         </div>
 	</div>
-	
+
 	<div id="footer">
         <ul>
             <li>8888 University Drive, Burnaby, B.C. Canada V5A 1S6</li>
@@ -62,7 +60,7 @@
             <li>&copy; Simon Fraser University</li>
         </ul>
     </div>
-	
+
     <script>
         window.scrollTo(0, 1);
     </script>
