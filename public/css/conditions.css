@@ -448,7 +448,7 @@ span.warning {
 	border-bottom: 1px dotted #fff;
 }
 
-#announcements {
+div#announcements {
 	clear: left;
 	width: 845px;
 	line-height: 21px;
@@ -619,7 +619,7 @@ span.warning {
 		height: auto;
 	}
 	
-	#announcements {
+	div#announcements {
 		width: 260px;
 	}
 	
