@@ -1,7 +1,7 @@
 <style>
 
-#updateconditions {
-	width: 90%;
+div.form-container {
+	width: 543px;
 }
 
 #updateconditions div {
@@ -39,7 +39,7 @@ fieldset {
 
 #conditions select {
     display: inline-block;
-    width: 250px;
+    width: 200px;
     margin-right: 45px;
 }
 
@@ -47,8 +47,12 @@ fieldset {
     width: 100px;
 }
 
+#conditions label[class*="status_"] {
+	display: none;
+}
+
 fieldset div {
-	margin-right: 10px;
+	padding-right: 10px;
 }
 
 fieldset.category-group {
@@ -105,7 +109,7 @@ fieldset button:hover {
 
 
 </style>
-<div>
+<div class="form-container">
     <form id="updateconditions" name="updateconditions" action="/api/1/conditions" method="POST">
         <fieldset id="conditions">
             <legend>Current Conditions</legend>
