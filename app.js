@@ -41,6 +41,34 @@ app.configure(function(){
             } else {
                 return date;
             }
+        },
+        renderHeadTags: function(all) {
+            var templates = {
+                scripts: '<script src="/js/FILENAME"></script>',
+                css: '<link rel="stylesheet" href="css/FILENAME">'
+            }
+            ,   buf = '';
+            var rendertags = function(type, tmpl, arr) {
+                var buf = [];
+                for (var i = 0; i < arr.length; i++) {
+                    buf.push(tmpl.replace('FILENAME', arr[i]));
+                }
+                return buf.join('\n');
+            };
+            if (all) {
+                for (var type in all) {
+                    buf += rendertags(type, templates[type], all[type]);
+                }
+            }
+            return buf;
+        }
+    });
+    app.dynamicHelpers({
+        resources: function(req, res) {
+            return {
+                scripts: ['jquery-1.7.1.js', 'menus.js'],
+                css:['conditions.css']
+            };
         }
     });
 });
@@ -94,7 +122,7 @@ app.get('/logout', function(req, res) {
 });
 
 // API Routes
-app.get('/api/1/conditions/:key?', function(req, res) {
+app.get('/api/1/current/:key?', function(req, res) {
     var data = {}, status = 200;
     if (!req.param('key')) {
         data = conditions;
@@ -111,7 +139,7 @@ app.get('/api/1/conditions/:key?', function(req, res) {
     res.json(data, status);
 });
 
-app.post('/api/1/conditions', function(req, res) {
+app.post('/api/1/current', function(req, res) {
     var data = req.body;
     var validate = conditionsSchema.validate(data);
     if (validate.isError()) {
