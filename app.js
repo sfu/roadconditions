@@ -1,4 +1,5 @@
 var fs = require('fs')
+,   os = require('os')
 ,   express = require('express')
 ,   moment = require('moment')
 ,   schema = require('schema')('conditions')
@@ -18,7 +19,7 @@ fs.watch(conditionsPath, function(event, filename) {
 });
 // Configuration
 
-app.listen(3001);
+app.listen(process.env.PORT || 3001);
 console.log("Express server listening on port %d in %s mode", app.address().port, app.settings.env);
 
 
@@ -75,17 +76,15 @@ app.configure(function(){
 
 app.configure('development', function(){
     app.use(express.errorHandler({ dumpExceptions: true, showStack: true }));
-    casService = 'http://icat-eryn.its.sfu.ca:' + app.address().port + '/login';
 });
 
 app.configure('production', function(){
     app.use(express.errorHandler());
-    casService = 'http://www.sfu.ca/security/sfuroadconditions/login';
 });
 
 // Authentication middleware
 var casauth = cas.getMiddleware({
-    service: casService,
+    service: process.env.CAS_SERVICE || 'http://' + os.hostname() + ':' + app.address().port + '/login',
     allow: 'sfu',        // TODO enter correct maillists in order (supervisor, dispatcher)
     userObject: 'auth'
 });
