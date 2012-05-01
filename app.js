@@ -72,7 +72,7 @@ app.configure(function(){
         }
     });
     app.dynamicHelpers({
-        resources: function(req, res) {
+        headResources: function(req, res) {
             return {
                 scripts: ['jquery-1.7.1.js', 'menus.js'],
                 css:['conditions.css']
