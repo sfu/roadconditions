@@ -103,3 +103,8 @@ fieldset button {
 fieldset button:hover {
     background-color: #eee;
 }
+
+textarea {
+    width: 100%;
+    height: 250px;
+}
