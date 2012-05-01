@@ -62,6 +62,13 @@ app.configure(function(){
                 }
             }
             return buf;
+        },
+        addBodyScriptTags: function(all) {
+            var buf = [];
+            for (var i = 0; i < all.length; i++) {
+                buf.push('<script src="/js/' + all[i] + '"></script>');
+            }
+            return buf.join('\n');
         }
     });
     app.dynamicHelpers({
@@ -70,6 +77,9 @@ app.configure(function(){
                 scripts: ['jquery-1.7.1.js', 'menus.js'],
                 css:['conditions.css']
             };
+        },
+        bodyScripts: function(req, res) {
+            return [];
         }
     });
 });
