@@ -1,5 +1,5 @@
 <% headResources.css.push('admin.css'); %>
-<% headResources.scripts.push('tiny_mce/tiny_mce.js'); %>
+<% headResources.scripts.push('can.jquery.js', 'tiny_mce/tiny_mce.js'); %>
 
 <div class="form-container">
     <form id="updateconditions" name="updateconditions" action="/api/1/conditions" method="POST">
@@ -8,15 +8,15 @@
             <div>
                 <label for="campus">Campus:</label>
                 <select id="campus" name="campus">
-                    <option value="open" data-defaultstatus="normal">open</option>
-                    <option value="closed" data-defaultstatus="alert">closed</option>
-                    <option value="reopened" data-defaultstatus="warning">reopened</option>
+                    <option value="open" data-defaultstatus="normal">Open</option>
+                    <option value="closed" data-defaultstatus="alert">Closed</option>
+                    <option value="reopened" data-defaultstatus="warning">Reopened</option>
                 </select>
                 <label class="status_label" for="campus_status">Status: </label>
                 <select id="campus_status" name="campus_status">
-                    <option value="normal">normal</option>
-                    <option value="warning">warning</option>
-                    <option value="alert">alert</option>
+                    <option value="normal">Normal</option>
+                    <option value="warning">Warning</option>
+                    <option value="alert">Alert</option>
                 </select>
             </div>
             <div>
@@ -39,68 +39,68 @@
                 </select>
                 <label class="status_label" for="roads_status">Status: </label>
                 <select id="roads_status" name="roads_status">
-                    <option value="normal">normal</option>
-                    <option value="warning">warning</option>
-                    <option value="alert">alert</option>
+                    <option value="normal">Normal</option>
+                    <option value="warning">Warning</option>
+                    <option value="alert">Alert</option>
                 </select>
             </div>
             <div>
                 <label for="adjacentroads">Adjacent Roads:</label>
                 <select id="adjacentroads" name="adjacentroads">
-                    <option value="not applicable" data-defaultstatus="normal">not applicable</option>
-                    <option value="closed" data-defaultstatus="alert">closed</option>
-                    <option value="use caution" data-defaultstatus="warning">use caution</option>
-                    <option value="use extreme caution" data-defaultstatus="alert">use extreme caution</option>
+                    <option value="not applicable" data-defaultstatus="normal">Not applicable</option>
+                    <option value="closed" data-defaultstatus="alert">Closed</option>
+                    <option value="use caution" data-defaultstatus="warning">Use caution</option>
+                    <option value="use extreme caution" data-defaultstatus="alert">Use extreme caution</option>
                 </select>
                 <label class="status_label"  for="adjacentroads_status">Status: </label>
                 <select id="adjacentroads_status" name="adjacentroads_status">
-                    <option value="normal">normal</option>
-                    <option value="warning">warning</option>
-                    <option value="alert">alert</option>
+                    <option value="normal">Normal</option>
+                    <option value="warning">Warning</option>
+                    <option value="alert">Alert</option>
                 </select>
             </div>
             <div>
                 <label for="transit">Transit Service</label>
                 <select id="transit" name="transit">
-                    <option value="on schedule" data-defaultstatus="normal">on schedule</option>
-                    <option value="delayed" data-defaultstatus="warning">delayed</option>
-                    <option value="not running" data-defaultstatus="alert">not running</option>
+                    <option value="on schedule" data-defaultstatus="normal">On schedule</option>
+                    <option value="delayed" data-defaultstatus="warning">Delayed</option>
+                    <option value="not running" data-defaultstatus="alert">Not running</option>
                 </select>
                 <label  class="status_label" for="transit_status">Status: </label>
                 <select id="transit_status" name="transit_status">
-                    <option value="normal">normal</option>
-                    <option value="warning">warning</option>
-                    <option value="alert">alert</option>
+                    <option value="normal">Normal</option>
+                    <option value="warning">Warning</option>
+                    <option value="alert">Alert</option>
                 </select>
             </div>
             <div>
                 <label for="classes">Classes:</label>
                 <select id="classes" name="classes">
-                    <option value="on schedule">as scheduled</option>
-                    <option value="cancelled (morning classes)" data-defaultstatus="normal">cancelled (morning classes)</option>
-                    <option value="cancelled (afternoon classes)" data-defaultstatus="alert">cancelled (afternoon classes)</option>
-                    <option value="cancelled (evening classes)" data-defaultstatus="alert">cancelled (evening classes)</option>
-                    <option value="cancelled (all classes)" data-defaultstatus="alert">cancelled (all classes)</option>
-                    <option value="cancelled until further notice" data-defaultstatus="alert">cancelled until further notice</option>
+                    <option value="on schedule">As scheduled</option>
+                    <option value="cancelled (morning classes)" data-defaultstatus="normal">Cancelled (morning classes)</option>
+                    <option value="cancelled (afternoon classes)" data-defaultstatus="alert">Cancelled (afternoon classes)</option>
+                    <option value="cancelled (evening classes)" data-defaultstatus="alert">Cancelled (evening classes)</option>
+                    <option value="cancelled (all classes)" data-defaultstatus="alert">Cancelled (all classes)</option>
+                    <option value="cancelled until further notice" data-defaultstatus="alert">Cancelled until further notice</option>
                 </select>
                 <label  class="status_label" for="classes_status">Status: </label>
                 <select id="classes_status" name="classes_status">
-                    <option value="normal">normal</option>
-                    <option value="warning">warning</option>
-                    <option value="alert">alert</option>
+                    <option value="normal">Normal</option>
+                    <option value="warning">Warning</option>
+                    <option value="alert">Alert</option>
                 </select>
             </div>
             <div>
                 <label for="exams">Exams:</label>
                 <select id="exams" name="exams">
-                    <option value="as scheduled" data-defaultstatus="normal">as scheduled</option>
-                    <option value="postponed" data-defaultstatus="alert">postponed</option>
+                    <option value="as scheduled" data-defaultstatus="normal">As scheduled</option>
+                    <option value="postponed" data-defaultstatus="alert">Postponed</option>
                 </select>
                 <label  class="status_label" for="exams_status">Status: </label>
                 <select id="exams_status" name="exams_status">
-                    <option value="normal">normal</option>
-                    <option value="warning">warning</option>
-                    <option value="alert">alert</option>
+                    <option value="normal">Normal</option>
+                    <option value="warning">Warning</option>
+                    <option value="alert">Alert</option>
                 </select>
             </div>
         </fieldset>
@@ -111,6 +111,9 @@
                 <label for="announcements">Main Announcements</label>
                 <textarea id="announcements" name="announcements"></textarea>
             </div>
+        </fieldset>
+        <fieldset>
+            <legend>Sidebar Items</legend>
             <div>
                 <label for="sidebar0">Sidebar Item</label>
                 <textarea id="sidebar0" name="sidebar0"></textarea>
