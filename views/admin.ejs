@@ -144,6 +144,10 @@ var conditionsFormElements = {
     ]
 }
 
+var selected = function(category, type, value) {
+    return current.conditions[category][type] === value ? 'selected ' : '';
+};
+
 <div class="form-container">
     <form id="updateconditions" name="updateconditions" action="/api/1/conditions" method="POST">
         <fieldset id="conditions">
