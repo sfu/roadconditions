@@ -197,52 +197,29 @@ var renderOptions = function(data) {
         <fieldset>
             <legend>Links</legend>
 
+            <% for (i in current.links) {
+                var linkset = current.links[i];
+            %>
             <fieldset class="category-group">
-            <!-- I think this legend can be removed because you'll be displaying existing link groups in the category text input below
-				<legend>Transit Links</legend> -->
-
-				<div>
-					<label for="category">Category</label><br />
-                	<input name="text" id="text"/>
-				</div>
-
-				<div>
-                	<label for="text">Text</label><br />
-                	<input name="text" id="text"/>
-            	</div>
-
-				<div>
-                	<label for="url">URL</label><br />
-                	<input name="url" id="url"/>
-				</div>
-
+                <div>
+                    <label for="category">Category</label><br />
+                    <input name="text" id="text" value="<%= linkset.category %>"/>
+                </div>
+                <% for (i in linkset.links) {%>
+                    <% var link = linkset.links[i]; %>
+                <div>
+                    <label for="text">Text</label><br />
+                    <input name="text" id="text" value="<%= link.text %>"/>
+                </div>
+                <div>
+                    <label for="url">URL</label><br />
+                    <input name="url" id="url"/ value="<%= link.url %>">
+                </div>
+                <% } %>
                 <button>Add new link</button>
-
-			</fieldset>
-
-			<fieldset class="category-group">
-
-				<div>
-					<label for="category">Category</label><br />
-                	<input name="text" id="text"/>
-				</div>
-
-				<div>
-                	<label for="text">Text</label><br />
-                	<input name="text" id="text"/>
-            	</div>
-
-				<div>
-                	<label for="url">URL</label><br />
-                	<input name="url" id="url"/>
-				</div>
-
-                <button>Add new link</button>
-
-			</fieldset>
-
+            </fieldset>
+            <% } %>
             <button>Add new category</button>
-
         </fieldset>
         <input type="submit" value="Submit"/>
     </form>
