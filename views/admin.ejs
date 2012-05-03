@@ -1,6 +1,149 @@
 <% headResources.css.push('admin.css'); %>
 <% headResources.scripts.push('can.jquery.js', 'tiny_mce/tiny_mce.js'); %>
 
+<%
+var conditionsFormElements = {
+    "campus": [
+        {
+            "value": "open",
+            "defaultstatus": "normal"
+        },
+        {
+            "value": "closed",
+            "defaultstatus": "alert"
+        },
+        {
+            "value": "reopened",
+            "defaultstatus": "warning"
+        }
+    ],
+    "roads": [
+        {
+            "value": "clear",
+            "defaultstatus": "normal"
+        },
+        {
+            "value": "closed",
+            "defaultstatus": "alert"
+        },
+        {
+            "value": "covered with dry snow",
+            "defaultstatus": "alert"
+        },
+        {
+            "value": "covered with wet snow",
+            "defaultstatus": "alert"
+        },
+        {
+            "value": "covered with hard snow",
+            "defaultstatus": "alert"
+        },
+        {
+            "value": "dry",
+            "defaultstatus": "normal"
+        },
+        {
+            "value": "good",
+            "defaultstatus": "normal"
+        },
+        {
+            "value": "icy",
+            "defaultstatus": "alert"
+        },
+        {
+            "value": "light snow",
+            "defaultstatus": "warning"
+        },
+        {
+            "value": "partially clear",
+            "defaultstatus": "warning"
+        },
+        {
+            "value": "snow (beware of possible ice)",
+            "defaultstatus": "alert"
+        },
+        {
+            "value": "snow",
+            "defaultstatus": "alert"
+        },
+        {
+            "value": "wet",
+            "defaultstatus": "normal"
+        },
+        {
+            "value": "wet (possible icy conditions)",
+            "defaultstatus": "warning"
+        }
+    ],
+    "adjacentroads": [
+        {
+            "value": "not applicable",
+            "defaultstatus": "normal"
+        },
+        {
+            "value": "closed",
+            "defaultstatus": "alert"
+        },
+        {
+            "value": "use caution",
+            "defaultstatus": "warning"
+        },
+        {
+            "value": "use extreme caution",
+            "defaultstatus": "alert"
+        }
+    ],
+    "transit": [
+        {
+            "value": "on schedule",
+            "defaultstatus": "normal"
+        },
+        {
+            "value": "delayed",
+            "defaultstatus": "warning"
+        },
+        {
+            "value": "not running",
+            "defaultstatus": "alert"
+        }
+    ],
+    "classes": [
+        {
+            "value": "on schedule"
+        },
+        {
+            "value": "cancelled (morning classes)",
+            "defaultstatus": "normal"
+        },
+        {
+            "value": "cancelled (afternoon classes)",
+            "defaultstatus": "alert"
+        },
+        {
+            "value": "cancelled (evening classes)",
+            "defaultstatus": "alert"
+        },
+        {
+            "value": "cancelled (all classes)",
+            "defaultstatus": "alert"
+        },
+        {
+            "value": "cancelled until further notice",
+            "defaultstatus": "alert"
+        }
+    ],
+    "exams": [
+        {
+            "value": "as scheduled",
+            "defaultstatus": "normal"
+        },
+        {
+            "value": "postponed",
+            "defaultstatus": "alert"
+        }
+    ]
+}
+
 <div class="form-container">
     <form id="updateconditions" name="updateconditions" action="/api/1/conditions" method="POST">
         <fieldset id="conditions">
