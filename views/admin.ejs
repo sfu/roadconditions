@@ -180,23 +180,17 @@ var renderOptions = function(data) {
             <legend>Announcements</legend>
             <div>
                 <label for="announcements">Main Announcements</label>
-                <textarea id="announcements" name="announcements"></textarea>
+                <textarea id="announcements" name="announcements"><%- current.announcements %></textarea>
             </div>
         </fieldset>
         <fieldset>
             <legend>Sidebar Items</legend>
-            <div>
-                <label for="sidebar0">Sidebar Item</label>
-                <textarea id="sidebar0" name="sidebar0"></textarea>
-            </div>
-            <div>
-                <label for="sidebar1">Sidebar Item</label>
-                <textarea id="sidebar1" name="sidebar1"></textarea>
-            </div>
-            <div>
-                <label for="sidebar2">Sidebar Item</label>
-                <textarea id="sidebar2" name="sidebar2"></textarea>
-            </div>
+            <% for (var i = 0; i < current.sidebar.length; i++) { %>
+                <div>
+                    <label for="sidebar_<%= i %>">Sidebar Item <%= i+1 %></label>
+                    <textarea id="sidebar_<%= i %>" name="sidebar_<%= i %>"><%- current.sidebar[i] %></textarea>
+                </div>
+            <% } %>
             <button>Add new sidebar item</button>
         </fieldset>
 
