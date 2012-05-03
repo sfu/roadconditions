@@ -262,5 +262,13 @@ var renderOptions = function(data) {
             theme_advanced_toolbar_align : "left",
             theme_advanced_resizing : true,
         });
+
+        $('#conditions select').change(function(ev) {
+            var $this = $(this);
+            var statusfield = $('#' + this.id + '_status');
+            statusfield.val($(this).find(":selected").data('defaultstatus'));
+        });
+
+
     });
 </script>
