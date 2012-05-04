@@ -156,7 +156,7 @@ var renderOptions = function(data) {
             html += '<option ' + selected(category, 'condition', data[category][i].value) + 'value="' + data[category][i].value + '" data-defaultstatus="' + data[category][i].defaultstatus + '">' + data[category][i].value.replace(data[category][i].value.charAt(0), data[category][i].value.charAt(0).toUpperCase()) + '</option>';
         };
         html += '</select>';
-        html += '<label class="status_label" for="' + category + '_status">Status: </label><select id="' + category + '_status" name="' + category + '_status">';
+        html += '<label class="status_label" for="' + category + '_status">Status: </label><select data-statusfor="'+ category + '" id="' + category + '_status" name="' + category + '_status">';
 
         var statuses = ['normal', 'warning', 'alert'];
         for (var i=0; i < statuses.length; i++) {
