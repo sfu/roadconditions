@@ -170,6 +170,7 @@ var renderOptions = function(data) {
 %>
 
 <div class="form-container">
+    <p>Last updated at <%= dateFormat(current.lastupdated, "h:mm a [on] MMMM DD YYYY") %></p>
     <form id="updateconditions" name="updateconditions" action="/api/1/conditions" method="POST">
         <fieldset id="conditions">
             <legend>Current Conditions</legend>
