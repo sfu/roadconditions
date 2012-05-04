@@ -247,6 +247,7 @@ var renderOptions = function(data) {
             statusfield.val($(this).find(":selected").data('defaultstatus'));
         });
 
+        $('button').click(function(ev) { ev.preventDefault(); });
 
     });
 </script>
