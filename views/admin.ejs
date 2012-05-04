@@ -243,7 +243,7 @@ var renderOptions = function(data) {
 
         $('#conditions select').change(function(ev) {
             var $this = $(this);
-            var statusfield = $('#' + this.id + '_status');
+            var statusfield = $('*[data-statusfor="' + this.id + '"]');
             statusfield.val($(this).find(":selected").data('defaultstatus'));
         });
 
