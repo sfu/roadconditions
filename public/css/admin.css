@@ -1,4 +1,4 @@
-div.form-container {
+.form-container {
     width: 543px;
 }
 
@@ -20,9 +20,6 @@ legend {
     width: 100%;
 }
 
-.status_label {
-    width: 50px !important;
-}
 
 fieldset {
     margin-top: 18px;
