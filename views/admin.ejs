@@ -177,14 +177,14 @@ var renderOptions = function(data) {
             <%- renderOptions(conditionsFormElements) %>
         </fieldset>
 
-        <fieldset>
+        <fieldset id="announcements">
             <legend>Announcements</legend>
             <div>
-                <label for="announcements">Main Announcements</label>
-                <textarea id="announcements" name="announcements"><%- current.announcements %></textarea>
+                <label for="announcements_editor">Main Announcements</label>
+                <textarea id="announcements_editor" name="announcements_editor"><%- current.announcements %></textarea>
             </div>
         </fieldset>
-        <fieldset>
+        <fieldset id="sidebar">
             <legend>Sidebar Items</legend>
             <% for (var i = 0; i < current.sidebar.length; i++) { %>
                 <div>
@@ -195,7 +195,7 @@ var renderOptions = function(data) {
             <button>Add new sidebar item</button>
         </fieldset>
 
-        <fieldset>
+        <fieldset id="links">
             <legend>Links</legend>
 
             <% for (i in current.links) {
