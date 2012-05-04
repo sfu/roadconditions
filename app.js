@@ -75,7 +75,7 @@ app.configure(function(){
         headResources: function(req, res) {
             return {
                 scripts: ['jquery-1.7.1.js', 'menus.js'],
-                css:['conditions.css']
+                css:['base.css']
             };
         },
         bodyScripts: function(req, res) {
