@@ -1,227 +1,33 @@
 <% headResources.css.push('admin.css'); %>
-<% headResources.scripts.push('can.jquery.js', 'tiny_mce/tiny_mce.js'); %>
-
-<%
-var conditionsFormElements = {
-    "campus": [
-        {
-            "value": "open",
-            "defaultstatus": "normal"
-        },
-        {
-            "value": "closed",
-            "defaultstatus": "alert"
-        },
-        {
-            "value": "reopened",
-            "defaultstatus": "warning"
-        }
-    ],
-    "roads": [
-        {
-            "value": "clear",
-            "defaultstatus": "normal"
-        },
-        {
-            "value": "closed",
-            "defaultstatus": "alert"
-        },
-        {
-            "value": "covered with dry snow",
-            "defaultstatus": "alert"
-        },
-        {
-            "value": "covered with wet snow",
-            "defaultstatus": "alert"
-        },
-        {
-            "value": "covered with hard snow",
-            "defaultstatus": "alert"
-        },
-        {
-            "value": "dry",
-            "defaultstatus": "normal"
-        },
-        {
-            "value": "good",
-            "defaultstatus": "normal"
-        },
-        {
-            "value": "icy",
-            "defaultstatus": "alert"
-        },
-        {
-            "value": "light snow",
-            "defaultstatus": "warning"
-        },
-        {
-            "value": "partially clear",
-            "defaultstatus": "warning"
-        },
-        {
-            "value": "snow (beware of possible ice)",
-            "defaultstatus": "alert"
-        },
-        {
-            "value": "snow",
-            "defaultstatus": "alert"
-        },
-        {
-            "value": "wet",
-            "defaultstatus": "normal"
-        },
-        {
-            "value": "wet (possible icy conditions)",
-            "defaultstatus": "warning"
-        }
-    ],
-    "adjacentroads": [
-        {
-            "value": "not applicable",
-            "defaultstatus": "normal"
-        },
-        {
-            "value": "closed",
-            "defaultstatus": "alert"
-        },
-        {
-            "value": "use caution",
-            "defaultstatus": "warning"
-        },
-        {
-            "value": "use extreme caution",
-            "defaultstatus": "alert"
-        }
-    ],
-    "transit": [
-        {
-            "value": "on schedule",
-            "defaultstatus": "normal"
-        },
-        {
-            "value": "delayed",
-            "defaultstatus": "warning"
-        },
-        {
-            "value": "not running",
-            "defaultstatus": "alert"
-        }
-    ],
-    "classes": [
-        {
-            "value": "on schedule"
-        },
-        {
-            "value": "cancelled (morning classes)",
-            "defaultstatus": "normal"
-        },
-        {
-            "value": "cancelled (afternoon classes)",
-            "defaultstatus": "alert"
-        },
-        {
-            "value": "cancelled (evening classes)",
-            "defaultstatus": "alert"
-        },
-        {
-            "value": "cancelled (all classes)",
-            "defaultstatus": "alert"
-        },
-        {
-            "value": "cancelled until further notice",
-            "defaultstatus": "alert"
-        }
-    ],
-    "exams": [
-        {
-            "value": "as scheduled",
-            "defaultstatus": "normal"
-        },
-        {
-            "value": "postponed",
-            "defaultstatus": "alert"
-        }
-    ]
-}
-
-var selected = function(category, type, value) {
-    return current.conditions[category][type] === value ? 'selected ' : '';
-};
-
-var renderOptions = function(data) {
-    var html = '';
-    for (var category in data) {
-        html += '<div><label for="' + category + '">' + category.replace(category.charAt(0), category.charAt(0).toUpperCase()) + ': </label><select id="' + category + '" name="' + category + '">';
-        for (var i = 0; i < data[category].length; i++) {
-            html += '<option ' + selected(category, 'condition', data[category][i].value) + 'value="' + data[category][i].value + '" data-defaultstatus="' + data[category][i].defaultstatus + '">' + data[category][i].value.replace(data[category][i].value.charAt(0), data[category][i].value.charAt(0).toUpperCase()) + '</option>';
-        };
-        html += '</select>';
-        html += '<label class="status_label" for="' + category + '_status">Status: </label><select data-statusfor="'+ category + '" id="' + category + '_status" name="' + category + '_status">';
-
-        var statuses = ['normal', 'warning', 'alert'];
-        for (var i=0; i < statuses.length; i++) {
-            html += '<option ' + selected(category, 'status', statuses[i]) + 'value="' + statuses[i] + '">' + statuses[i] + '</option>';
-        }
-
-        html += '</select></div>';
-    }
-    return html;
-}
-%>
+<% headResources.scripts.push('vendor/spine-build.js', 'vendor/ejs_production.js', 'vendor/tiny_mce/tiny_mce.js'); %>
 
 <div class="form-container">
     <p>Last updated at <%= dateFormat(current.lastupdated, "h:mm a [on] MMMM DD YYYY") %></p>
     <form id="updateconditions" name="updateconditions" action="/api/1/conditions" method="POST">
-        <fieldset id="conditions">
+
+        <fieldset id="conditionsContainer">
             <legend>Current Conditions</legend>
-            <%- renderOptions(conditionsFormElements) %>
+            <div id="conditions"></div>
         </fieldset>
 
-        <fieldset id="announcements">
+        <fieldset id="announcementsContainer">
             <legend>Announcements</legend>
-            <div>
-                <label for="announcements_editor">Main Announcements</label>
-                <textarea id="announcements_editor" name="announcements_editor"><%- current.announcements %></textarea>
-            </div>
-        </fieldset>
-        <fieldset id="sidebar">
-            <legend>Sidebar Items</legend>
-            <% for (var i = 0; i < current.sidebar.length; i++) { %>
-                <div>
-                    <label for="sidebar_<%= i %>">Sidebar Item <%= i+1 %></label>
-                    <textarea id="sidebar_<%= i %>" name="sidebar_<%= i %>"><%- current.sidebar[i] %></textarea>
-                </div>
-            <% } %>
-            <button>Add new sidebar item</button>
+            <div id="announcements"></div>
         </fieldset>
 
-        <fieldset id="links">
-            <legend>Links</legend>
-
-            <% for (i in current.links) {
-                var linkset = current.links[i];
-            %>
-            <fieldset class="category-group">
-                <div>
-                    <label for="category">Category</label><br />
-                    <input name="text" id="text" value="<%= linkset.category %>"/>
-                </div>
-                <% for (i in linkset.links) {%>
-                    <% var link = linkset.links[i]; %>
-                <div>
-                    <label for="text">Text</label><br />
-                    <input name="text" id="text" value="<%= link.text %>"/>
-                </div>
-                <div>
-                    <label for="url">URL</label><br />
-                    <input name="url" id="url"/ value="<%= link.url %>">
-                </div>
-                <% } %>
-                <button>Add new link</button>
-            </fieldset>
-            <% } %>
-            <button>Add new category</button>
+        <fieldset id="sidebarsContainer">
+            <legend>Sidebars</legend>
+            <div id="sidebars"></div>
+            <button id="addnewsidebar">Add New Sidebar</button>
         </fieldset>
+
+
+        <fieldset id="linksContainer">
+            <a name="links"><legend>Links</legend></a>
+            <div id="linkCategories"></div>
+            <button id="addnewlinkcategory">Add New Category</button>
+        </fieldset>
+
         <input type="submit" value="Submit"/>
     </form>
 </div>
