@@ -241,13 +241,7 @@ var renderOptions = function(data) {
             theme_advanced_resizing : true,
         });
 
-        $('#conditions select').change(function(ev) {
-            var $this = $(this);
-            var statusfield = $('*[data-statusfor="' + this.id + '"]');
-            statusfield.val($(this).find(":selected").data('defaultstatus'));
-        });
 
-        $('button').click(function(ev) { ev.preventDefault(); });
 
     });
 </script>
