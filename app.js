@@ -74,7 +74,7 @@ app.configure(function(){
     app.dynamicHelpers({
         headResources: function(req, res) {
             return {
-                scripts: ['jquery-1.7.1.js', 'menus.js'],
+                scripts: ['vendor/jquery-1.7.1.min.js', 'menus.js'],
                 css:['base.css']
             };
         },
