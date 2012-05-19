@@ -29,13 +29,15 @@
     <h3>Campus announcements</h3>
 
     <div class="primary">
-        <%- announcements %>
+        <% for (item in announcements) { %>
+            <div><%- announcements[item] %></div>
+        <% } %>
     </div>
 
 
     <div class="secondary">
-        <% for (item in sidebar) { %>
-            <div><%- sidebar[item] %></div>
+        <% for (item in sidebars) { %>
+            <div><%- sidebars[item] %></div>
         <% } %>
     </div>
 
