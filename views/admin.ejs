@@ -19,14 +19,14 @@
         <fieldset id="sidebarsContainer">
             <legend>Sidebars</legend>
             <div id="sidebars"></div>
-            <button id="addnewsidebar">Add New Sidebar</button>
+            <button class="plus" id="addnewsidebar">Add New Sidebar</button>
         </fieldset>
 
 
         <fieldset id="linksContainer">
             <legend>Links</legend>
             <div id="linkCategories"></div>
-            <button id="addnewlinkcategory">Add New Category</button>
+            <button class="plus" id="addnewlinkcategory">Add New Category</button>
         </fieldset>
 
         <input type="submit" value="Submit"/>
@@ -49,6 +49,7 @@
 <script type="text/template" id="sidebarTmpl">
     <label for="sidebar-[%= id %]">Sidebar Item [%= id %]</label>
     <textarea id="sidebar-[%= id %]" name="sidebar-[%= id %]">[%= content %]</textarea>
+    <button class="minus deletesidebaritem">Delete sidebar item</button>
 </script>
 
 <script type="text/template" id="linkCategoryTmpl">
@@ -61,8 +62,8 @@
     <div id="linkcategory-[%= id %]" class="links group">
     </div>
     <div class="group">
-        <button class="deleteCategory">Delete category</button>
-        <button class="addLink">Add new link</button>
+        <button class="plus addlink">Add new link</button>
+        <button class="minus deletecategory">Delete category</button>
     </div>
 </script>
 
@@ -76,6 +77,6 @@
         <input name="url-[%= id %]" id="url-[%= id %]"/ value="[%= url %]">
     </div>
     <div>
-        <button class="deletelink">Delete link</button>
+        <button class="minus deletelink">Delete link</button>
     </div>
 </script>
