@@ -169,7 +169,8 @@ var SidebarsItem = TextItemController.sub({
     className: 'sidebaritem',
 
     template: function(item) {
-        return '<textarea style="display:block;width:400px;height:100px;margin-bottom:5px">' + this.item.content + '</textarea><button class="deletesidebaritem">Delete</button>';
+        var tmpl = document.getElementById('sidebarTmpl');
+        return new EJS({ element: tmpl, type: '[' }).render(this.item);
     }
 
 });
@@ -224,8 +225,9 @@ var AnnouncementsItem = TextItemController.sub({
 
     className: 'announcementsitem',
 
-    template: function(item) {
-        return '<textarea style="display:block;width:400px;height:100px;margin-bottom:5px">' + this.item.content + '</textarea>';
+    template: function() {
+        var tmpl = document.getElementById('announcementTmpl');
+        return new EJS({ element: tmpl, type: '[' }).render(this.item);
     }
 
 });
@@ -277,7 +279,8 @@ var LinksItem = Spine.Controller.sub({
     },
 
     template: function() {
-        return '<div><input data-attr="url" value="' + this.item.url + '"><input data-attr="text" value="' + this.item.text + '"><button class="deletelink">Delete Link</button></div>';
+        var tmpl = document.getElementById('linkItemTmpl');
+        return new EJS({ element: tmpl, type: '[' }).render(this.item);
     },
 
     render: function() {
@@ -360,10 +363,8 @@ var CategoriesItem = Spine.Controller.sub({
     },
 
     template: function() {
-
-        return '<div><label for="category-' + this.item.id + '">Category</label><br /><input class="linkCategoryName" id="category-' + this.item.id + '" value="' + this.item.name + '"/></div><div id="linkcategory-' + this.item.id + '" class="links"></div><button class="deleteCategory">Delete Category</button><button class="addLink">Add Link</button>';
-
-//        return '<input class="linkCategoryName" type="text" value="' + this.item.name + '" /><div id="linkcategory-' + this.item.id + '" class="links"></div><button class="deleteCategory">Delete Category</button><button class="addLink">Add Link</button>';
+        var tmpl = document.getElementById('linkCategoryTmpl');
+        return new EJS({ element: tmpl, type: '[' }).render(this.item);
     },
 
     render: function() {
