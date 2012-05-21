@@ -66,3 +66,16 @@
     </div>
 </script>
 
+<script type="text/template" id="linkItemTmpl">
+    <div>
+        <label for="text-[%= id %]">Text</label><br />
+        <input name="text-[%= id %]" id="text-[%= id %]" value="[%= text %]"/>
+    </div>
+    <div>
+        <label for="url-[%= id %]">URL</label><br />
+        <input name="url-[%= id %]" id="url-[%= id %]"/ value="[%= url %]">
+    </div>
+    <div>
+        <button class="deletelink">Delete link</button>
+    </div>
+</script>
