@@ -51,3 +51,18 @@
     <textarea id="sidebar-[%= id %]" name="sidebar-[%= id %]">[%= content %]</textarea>
 </script>
 
+<script type="text/template" id="linkCategoryTmpl">
+    <div class="category">
+        <label for="category-[%= id %]">Category [%= id %]</label>
+        <br />
+        <input class="linkCategoryName" id="category-[%= id %]" value="[%= name %]"/>
+    </div>
+
+    <div id="linkcategory-[%= id %]" class="links group">
+    </div>
+    <div class="group">
+        <button class="deleteCategory">Delete category</button>
+        <button class="addLink">Add new link</button>
+    </div>
+</script>
+
