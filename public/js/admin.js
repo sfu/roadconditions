@@ -223,13 +223,7 @@ var app = (function(Spine, $, exports, data) {
         ANNOUNCEMENTS
     ********************************************************/
 
-    var Announcement = TextItem.sub({
-        validate: function() {
-            if (Announcement.count() > 0) {
-                return 'Can\'t create more announcements';
-            }
-        }
-    });
+    var Announcement = TextItem.sub();
     Announcement.configure('Announcement');
 
     var AnnouncementsItem = TextItemController.sub({
