@@ -373,8 +373,8 @@ var app = (function(Spine, $, exports, data) {
 
         events: {
             'change .linkCategoryName': 'update',
-            'click .deleteCategory': 'destroy',
-            'click .addLink': 'createLink'
+            'click .deletecategory': 'destroy',
+            'click .addlink': 'createLink'
         },
 
         elements: {
