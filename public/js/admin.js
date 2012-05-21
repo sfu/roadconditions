@@ -209,6 +209,7 @@ var app = (function(Spine, $, exports, data) {
         addOne: function(sidebar) {
             var view = new SidebarsItem({ item: sidebar });
             this.sidebars.append(view.render().el);
+            tinyMCE.execCommand("mceAddControl", false, 'sidebar-' + sidebar.id);
         },
 
         create: function(ev) {
