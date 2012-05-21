@@ -7,7 +7,6 @@ var data = JSON.parse(document.getElementById('conditions_json').innerHTML);
 
 var Condition = Spine.Model.sub();
 
-// name = "campus", status = "open", severity = "normal", map = map of statuses:default_severities
 Condition.configure('Condition', 'name', 'status', 'severity', 'statusSeverityMap');
 Condition.extend({
     serialize: function() {},
@@ -34,7 +33,6 @@ var ConditionsItem = Spine.Controller.sub({
     },
 
     init: function() {
-        console.log('init conditionsitem');
         this.item.bind('update', this.proxy(this.render));
     },
 
@@ -66,7 +64,6 @@ var ConditionsItem = Spine.Controller.sub({
     },
 
     updateStatus: function(ev) {
-        console.log('updateStatus');
         var newStatus = ev.target.value;
         this.item.updateAttributes({
             status: newStatus,
@@ -75,7 +72,6 @@ var ConditionsItem = Spine.Controller.sub({
     },
 
     updateSeverity: function(ev) {
-        console.log('updateSeverity');
         this.item.updateAttribute('severity', ev.target.value);
     }
 });
