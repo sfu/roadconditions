@@ -137,7 +137,6 @@ var app = (function(Spine, $, exports, data) {
     //represents a controller for each individual announcement & sidebar item; handles updating, destorying and rendering
     var TextItemController = Spine.Controller.sub({
         init: function() {
-            this.item.bind('update', this.proxy(this.render));
             this.item.bind('destroy', this.proxy(this.remove));
         },
 
