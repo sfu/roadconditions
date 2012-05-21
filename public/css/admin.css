@@ -129,6 +129,11 @@ fieldset button.deletesidebaritem {
 textarea {
     width: 100%;
     height: 250px;
+}
+
+#announcements label, #sidebars label {
+    display: none;
+}
 
 #sidebars {
     margin-bottom: 25px;
