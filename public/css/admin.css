@@ -93,7 +93,6 @@ fieldset.category-group button {
 
 fieldset button {
     font-size: 13px;
-    background: #D7DAE0 url(../images/plus-12x12.png) 3px 5px no-repeat;
     display: inline-block;
     padding: 4px 6px 3px 18px;
     color: #555;
@@ -107,6 +106,14 @@ fieldset button {
     border: 1px solid #fff;
     position: relative;
     cursor: pointer
+}
+
+fieldset .plus {
+    background: #D7DAE0 url(../images/plus-12x12.png) 3px 5px no-repeat;
+}
+
+fieldset .minus {
+    background: #D7DAE0 url(../images/minus-12x12.png) 3px 5px no-repeat;
 }
 
 fieldset button:hover {
