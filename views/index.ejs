@@ -5,7 +5,7 @@
     <div class="primary">
 
         <ul>
-            <li><h2>The university is <span class="<%= conditions.campus.status %>"><%= conditions.campus.condition %></span></h2></li>
+            <li><h2>The university is <span class="<%= conditions.campus.severity %>"><%= conditions.campus.status %></span></h2></li>
             <li class="datestamp" data-lastupdated="<%= lastupdated %>">Report updated at <span><%= dateFormat(lastupdated, "h:mm a [on] MMMM DD YYYY") %><span></li>
         </ul>
 
@@ -13,11 +13,11 @@
 
     <div class="secondary">
         <ul>
-            <li>University roads: <span class="<%= conditions.roads.status %>"><%= conditions.roads.condition %></span></li>
-            <li>Adjacent roads: <span class="<%= conditions.adjacentroads.status %>"><%= conditions.adjacentroads.condition %></span></li>
-            <li class="divider">Classes are: <span class="<%= conditions.classes.status %>"><%= conditions.classes.condition %></span></li>
-            <li>Translink buses are: <span class="<%= conditions.transit.status %>"><%= conditions.transit.condition %></span></li>
-            <li>Exams are: <span class="<%= conditions.exams.status %>"><%= conditions.exams.condition %></span></li>
+            <li>University roads: <span class="<%= conditions.roads.severity %>"><%= conditions.roads.status %></span></li>
+            <li>Adjacent roads: <span class="<%= conditions.adjacentroads.severity %>"><%= conditions.adjacentroads.status %></span></li>
+            <li class="divider">Classes are: <span class="<%= conditions.classes.severity %>"><%= conditions.classes.status %></span></li>
+            <li>Translink buses are: <span class="<%= conditions.transit.severity %>"><%= conditions.transit.status %></span></li>
+            <li>Exams are: <span class="<%= conditions.exams.severity %>"><%= conditions.exams.status %></span></li>
         </ul>
 
     </div>
