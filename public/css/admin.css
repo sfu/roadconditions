@@ -56,21 +56,33 @@ fieldset.category-group {
     margin-bottom: 18px;
 }
 
-fieldset.category-group div {
-    width: 245px;
+.links div {
+    /*width: 240px;*/
     float: left;
 }
 
-fieldset.category-group div input {
-    width: 240px;
+.group:after {
+    content: ".";
+    display: block;
+    height: 0;
+    clear: both;
+    visibility: hidden;
 }
 
-fieldset.category-group div:first-child {
+.category-group input {
+    width: 180px;
+}
+
+.category {
     width: 500px;
 }
 
-fieldset.category-group div:first-child input#text {
-    width: 495px;
+.category label {
+    display:none;
+}
+
+.category input {
+    width: 490px;
 }
 
 fieldset.category-group button {
