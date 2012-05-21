@@ -256,6 +256,7 @@ var app = (function(Spine, $, exports, data) {
         addOne: function(announcement) {
             var view = new AnnouncementsItem({ item: announcement });
             this.announcements.append(view.render().el);
+            tinyMCE.execCommand("mceAddControl", false, 'announcement-' + announcement.id);
         }
     });
 
