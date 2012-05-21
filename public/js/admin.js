@@ -468,6 +468,24 @@ var app = (function(Spine, $, exports, data) {
             $('body').on('click', 'button', function(ev) { ev.preventDefault(); });
             $('form').on('submit', self.submit);
 
+            tinyMCE.init({
+                mode: 'textareas',
+                theme: 'advanced',
+                plugins: 'paste',
+                theme_advanced_buttons1: 'bold,italic,|,link,unlink,|,cut,copy,paste,pastetext,pasteword',
+                theme_advanced_buttons2: '',
+                theme_advanced_buttons3: '',
+                theme_advanced_toolbar_location : "top",
+                theme_advanced_toolbar_align : "left",
+                theme_advanced_resizing : true,
+                setup : function(ed) {
+                    ed.onChange.add(function(ed, l) {
+                        ed.save();
+                        $(ed.getElement()).trigger('change');
+                    });
+                }
+            });
+
             exports.Condition = Condition;
             exports.Announcement = Announcement;
             exports.Sidebar = Sidebar;
