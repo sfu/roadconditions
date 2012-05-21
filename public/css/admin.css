@@ -120,7 +120,16 @@ fieldset button:hover {
     background-color: #eee;
 }
 
+
+
+fieldset button.deletesidebaritem {
+    margin-top: 10px;
+}
+
 textarea {
     width: 100%;
     height: 250px;
+
+#sidebars {
+    margin-bottom: 25px;
 }
