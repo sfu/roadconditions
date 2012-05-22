@@ -498,7 +498,12 @@ var app = (function(Spine, $, exports, data) {
                 type: 'POST',
                 url: ev.target.action,
                 data: JSON.stringify(data),
-                success: function(data) { console.log(data); },
+                success: function(data, textStatus, jqXHR) {
+                    $('#lastupdated span').text(moment(new Date(data.lastupdated)).format('h:mm a [on] MMMM DD YYYY'));
+                    window.scrollTo(0, 1);
+                },
+                error: function(jqXHR, textStatus, errorThrown) {
+                },
                 dataType: 'json',
                 contentType: 'application/json'
             });
