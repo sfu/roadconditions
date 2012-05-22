@@ -1,5 +1,6 @@
 var fs = require('fs')
 ,   os = require('os')
+,   gzippo = require('gzippo')
 ,   express = require('express')
 ,   moment = require('moment')
 ,   schema = require('schema')('conditions')
@@ -33,7 +34,8 @@ app.configure(function(){
     app.use(express.session({secret: 'YJrJ2wfqWRfVsaBVVFDYDKtmjAjKAXZ7AZKDtoGzaTrZPDDp'}));
     app.use(express.bodyParser());
     app.use(express.methodOverride());
-    app.use(express['static'](__dirname + '/public'));
+    // app.use(express['static'](__dirname + '/public'));
+    app.use(gzippo.staticGzip(__dirname + '/public'));
     app.enable('jsonp callback');
     app.helpers({
         dateFormat: function(date, format) {
@@ -74,8 +76,8 @@ app.configure(function(){
     app.dynamicHelpers({
         headResources: function(req, res) {
             return {
-                scripts: ['vendor/jquery-1.7.1.min.js', 'menus.js'],
-                css:['base.css']
+                scripts: ['vendor/jquery-1.7.1.min.js', 'menus.min.js'],
+                css:['base-min.css']
             };
         },
         bodyScripts: function(req, res) {
