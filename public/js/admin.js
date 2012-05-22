@@ -497,6 +497,12 @@ var app = (function(Spine, $, exports, data) {
                 type: 'POST',
                 url: ev.target.action,
                 data: JSON.stringify(data),
+                beforeSend: function() {
+                    $('input[type="submit"]').attr('disabled', true);
+                },
+                complete: function() {
+                    $('input[type="submit"]').attr('disabled', false);
+                },
                 success: function(data, textStatus, jqXHR) {
                     $('#lastupdated span').text(moment(new Date(data.lastupdated)).format('h:mm a [on] MMMM DD YYYY'));
                     window.scrollTo(0, 1);
