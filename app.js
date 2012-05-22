@@ -154,7 +154,11 @@ app.post('/api/1/current', loggedin, function(req, res) {
     if (validate.isError()) {
         res.send(validate.getError());
     } else {
+        data.lastupdated = new Date().getTime();
+        conditions = data;
         res.send(data);
+        // write file
+        // update other instance(s)
     }
 });
 
