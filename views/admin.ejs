@@ -44,10 +44,11 @@
 <script type="text/template" id="conditionItemTmpl">
     [%
         var severities = ['normal', 'warning', 'alert']
+        ,   val = name === 'adjacentroads' ? 'Adjacent roads' : name.toSentenceCase()
         ,   selected;
     %]
 
-    <label for="[%= name %]">[%= name.toSentenceCase() %]:</label><select class="status" id="[%= name %]">
+    <label for="[%= name %]">[%= val %]:</label><select class="status" id="[%= name %]">
         [% for (var ssmStatus in statusSeverityMap) { %]
             [% selected = ssmStatus === status ? 'selected="selected"' : ''; %]
             <option value="[%= ssmStatus %]" [%= selected %]>[%= ssmStatus.toSentenceCase() %]</option>
