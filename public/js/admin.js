@@ -1,4 +1,4 @@
-/*global Spine, EJS, tinyMCE*/
+/*global Spine, EJS, tinyMCE, moment*/
 
 window.exports = {};
 
