@@ -117,7 +117,7 @@ app.get('/', function(req, res) {
 });
 
 app.get('/admin', loggedin, function(req, res) {
-    res.render('admin', {current: conditions});
+    res.render('admin', {auth: req.session.auth, current: conditions});
 });
 
 // Authentication Routes
