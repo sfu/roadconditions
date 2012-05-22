@@ -1,4 +1,4 @@
-<% headResources.css.push('admin-min.css'); %>
+<% headResources.css.push('admin-min.css'); console.log(auth.maillist); if (auth.maillist === 'roadconditions-dispatchers') { headResources.css.push('admin-dispatcher-min.css'); } %>
 <% headResources.scripts.push('vendor/spine-build.js', 'vendor/ejs_production.js', 'vendor/tiny_mce/tiny_mce.js'); %>
 <% bodyScripts.push('admin-min.js'); %>
 
