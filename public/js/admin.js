@@ -488,7 +488,14 @@ var app = (function(Spine, $, exports, data) {
                 sidebars: Sidebar.serialize(),
                 links: Category.serialize()
             };
-            console.log(JSON.stringify(data));
+            $.ajax({
+                type: 'POST',
+                url: ev.target.action,
+                data: JSON.stringify(data),
+                success: function(data) { console.log(data); },
+                dataType: 'json',
+                contentType: 'application/json'
+            });
         }
     });
 
