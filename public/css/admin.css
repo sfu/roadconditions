@@ -35,7 +35,7 @@ fieldset {
 #conditions select {
     display: inline-block;
     width: 200px;
-    margin-right: 45px;
+    margin-right: 35px;
 }
 
 #conditions select[id*="_status"] {
