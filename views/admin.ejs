@@ -41,6 +41,27 @@
     {"campus":{"open":"normal","closed":"alert","reopened":"warning"},"roads":{"clear":"normal","closed":"alert","covered with dry snow":"alert","covered with wet snow":"alert","covered with hard snow":"alert","dry":"normal","good":"normal","icy":"alert","light snow":"warning","partially clear":"warning","snow (beware of possible ice)":"alert","snow":"alert","wet":"normal","wet (possible icy conditions)":"warning"},"adjacentroads":{"not applicable":"normal","closed":"alert","use caution":"warning","use extreme caution":"alert"},"transit":{"on schedule":"normal","delayed":"warning","not running":"alert"},"classes":{"on schedule":"normal","cancelled (morning classes)":"alert","cancelled (afternoon classes)":"alert","cancelled (evening classes)":"alert","cancelled (all classes)":"alert","cancelled until further notice":"alert"},"exams":{"as scheduled":"normal","postponed":"alert"}}
 </script>
 
+<script type="text/template" id="conditionItemTmpl">
+    [%
+        var severities = ['normal', 'warning', 'alert']
+        ,   selected;
+    %]
+
+    <label for="[%= name %]">[%= name %]:</label><select class="status" id="[%= name %]">
+        [% for (var ssmStatus in statusSeverityMap) { %]
+            [% selected = ssmStatus === status ? 'selected="selected"' : ''; %]
+            <option value="[%= ssmStatus %]" [%= selected %]>[%= ssmStatus %]</option>
+        [% } %]
+    </select>
+    <label class="status_label" for="[%= name %]_status">Status:</label>
+    <select class="severity" data-statusfor="[%= name %]" id="[%= name %]_status">
+        [% for (var i = 0; i < severities.length; i++) { %]
+            [%  selected = severities[i] === severity ? 'selected="selected"' : ''; %]
+            <option value="[%= severities[i] %]" [%= selected %]>[%= severities[i] %]</option>
+        [% } %]
+    </select>
+</script>
+
 <script type="text/template" id="announcementTmpl">
    <label for="announcement-[%= id %]">Main Announcement [%= id %]</label>
        <textarea id="announcement-[%= id %]" name="announcement-[%= id %]">[%= content %]</textarea>
