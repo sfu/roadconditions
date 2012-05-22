@@ -148,7 +148,7 @@ app.get('/api/1/current/:key?', function(req, res) {
     res.json(data, status);
 });
 
-app.post('/api/1/current', function(req, res) {
+app.post('/api/1/current', loggedin, function(req, res) {
     var data = req.body;
     var validate = conditionsSchema.validate(data);
     if (validate.isError()) {
