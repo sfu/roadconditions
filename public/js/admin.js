@@ -446,7 +446,6 @@ var app = (function(Spine, $, exports, data) {
         el: $('body'),
 
         init: function() {
-
             if (!String.prototype.toSentenceCase) {
                 String.prototype.toSentenceCase = function() {
                     return this.toUpperCase().charAt(0) + this.substring(1);
@@ -507,6 +506,9 @@ var app = (function(Spine, $, exports, data) {
                 dataType: 'json',
                 contentType: 'application/json'
             });
+
+
+
         }
     });
 
