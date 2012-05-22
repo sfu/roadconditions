@@ -447,9 +447,8 @@ var app = (function(Spine, $, exports, data) {
 
         init: function() {
 
-            var self = this;
             $('body').on('click', 'button', function(ev) { ev.preventDefault(); });
-            $('form').on('submit', self.submit);
+            $('form').on('submit', this.submit);
 
             tinyMCE.init({
                 mode: 'textareas',
