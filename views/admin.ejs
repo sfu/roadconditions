@@ -47,17 +47,17 @@
         ,   selected;
     %]
 
-    <label for="[%= name %]">[%= name %]:</label><select class="status" id="[%= name %]">
+    <label for="[%= name %]">[%= name.toSentenceCase() %]:</label><select class="status" id="[%= name %]">
         [% for (var ssmStatus in statusSeverityMap) { %]
             [% selected = ssmStatus === status ? 'selected="selected"' : ''; %]
-            <option value="[%= ssmStatus %]" [%= selected %]>[%= ssmStatus %]</option>
+            <option value="[%= ssmStatus %]" [%= selected %]>[%= ssmStatus.toSentenceCase() %]</option>
         [% } %]
     </select>
     <label class="status_label" for="[%= name %]_status">Status:</label>
     <select class="severity" data-statusfor="[%= name %]" id="[%= name %]_status">
         [% for (var i = 0; i < severities.length; i++) { %]
             [%  selected = severities[i] === severity ? 'selected="selected"' : ''; %]
-            <option value="[%= severities[i] %]" [%= selected %]>[%= severities[i] %]</option>
+            <option value="[%= severities[i] %]" [%= selected %]>[%= severities[i].toSentenceCase() %]</option>
         [% } %]
     </select>
 </script>
