@@ -138,3 +138,16 @@ textarea {
 #sidebars {
     margin-bottom: 25px;
 }
+
+#updateconditions div#lastupdated {
+    padding-top: 0;
+    padding-bottom: 0;
+    width: 100%;
+}
+
+#lastupdated p, #lastupdated span {
+    font: 16px/21px "DINProMedium",sans-serif;
+    text-transform: uppercase;
+    letter-spacing: .1em;
+    color: black;
+}
