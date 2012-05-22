@@ -1,5 +1,5 @@
 {
-    "additionalProperties": false,
+    "additionalProperties": true,
     "type": "object",
     "properties": {
         "conditions": {
@@ -8,10 +8,10 @@
                 "campus": {
                     "type": "object",
                     "properties": {
-                        "condition": {
+                        "status": {
                             "type": "string"
                         },
-                        "status": {
+                        "severity": {
                             "type": "string",
                             "enum": [
                                 "normal",
@@ -24,10 +24,10 @@
                 "roads": {
                     "type": "object",
                     "properties": {
-                        "condition": {
+                        "status": {
                             "type": "string"
                         },
-                        "status": {
+                        "severity": {
                             "type": "string",
                             "enum": [
                                 "normal",
@@ -40,10 +40,10 @@
                 "adjacentroads": {
                     "type": "object",
                     "properties": {
-                        "condition": {
+                        "status": {
                             "type": "string"
                         },
-                        "status": {
+                        "severity": {
                             "type": "string",
                             "enum": [
                                 "normal",
@@ -56,10 +56,10 @@
                 "transit": {
                     "type": "object",
                     "properties": {
-                        "condition": {
+                        "status": {
                             "type": "string"
                         },
-                        "status": {
+                        "severity": {
                             "type": "string",
                             "enum": [
                                 "normal",
@@ -72,10 +72,10 @@
                 "classes": {
                     "type": "object",
                     "properties": {
-                        "condition": {
+                        "status": {
                             "type": "string"
                         },
-                        "status": {
+                        "severity": {
                             "type": "string",
                             "enum": [
                                 "normal",
@@ -88,10 +88,10 @@
                 "exams": {
                     "type": "object",
                     "properties": {
-                        "condition": {
+                        "status": {
                             "type": "string"
                         },
-                        "status": {
+                        "severity": {
                             "type": "string",
                             "enum": [
                                 "normal",
@@ -104,9 +104,12 @@
             }
         },
         "announcements": {
-            "type": "string"
+            "type": "array",
+            "items": {
+                "type": "string"
+            }
         },
-        "sidebar": {
+        "sidebars": {
             "type": "array",
             "items": {
                 "type": "string"
