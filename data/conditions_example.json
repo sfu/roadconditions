@@ -1,0 +1,76 @@
+{
+    "conditions": {
+        "campus": {"status": "open", "severity": "normal"},
+        "roads": {"status": "wet", "severity": "alert"},
+        "adjacentroads": {"status": "not applicable", "severity": "warning"},
+        "transit": {"status": "on schedule", "severity": "normal"},
+        "classes": {"status": "on schedule", "severity": "normal"},
+        "exams": {"status": "postponed", "severity": "alert"}
+    },
+
+    "announcements" : [ "<p>It is currently 2°C on campus with partly cloudy skies and snow. Roadways, parking lots and walkways are wet. Driving conditions and visibility are good.</p><p>Translink buses appear to be running on schedule. For an up to date SFU campus bus schedule, please contact Translink at 604.953.3333 or check their website at <a href=\"www.translink.ca\">www.translink.ca</a>.</p><p>Bears are out of hibernation. Campus Security advises all members of our community to exercise vigilance when using pathways adjacent to wooded areas, and to dispose of food stuff and other trash in bear proof garbage cans whenever possible. Should you see a bear on campus, please contact Campus Security at 778.782.4500, or at local 24500 via campus phones. For further information, please see Bear Awareness.</p>" ],
+
+    "sidebars": [
+        "<p>Constant traffic updates can be heard on radio station AM730. Traffic updates also run every 10 minutes on AM1130 and AM980.</p>",
+        "<p>The SFU Burnaby Road and Traffic report is also available at <strong>604.444.4929</strong> and will be updated whenever conditions change.</p>",
+        "<p>For more information on Road Conditions at other SFU Campuses call:<br />SFU Vancouver at 778.782.5029<br />SFU Surrey at 778.782.7070<br /></p>"
+    ],
+
+    "links": [
+        {
+            "category": "Transportation Links",
+            "links": [
+                {
+                    "url": "http://www.translink.ca",
+                    "text" : "Translink Website"
+                },
+                {
+                    "url": "http://m.translink.ca",
+                    "text" : "Translink Mobile Site"
+                }
+            ]
+        },
+        {
+            "category": "Weather Forecasts",
+            "links": [
+                {
+                    "url": "http://weatheroffice.ec.gc.ca/canada_e.",
+                    "text" : "Environment Canada"
+                },
+                {
+                    "url": "http://www.theweathernetwork.com",
+                    "text" : "The Weather Network"
+                }
+            ]
+        },
+        {
+            "category": "Campus Notices &amp; Conditions",
+            "links": [
+                {
+                    "url": "http://www.sfu.ca/security",
+                    "text" : "Security Alerts &amp; Traffic Notices"
+                },
+                {
+                    "url": "http://students.sfu.ca/recreation/facility/status.html",
+                    "text" : "Recreation &amp; Athletics Conditions"
+                }
+            ]
+        },
+        {
+            "category": "Wildlife Links",
+            "links": [
+                {
+                    "url": "http://www.pc.gc.ca/eng/docs/v-g/oursnoir-blackbear/page3.aspx",
+                    "text" : "Bear Encounters"
+                },
+                {
+                    "url": "http://www.env.gov.bc.ca/wld/documents/bear_hm.htm",
+                    "text" : "Living Near Bears"
+                }
+            ]
+        }
+
+    ],
+
+    "lastupdated": 1333151930179
+}
