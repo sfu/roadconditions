@@ -97,7 +97,7 @@ app.configure('production', function(){
 // Authentication middleware
 var casauth = cas.getMiddleware({
     service: process.env.CAS_SERVICE || 'http://' + os.hostname() + ':' + app.address().port + '/login',
-    allow: 'sfu',        // TODO enter correct maillists in order (supervisor, dispatcher)
+    allow: '!roadconditions-supervisors,!roadconditions-dispatchers',
     userObject: 'auth'
 });
 
