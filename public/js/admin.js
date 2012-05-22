@@ -51,25 +51,8 @@ var app = (function(Spine, $, exports, data) {
         },
 
         template: function(item) {
-            var severities = ['normal', 'warning', 'alert'];
-            var selected;
-            var html = '<label for="' + this.item.name + '">' + this.item.name + ': </label><select class="status" id="' + this.item.name + '">';
-
-            for (var status in this.item.statusSeverityMap) {
-                selected = status === this.item.status ? 'selected="selected"' : '';
-                html += '<option value="' + status + '" ' + selected +'>' + status + '</option>';
-            }
-
-            html += '</select><label class="status_label" for="' + this.item.name + '_status">Status: </label><select class="severity" data-statusfor="' + this.item.name + '" id="' + this.item.name + '_status">';
-
-            for (var i = 0; i < severities.length; i++) {
-                selected = severities[i] === this.item.severity ? 'selected="selected"' : '';
-                html += '<option value="' + severities[i] + '" ' + selected +'>' + severities[i] + '</option>';
-            }
-
-            html += '</select>';
-
-            return html;
+            var tmpl = document.getElementById('conditionItemTmpl');
+            return new EJS({ element: tmpl, type: '[' }).render(this.item);
         },
 
         render: function(item) {
