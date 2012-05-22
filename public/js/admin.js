@@ -447,6 +447,12 @@ var app = (function(Spine, $, exports, data) {
 
         init: function() {
 
+            if (!String.prototype.toSentenceCase) {
+                String.prototype.toSentenceCase = function() {
+                    return this.toUpperCase().charAt(0) + this.substring(1);
+                };
+            }
+
             $('body').on('click', 'button', function(ev) { ev.preventDefault(); });
             $('form').on('submit', this.submit);
 
