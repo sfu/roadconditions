@@ -43,10 +43,9 @@ app.configure(function(){
     express.logger.token('user', function(req, res) { var user = '-'; if (req.session && req.session.auth) { user = req.session.auth.user; } return user; });
     app.use(express.logger({format: ':remote-addr - :user [:date] ":method :url HTTP/:http-version" :status :res[content-length] ":referrer" ":user-agent"'}));
     app.use(express.cookieParser());
-    app.use(express.session({secret: 'YJrJ2wfqWRfVsaBVVFDYDKtmjAjKAXZ7AZKDtoGzaTrZPDDp'}));
+    app.use(express.session({secret: 'YJrJ2wfqWRfVsaBVVFDYDKtmjAjKAXZ7AZKDtoGzaTrZPDDp', expires: false}));
     app.use(express.bodyParser());
     app.use(express.methodOverride());
-    // app.use(express['static'](__dirname + '/public'));
     app.use(gzippo.staticGzip(__dirname + '/public'));
     app.enable('jsonp callback');
     app.helpers({
