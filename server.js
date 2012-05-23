@@ -15,9 +15,21 @@ var fs = require('fs')
 fs.watch(conditionsPath, function(event, filename) {
     if (event === 'change') {
         var conditions = JSON.parse(fs.readFileSync(conditionsPath));
-        console.log('reloaded conditions', conditions);
+        console.log('reloaded conditions.json');
     }
 });
+
+var writeConditions = function(data) {
+    data = JSON.stringify(data);
+    fs.writeFile(conditionsPath, data, 'UTF-8', function(err) {
+        if (err) {
+            console.log(err);
+        } else {
+            console.log('saved updated conditions.json');
+        }
+    });
+};
+
 // Configuration
 
 app.listen(process.env.PORT || 3001);
@@ -158,9 +170,8 @@ app.post('/api/1/current', loggedin, function(req, res) {
     } else {
         data.lastupdated = new Date().getTime();
         conditions = data;
+        writeConditions(data);
         res.send(data);
-        // write file
-        // update other instance(s)
     }
 });
 
