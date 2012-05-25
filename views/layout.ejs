@@ -1,3 +1,11 @@
+<%
+    var onlineservices = [
+        {"label":"SFU Connect + mySFU","link":"http://connect.sfu.ca"},
+        {"label":"Alumni Mail","link":"http://www.sfu.ca/alumni/emailforwarding/"},
+        {"label":"Student Information System","link":"http://go.sfu.ca"}
+    ];
+%>
+
 <!DOCTYPE html>
 <html>
 
@@ -27,14 +35,28 @@
 		        <ul id="services">
 		            <li class="dropdown" id="online">
 		                <a class="tabs" href="//www.sfu.ca/onlineservices/">SFU Online</a>
+                        <ul id="onlineServices">
+                        <% for (var i = 0; i < onlineservices.length; i++) { %>
+                            <li>
+                                <a href="<%= onlineservices[i].link %>"><%= onlineservices[i].label %></a>
+                            </li>
+                        <% } %>
+                        </ul>
 		            </li>
 		            <li class="dropdown" id="directory">
 		                <a class="tabs" href="//www.sfu.ca/dir/">A-Z Links</a>
-
+                        <ul id="AtoZ">
+                            <% var letter; for (var z=65; z<91; z++) { %>
+                                <% letter = String.fromCharCode(z+32); %>
+                                <li>
+                                    <a href="http://www.sfu.ca/dir/?<%= letter %>"><%= letter %></a>
+                                </li>
+                            <% } %>
+                        </ul>
 		            </li>
 		            <li class="last" id="search">
 		              <form action="//www.sfu.ca/search.html" class="search" method="GET">
-		                    <input id="s" name="q" type="text" value="Search sfu.ca"/>
+		                    <input id="s" name="q" type="text" placeholder="Search sfu.ca"/>
 		                    <span class="button"><input id="submit" type="submit" value="Search"/></span>
 		              </form>
 		            </li>
