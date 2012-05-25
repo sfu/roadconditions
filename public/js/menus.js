@@ -1,64 +1,75 @@
 (function($) {
 
-    var onlineJSON = {"services":[
-        {"label":"SFU Connect + mySFU","link":"http://connect.sfu.ca"},
-        {"label":"Alumni Mail","link":"http://www.sfu.ca/alumni/emailforwarding/"},
-        {"label":"Student Information System","link":"http://go.sfu.ca"}
-    ]};
+    ///////////// HELPERS
+    var addEvent, addHoverEvent;
 
-    function aToZ(){
-        var atoz = '';
-        for( var i=65;i<91;i++){
-            var letter = String.fromCharCode(i+32);
-            atoz +='<li><a href="http://www.sfu.ca/dir/?'+letter+'">'+letter+'</a></li>';
-        }
-        $('<ul>').html(atoz).attr('id','AtoZ').css('zIndex', 999).appendTo('li#directory');
+    if (!document.querySelectorAll) {
+        document.querySelectorAll = function(selector) {
+            var doc = document,
+                head = doc.documentElement.firstChild,
+                styleTag = doc.createElement('STYLE');
+            head.appendChild(styleTag);
+            doc.__qsaels = [];
+
+            styleTag.styleSheet.cssText = selector + "{x:expression(document.__qsaels.push(this))}";
+            window.scrollBy(0, 0);
+
+            return doc.__qsaels;
+        };
     }
-
-    function online(jsonData){
-
-        var data = jsonData;
-        var menu = '';
-
-        for (var i= 0; i < data.services.length; i++) {
-            menu += '<li><a href="'+data.services[i].link+'">'+data.services[i].label+'</a></li>';
+    addEvent = function(el, type, func) {
+        if (el.addEventListener) {
+            el.addEventListener(type, func, true);
+        } else if (el.attachEvent) {
+            el.attachEvent("on" + type, func);
         }
+    };
 
-        $('<ul>').html(menu).attr('id','onlineServices').css('zIndex', 1000).appendTo('#online');
+    addHoverEvent = function(el, mouseoverFunc, mouseoutFunc) {
+        addEvent(el, 'mouseover', mouseoverFunc);
+        addEvent(el, 'mouseout', mouseoutFunc);
+    };
+    ///////////// END HELPERS
 
-    }
 
-    $(document).ready(function(){
-        //Creates A to Z menu
-        aToZ();
+    ///////////// SERIOUS BUSINESS
+    var directoryAtabsEl = document.querySelectorAll('#directory a.tabs')[0];
+    addHoverEvent(document.querySelectorAll('#directory')[0],
+        function(ev) {
+            directoryAtabsEl.style.borderBottom = '10px solid #cb5a60';
+        },
+        function(ev) {
+            directoryAtabsEl.style.borderBottom = 'none';
+        }
+    );
 
-        //Loading the JSON for the SFU Online menu
-        online(onlineJSON);
+    var onlineAtabsEl = document.querySelectorAll('#online a.tabs')[0];
+    addHoverEvent(document.querySelectorAll('#online')[0],
+        function(ev) {
+            onlineAtabsEl.style.borderBottom = '10px solid #cb5a60';
+        },
+        function(ev) {
+            onlineAtabsEl.style.borderBottom = 'none';
+        }
+    );
 
-        $('li.dropdown').hover(
-            function() { $('ul', this).css('display', 'block'); },
-            function() { $('ul', this).css('display', 'none'); }
-        );
+    if (!('placeholder' in document.createElement('input'))) {
+        var searchEl = document.getElementById('s')
+        ,   defaultValue = 'Search sfu.ca';
 
-        $('#directory').hover(
-            function() { $('#directory a.tabs').css('border-bottom', '10px solid #cb5a60'); },
-            function() { $('#directory a.tabs').css('border-bottom', 'none'); }
-        );
+        searchEl.value = defaultValue;
 
-        $('#online').hover(
-            function() { $('#online a.tabs').css('border-bottom', '10px solid #cb5a60'); },
-            function() { $('#online a.tabs').css('border-bottom', 'none'); }
-        );
-
-        $("#s").focus(function() {
-            if( this.value === this.defaultValue ){
-                this.value = "";
-            }
-        }).blur(function() {
-            if( !this.value.length ) {
-                this.value = this.defaultValue;
+        addEvent(searchEl, 'focus', function(ev) {
+            if (this.value === defaultValue) {
+                this.value = '';
             }
         });
+        addEvent(searchEl, 'blur', function(ev) {
+            if (!this.value.length) {
+                this.value = defaultValue;
+            }
+        });
+    }
+    ///////////// PARTY TIME
 
-    }); // End $(document).ready(function(){
-})(jQuery);
+})();
