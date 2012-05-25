@@ -87,12 +87,12 @@ app.configure(function(){
     app.dynamicHelpers({
         headResources: function(req, res) {
             return {
-                scripts: ['vendor/jquery-1.7.1.min.js', 'menus.min.js'],
+                scripts: [],
                 css:['base-min.css']
             };
         },
         bodyScripts: function(req, res) {
-            return [];
+            return ['menus-min.js'];
         }
     });
 });
