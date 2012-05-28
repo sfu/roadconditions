@@ -5,6 +5,7 @@ var fs = require('fs')
 ,   moment = require('moment')
 ,   schema = require('schema')('conditions')
 ,   cas = require('cas-sfu')
+,   RedisStore = require('connect-redis')(express)
 ,   app = module.exports = express.createServer()
 ,   conditionsPath = __dirname + '/data/conditions.json'
 ,   conditions = JSON.parse(fs.readFileSync(conditionsPath))
@@ -42,8 +43,6 @@ app.configure(function(){
     app.use(express.favicon('public/favicon.ico'));
     express.logger.token('user', function(req, res) { var user = '-'; if (req.session && req.session.auth) { user = req.session.auth.user; } return user; });
     app.use(express.logger({format: ':remote-addr - :user [:date] ":method :url HTTP/:http-version" :status :res[content-length] ":referrer" ":user-agent"'}));
-    app.use(express.cookieParser());
-    app.use(express.session({secret: 'YJrJ2wfqWRfVsaBVVFDYDKtmjAjKAXZ7AZKDtoGzaTrZPDDp', expires: false}));
     app.use(express.bodyParser());
     app.use(express.methodOverride());
     app.use(gzippo.staticGzip(__dirname + '/public'));
@@ -98,10 +97,21 @@ app.configure(function(){
 });
 
 app.configure('development', function(){
+    app.use(express.cookieParser());
+    app.use(express.session({secret: 'YJrJ2wfqWRfVsaBVVFDYDKtmjAjKAXZ7AZKDtoGzaTrZPDDp', expires: false}));
     app.use(express.errorHandler({ dumpExceptions: true, showStack: true }));
 });
 
 app.configure('production', function(){
+    app.use(express.cookieParser());
+    app.use(express.session({
+        store: new RedisStore({
+            host: 'redis1.its.sfu.ca',
+            prefix: 'roadconditions_sess:'
+        }),
+        secret: 'YJrJ2wfqWRfVsaBVVFDYDKtmjAjKAXZ7AZKDtoGzaTrZPDDp',
+        expires: false
+    }));
     app.use(express.errorHandler());
 });
 
