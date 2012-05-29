@@ -5,37 +5,64 @@ var fs = require('fs')
 ,   moment = require('moment')
 ,   schema = require('schema')('conditions')
 ,   cas = require('cas-sfu')
-,   RedisStore = require('connect-redis')(express)
+,   redis = require('redis')
+,   redisport = 6379
+,   redishost = 'redis1.its.sfu.ca'
 ,   app = module.exports = express.createServer()
-,   conditionsPath = __dirname + '/data/conditions.json'
-,   conditions = JSON.parse(fs.readFileSync(conditionsPath))
+,   dataclient = redis.createClient(redisport, redishost)
+,   subclient = redis.createClient(redisport, redishost)
+,   pubclient = redis.createClient(redisport, redishost)
+,   RedisStore = require('connect-redis')(express)
+,   defaultConditionsPath = __dirname + '/data/conditions_default.json'
 ,   schemaPath = __dirname + '/data/conditions_schema.json'
 ,   conditionsSchema = schema.Schema.create(JSON.parse(fs.readFileSync(schemaPath)))
-,   cas, casService;
+,   port = process.env.port || 3001
+,   serverid = os.hostname() + ':' + port
+,   cas, casService, conditions, writeConditions;
 
-fs.watch(conditionsPath, function(event, filename) {
-    if (event === 'change') {
-        var conditions = JSON.parse(fs.readFileSync(conditionsPath));
-        console.log('reloaded conditions.json');
-    }
-});
-
-var writeConditions = function(data) {
-    data = JSON.stringify(data);
-    fs.writeFile(conditionsPath, data, 'UTF-8', function(err) {
+writeConditions = function(data) {
+    dataclient.set('roadconditions:data', JSON.stringify(data), function(err, reply) {
         if (err) {
-            console.log(err);
+            console.log('REDIS ERROR WRITING CONDITIONS: %s', err);
         } else {
-            console.log('saved updated conditions.json');
+            pubclient.publish('roadconditions:update', JSON.stringify({message: 'conditionsupdated', server: serverid }));
         }
     });
 };
 
-// Configuration
 
-app.listen(process.env.app_port || 3001);
-console.log("Express server listening on port %d in %s mode", app.address().port, app.settings.env);
+dataclient.on('error', function(err) {
+    console.log('REDIS ERROR: %s', err);
+});
 
+dataclient.on('connect', function(e) {
+    subclient.subscribe('roadconditions:update');
+    subclient.on('message', function(channel, message) {
+        if (channel === 'roadconditions:update') {
+            message = JSON.parse(message);
+            if (message.server !== serverid) {
+                dataclient.get('roadconditions:data', function(err, data) {
+                    console.log('RECEIVED UPDATED DATA FROM %s', message.server);
+                    conditions = JSON.parse(data);
+                });
+            }
+        }
+    });
+    dataclient.get('roadconditions:data', function(err, data) {
+        if (err) { throw err; }
+        if (!data) {
+            console.log('no data in redis; using defaults');
+            conditions = JSON.parse(fs.readFileSync(defaultConditionsPath, 'UTF-8'));
+            conditions.lastupdated = Date.now();
+            dataclient.set('roadconditions:data', JSON.stringify(conditions));
+        } else {
+            conditions = JSON.parse(data);
+        }
+
+        app.listen(port);
+        console.log("Express server listening on port %d in %s mode", port, app.settings.env);
+    });
+});
 
 app.configure(function(){
     app.set('view engine', 'ejs');
@@ -106,8 +133,8 @@ app.configure('production', function(){
     app.use(express.cookieParser());
     app.use(express.session({
         store: new RedisStore({
-            host: 'redis1.its.sfu.ca',
-            prefix: 'roadconditions_sess:'
+            host: redishost,
+            prefix: 'roadconditions:sess:'
         }),
         secret: 'YJrJ2wfqWRfVsaBVVFDYDKtmjAjKAXZ7AZKDtoGzaTrZPDDp',
         expires: false
@@ -117,7 +144,7 @@ app.configure('production', function(){
 
 // Authentication middleware
 var casauth = cas.getMiddleware({
-    service: process.env.CAS_SERVICE || 'http://' + os.hostname() + ':' + app.address().port + '/login',
+    service: process.env.CAS_SERVICE || 'http://' + os.hostname() + ':' + port + '/login',
     allow: '!roadconditions-supervisors,!roadconditions-dispatchers',
     userObject: 'auth'
 });
@@ -187,4 +214,3 @@ app.post('/api/1/current', loggedin, function(req, res) {
 // OH NO YOU DIDNT
 app.del('*', function(req, res) { res.send(405); });
 app.put('*', function(req, res) { res.send(405); });
-
