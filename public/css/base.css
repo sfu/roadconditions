@@ -133,7 +133,7 @@ ul#services{
 }
 
 ul#services li{
-    background: url(/images/sprites.gif) no-repeat right -60px;
+    background: url(../images/sprites.gif) no-repeat right -60px;
     float: left;
     position: relative;
     margin: 5px 0 0 10px;
