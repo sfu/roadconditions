@@ -5,14 +5,14 @@ var fs = require('fs')
 ,   moment = require('moment')
 ,   schema = require('schema')('conditions')
 ,   cas = require('cas-sfu')
+,   RedisStore = require('connect-redis')(express)
 ,   redis = require('redis')
 ,   redisport = 6379
 ,   redishost = 'redis1.its.sfu.ca'
-,   app = module.exports = express.createServer()
 ,   dataclient = redis.createClient(redisport, redishost)
 ,   subclient = redis.createClient(redisport, redishost)
 ,   pubclient = redis.createClient(redisport, redishost)
-,   RedisStore = require('connect-redis')(express)
+,   app = module.exports = express.createServer()
 ,   defaultConditionsPath = __dirname + '/data/conditions_default.json'
 ,   schemaPath = __dirname + '/data/conditions_schema.json'
 ,   conditionsSchema = schema.Schema.create(JSON.parse(fs.readFileSync(schemaPath)))
