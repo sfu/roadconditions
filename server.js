@@ -84,7 +84,7 @@ app.configure(function(){
         },
         renderHeadTags: function(all) {
             var templates = {
-                scripts: '<script src="/js/FILENAME"></script>',
+                scripts: '<script src="js/FILENAME"></script>',
                 css: '<link rel="stylesheet" href="css/FILENAME">'
             }
             ,   buf = '';
@@ -105,7 +105,7 @@ app.configure(function(){
         addBodyScriptTags: function(all) {
             var buf = [];
             for (var i = 0; i < all.length; i++) {
-                buf.push('<script src="/js/' + all[i] + '"></script>');
+                buf.push('<script src="js/' + all[i] + '"></script>');
             }
             return buf.join('\n');
         }
