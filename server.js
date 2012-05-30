@@ -130,6 +130,8 @@ app.configure('development', function(){
 });
 
 app.configure('production', function(){
+    app.set('basepath', '/security/new-sfuroadconditions');
+    app.set('basehost', 'www.sfu.ca');
     app.use(express.cookieParser());
     app.use(express.session({
         store: new RedisStore({
