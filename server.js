@@ -146,7 +146,7 @@ app.configure('production', function(){
 
 // Authentication middleware
 var casauth = cas.getMiddleware({
-    service: process.env.CAS_SERVICE || 'http://' + os.hostname() + ':' + port + '/login',
+    service: process.env.CAS_SERVICE || 'http://' + serverid + '/login',
     allow: '!roadconditions-supervisors,!roadconditions-dispatchers',
     userObject: 'auth'
 });
