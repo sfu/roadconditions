@@ -1,0 +1,1 @@
+(function(b){var a=function(){var h=document.getElementsByClassName("webcamimg"),e=new Date().getTime();for(var c=0;c<h.length;c++){var d=h[c],g=d.src,f=g.indexOf("?")>0?g.substr(0,g.indexOf("?"))+"?"+e:g+"?"+e;d.src=f}window.setTimeout(a,30000)};window.setTimeout(a,30000)})(window);
