@@ -166,6 +166,10 @@ app.get('/', function(req, res) {
     res.render('index', conditions);
 });
 
+app.get('/isup', function(req, res) {
+    res.send('ok', { 'Content-Type': 'text/plain' }, 200);
+});
+
 app.get('/admin', loggedin, function(req, res) {
     res.render('admin', {auth: req.session.auth, current: conditions});
 });
