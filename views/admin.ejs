@@ -58,14 +58,14 @@
         ,   selected;
     %]
 
-    <label for="[%= name %]">[%= val %]:</label><select class="status" id="[%= name %]">
+    <label for="[%= name %]">[%= val %]:</label><select class="status" id="[%= name %]" name="[%= name %]">
         [% for (var ssmStatus in statusSeverityMap) { %]
             [% selected = ssmStatus === status ? 'selected="selected"' : ''; %]
             <option value="[%= ssmStatus %]" [%= selected %]>[%= ssmStatus.toSentenceCase() %]</option>
         [% } %]
     </select>
     <label class="status_label" for="[%= name %]_status">Status:</label>
-    <select class="severity" data-statusfor="[%= name %]" id="[%= name %]_status">
+    <select class="severity" data-statusfor="[%= name %]" id="[%= name %]_status" name="[%= name %]_status">
         [% for (var i = 0; i < severities.length; i++) { %]
             [%  selected = severities[i] === severity ? 'selected="selected"' : ''; %]
             <option value="[%= severities[i] %]" [%= selected %]>[%= severities[i].toSentenceCase() %]</option>
@@ -88,7 +88,7 @@
     <div class="category">
         <label for="category-[%= id %]">Category [%= id %]</label>
         <br />
-        <input class="linkCategoryName" id="category-[%= id %]" value="[%= name %]"/>
+        <input class="linkCategoryName required" id="category-[%= id %]" name="category-[%= id %]" value="[%= name %]" />
     </div>
 
     <div id="linkcategory-[%= id %]" class="links group">
@@ -102,11 +102,11 @@
 <script type="text/template" id="linkItemTmpl">
     <div>
         <label for="text-[%= id %]">Text</label><br />
-        <input name="text-[%= id %]" id="text-[%= id %]" value="[%= text %]"/>
+        <input name="text-[%= id %]" id="text-[%= id %]" value="[%= text %]" class="required" />
     </div>
     <div>
         <label for="url-[%= id %]">URL</label><br />
-        <input name="url-[%= id %]" id="url-[%= id %]"/ value="[%= url %]">
+        <input type="url" name="url-[%= id %]" id="url-[%= id %]" name="category-[%= id %]" value="[%= url %]" class="required" />
     </div>
     <div>
         <button class="minus deletelink">Delete link</button>
