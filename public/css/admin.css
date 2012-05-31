@@ -91,10 +91,11 @@ fieldset.category-group button {
     float: right;
 }
 
-fieldset button {
+button, input[type="submit"] {
     font-size: 13px;
+    background-color: #D7DAE0;
     display: inline-block;
-    padding: 4px 6px 3px 18px;
+    padding: 4px 6px 3px 6px;
     color: #555;
     text-decoration: none;
     -moz-border-radius: 4px;
@@ -108,15 +109,32 @@ fieldset button {
     cursor: pointer
 }
 
-fieldset .plus {
-    background: #D7DAE0 url(../images/plus-12x12.png) 3px 5px no-repeat;
+input[type="submit"] {
+    font-weight: bold;
+    font-size: 16px;
+    padding: 10px 41px;
 }
 
-fieldset .minus {
-    background: #D7DAE0 url(../images/minus-12x12.png) 3px 5px no-repeat;
+#submitContainer {
+    border-top: 5px solid #E1E8EF;
+    margin-top: 30px;
 }
 
-fieldset button:hover {
+.plus {
+    background-image: url(../images/plus-12x12.png);
+    background-repeat: no-repeat;
+    background-position: 3px 5px;
+    padding-left: 18px;
+}
+
+.minus {
+    background-image: url(../images/minus-12x12.png);
+        background-repeat: no-repeat;
+        background-position: 3px 5px;
+        padding-left: 18px;
+}
+
+button:hover {
     background-color: #eee;
 }
 
