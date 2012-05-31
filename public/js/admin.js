@@ -462,7 +462,7 @@ var app = (function(Spine, $, exports, data) {
                 onkeyup: false,
                 invalidHandler: function(form, validator) {
                     var numerrors = validator.numberOfInvalids();
-                    var msg = '<strong>Whoa now, not so fast!</strong> There ';
+                    var msg = '<strong>Whoa now, not so fast!</strong><br/>There ';
                     msg += numerrors === 1 ? 'was a problem ' : 'were some problems ';
                     msg += 'with your form input. ';
                     msg += numerrors === 1 ? 'It has been ' : 'They have been ';
@@ -491,11 +491,14 @@ var app = (function(Spine, $, exports, data) {
                         },
                         success: function(data, textStatus, jqXHR) {
                             $('#lastupdated span').text(moment(new Date(data.lastupdated)).format('h:mm a [on] MMMM DD YYYY'));
-                            var msg = $('<div>').html('<strong>Success!</strong> The Road and Traffic Report has been updated.');
+                            var msg = $('<div>').html('<strong>Success!</strong><br/>The Road and Traffic Report has been updated.');
                             $('#messageContainer').removeClass().addClass('success').empty().append(msg).fadeIn().delay(4000).fadeOut();
                             window.scrollTo(0, 1);
                         },
                         error: function(jqXHR, textStatus, errorThrown) {
+                            var msg = $('<div>').html('<strong>Oh dear, something has gone awry.</strong><br/>The server reported an error when trying to process the form. Please wait a moment and try again.');
+                            $('#messageContainer').removeClass().addClass('error').empty().append(msg).fadeIn();
+                            window.scrollTo(0, 1);
                         },
                         dataType: 'json',
                         contentType: 'application/json'
