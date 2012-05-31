@@ -453,10 +453,11 @@ var app = (function(Spine, $, exports, data) {
             }
 
             $('body').on('click', 'button', function(ev) { ev.preventDefault(); });
-            $('body').on('submit', 'form', function(ev) { ev.preventDefault(); });
+            $('#updateconditions').on('submit', function(ev) { ev.preventDefault(); });
             jQuery.validator.messages.required = "";
             jQuery.validator.messages.url = "";
-            $('#updateconditions').validate({
+
+            $('#updateconditions').submit(function(ev) { ev.preventDefault(); }).validate({
                 focusInvalid: false,
                 onfocusout: false,
                 onkeyup: false,
@@ -472,7 +473,6 @@ var app = (function(Spine, $, exports, data) {
                     $('#messageContainer').removeClass().addClass('error').empty().append(msg).fadeIn();
                 },
                 submitHandler: function(form) {
-                    event.preventDefault();
                     var data = {
                         conditions: Condition.serialize(),
                         announcements: Announcement.serialize(),
