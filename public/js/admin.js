@@ -483,38 +483,6 @@ var app = (function(Spine, $, exports, data) {
             new Announcements({ attr: 'announcements' });
             new Sidebars( { attr: 'sidebars' } );
             new Categories();
-        },
-
-        submit: function(ev) {
-            ev.preventDefault();
-            var data = {
-                conditions: Condition.serialize(),
-                announcements: Announcement.serialize(),
-                sidebars: Sidebar.serialize(),
-                links: Category.serialize()
-            };
-            $.ajax({
-                type: 'POST',
-                url: ev.target.action,
-                data: JSON.stringify(data),
-                beforeSend: function() {
-                    $('input[type="submit"]').attr('disabled', true);
-                },
-                complete: function() {
-                    $('input[type="submit"]').attr('disabled', false);
-                },
-                success: function(data, textStatus, jqXHR) {
-                    $('#lastupdated span').text(moment(new Date(data.lastupdated)).format('h:mm a [on] MMMM DD YYYY'));
-                    window.scrollTo(0, 1);
-                },
-                error: function(jqXHR, textStatus, errorThrown) {
-                },
-                dataType: 'json',
-                contentType: 'application/json'
-            });
-
-
-
         }
     });
 
