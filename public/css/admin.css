@@ -6,8 +6,14 @@
     padding-top: 12px;
 }
 
+#updateconditions div.category {
+    padding-top: 0;
+}
+
 fieldset {
     border: none;
+    padding: 0;
+    margin: 18px 0 0 0;
 }
 
 legend {
@@ -18,11 +24,6 @@ legend {
     border-bottom: 5px solid #E1E8EF;
     padding-bottom: 8px;
     width: 100%;
-}
-
-
-fieldset {
-    margin-top: 18px;
 }
 
 #conditions label {
@@ -54,6 +55,8 @@ fieldset.category-group {
     width: 515px;
     background-color: #ECF0F5;
     margin-bottom: 18px;
+    padding-left: 10px;
+    padding-bottom: 15px;
 }
 
 .links div {
@@ -158,7 +161,7 @@ textarea {
 }
 
 #updateconditions div#lastupdated {
-    padding-top: 0;
+    padding-top: 20px;
     padding-bottom: 0;
     width: 100%;
 }
