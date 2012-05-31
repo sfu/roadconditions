@@ -76,7 +76,7 @@ div#announcements {
 }
 
 #announcements .primary {
-	width: 550px;
+	width: 566px;
 	float: right;
 	font-size: 14px;
 }
@@ -127,3 +127,4 @@ div#announcements {
 #links div:last-child {
 	margin-right: 0px;
 }
+
