@@ -33,6 +33,10 @@ span.warning {
 	color: #E3E30A;
 }
 
+#status .primary .warning {
+	font-size: 36px;
+}
+
 .datestamp {
 	color: #777;
 }
