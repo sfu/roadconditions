@@ -453,7 +453,56 @@ var app = (function(Spine, $, exports, data) {
             }
 
             $('body').on('click', 'button', function(ev) { ev.preventDefault(); });
-            $('form').on('submit', this.submit);
+            $('body').on('submit', 'form', function(ev) { ev.preventDefault(); });
+            jQuery.validator.messages.required = "";
+            jQuery.validator.messages.url = "";
+            $('#updateconditions').validate({
+                focusInvalid: false,
+                onfocusout: false,
+                onkeyup: false,
+                invalidHandler: function(form, validator) {
+                    var numerrors = validator.numberOfInvalids();
+                    var msg = '<strong>Whoa now, not so fast!</strong> There ';
+                    msg += numerrors === 1 ? 'was a problem ' : 'were some problems ';
+                    msg += 'with your form input. ';
+                    msg += numerrors === 1 ? 'It has been ' : 'They have been ';
+                    msg += 'highlighted below. Please correct the problem and try again.';
+                    msg = $('<div>').html(msg);
+                    window.scrollTo(0, 1);
+                    $('#messageContainer').removeClass().addClass('error').empty().append(msg).fadeIn();
+                },
+                submitHandler: function(form) {
+                    event.preventDefault();
+                    var data = {
+                        conditions: Condition.serialize(),
+                        announcements: Announcement.serialize(),
+                        sidebars: Sidebar.serialize(),
+                        links: Category.serialize()
+                    };
+                    $.ajax({
+                        type: 'POST',
+                        url: form.action,
+                        data: JSON.stringify(data),
+                        beforeSend: function() {
+                            $('input[type="submit"]').attr('disabled', true);
+                        },
+                        complete: function() {
+                            $('input[type="submit"]').attr('disabled', false);
+                        },
+                        success: function(data, textStatus, jqXHR) {
+                            $('#lastupdated span').text(moment(new Date(data.lastupdated)).format('h:mm a [on] MMMM DD YYYY'));
+                            var msg = $('<div>').html('<strong>Success!</strong> The Road and Traffic Report has been updated.');
+                            $('#messageContainer').removeClass().addClass('success').empty().append(msg).fadeIn().delay(4000).fadeOut();
+                            window.scrollTo(0, 1);
+                        },
+                        error: function(jqXHR, textStatus, errorThrown) {
+                        },
+                        dataType: 'json',
+                        contentType: 'application/json'
+                    });
+
+                }
+            });
 
             tinyMCE.init({
                 mode: 'textareas',
