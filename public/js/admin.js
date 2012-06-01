@@ -254,7 +254,8 @@ var app = (function(Spine, $, exports, data) {
     var LinksItem = Spine.Controller.sub({
 
         events: {
-            'change .link input': 'update',
+            'change .linktext': 'updateText',
+            'change .linkurl': 'updateUrl',
             'click .deletelink': 'destroy'
         },
 
