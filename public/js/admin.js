@@ -296,11 +296,9 @@ var app = (function(Spine, $, exports, data) {
     });
 
     var Links = Spine.Controller.sub({
-
         elements: {
             '.links' : 'linksEl'
         },
-
 
         init: function() {
             Link.unbind('create');
