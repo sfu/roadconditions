@@ -261,7 +261,7 @@ var app = (function(Spine, $, exports, data) {
 
         tag: 'p',
 
-        className: 'link',
+        className: 'link group',
 
         init: function() {
             this.item.bind('destroy', this.proxy(this.remove));
