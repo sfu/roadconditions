@@ -281,7 +281,7 @@ var app = (function(Spine, $, exports, data) {
         },
 
         render: function() {
-            $('#linkcategory-' + this.item.attributes().category_id).append(this.template());
+            this.el.append(this.template());
             return this;
         },
 
