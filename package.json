@@ -1,8 +1,19 @@
 {
-    "name": "application-name"
-  , "version": "0.0.1"
-  , "private": true
-  , "dependencies": {
+  "name": "roadconditions",
+  "description": "Road Conditions application for SFU Safety & Risk Services (Security)",
+  "author": "Graham Ballantyne <grahamb@sfu.ca>",
+  "contributors": [ "Eryn Holbrook <hexaln@sfu.ca>" ],
+  "version": "1.0.0",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/sfu/node-cas-sfu"
+  },
+  "engines": {
+    "node": "0.6.x"
+  },
+  "main": "server.js",
+  "private": true,
+  "dependencies": {
       "express": "git://github.com/sfu/express.git#basepath-patch-2.x",
       "ejs": "0.7.1",
       "moment": "1.5.0",
