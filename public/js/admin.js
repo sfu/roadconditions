@@ -266,8 +266,12 @@ var app = (function(Spine, $, exports, data) {
             this.item.bind('destroy', this.proxy(this.remove));
         },
 
-        update: function() {
-            console.log('update link');
+        updateText: function(ev) {
+            this.item.updateAttribute('text', ev.target.value);
+        },
+
+        updateUrl: function(ev) {
+            this.item.updateAttribute('url', ev.target.value);
         },
 
         template: function() {
