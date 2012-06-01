@@ -64,6 +64,11 @@ fieldset.category-group {
     float: left;
 }
 
+p.link {
+    margin: 0;
+    padding: 0;
+}
+
 .group:after {
     content: ".";
     display: block;
