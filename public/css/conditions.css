@@ -68,7 +68,7 @@ span.warning {
 	border-bottom: 1px dotted #fff;
 }
 
-div#announcements {
+#announcements {
 	clear: left;
 	width: 845px;
 	line-height: 21px;
@@ -126,5 +126,67 @@ div#announcements {
 
 #links div:last-child {
 	margin-right: 0px;
+}
+
+/* Mobile Display */
+
+/* Landscape & Portrait Common */
+@media screen and (min-device-width: 320px) and (max-device-width: 480px) {
+	#status {
+	    width: 260px;
+	}
+
+	#status .primary {
+	    float: none;
+	    height: auto;
+	    padding-bottom: 24px;
+	}
+
+	#status .secondary {
+	    float: none;
+	    font-size: 14px;
+	    width: 100%;
+	    padding-left: 0px;
+	    margin-left: 0px;
+	    height: auto;
+	}
+
+	#announcements {
+	    width: 260px;
+	}
+
+	#announcements .primary {
+	    float: none;
+	    width: 260px;
+	}
+
+	#announcements .secondary {
+	    float: none;
+	    width: 260px;
+	}
+
+	#webcams {
+	    width: 260px;
+	}
+
+	#webcams div {
+	    float: none;
+	    margin-right: 0px;
+	}
+
+	#links {
+	    width: 260px;
+	}
+
+	#links div {
+	    float: none;
+	    margin-right: none;
+	}
+}
+
+@media screen and (min-width: 321px) and (max-width: 480px) {
+	#announcements, #announcements .primary, #announcements .secondary {
+	    width: 380px;
+	}
 }
 

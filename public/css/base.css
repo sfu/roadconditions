@@ -475,57 +475,6 @@ h4 {
         border-left: none;
     }
 
-    #status {
-        width: 260px;
-    }
-
-    #status .primary {
-        float: none;
-        height: auto;
-        padding-bottom: 24px;
-    }
-
-    #status .secondary {
-        float: none;
-        font-size: 14px;
-        width: 100%;
-        padding-left: 0px;
-        margin-left: 0px;
-        height: auto;
-    }
-
-    div#announcements {
-        width: 260px;
-    }
-
-    #announcements .primary {
-        float: none;
-        width: 260px;
-    }
-
-    #announcements .secondary {
-        float: none;
-        width: 260px;
-    }
-
-    #webcams {
-        width: 260px;
-    }
-
-    #webcams div {
-        float: none;
-        margin-right: 0px;
-    }
-
-    #links {
-        width: 260px;
-    }
-
-    #links div {
-        float: none;
-        margin-right: none;
-    }
-
     #footer {
         font-size: 8px;
         width: 100%;
@@ -551,10 +500,6 @@ h4 {
 
     h3 {
         width: 400px;
-    }
-
-    #announcements, #announcements .primary, #announcements .secondary {
-        width: 380px;
     }
 
     #footer, #footer a {
