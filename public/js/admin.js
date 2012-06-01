@@ -426,16 +426,16 @@ var app = (function(Spine, $, exports, data) {
         },
 
         addOne: function(category) {
-            new Links({
-                categoryid: category.id,
-                el: $('#linkcategory-' + category.id)
-            });
             var view = new CategoriesItem( {item: category });
             this.linkCategories.append(view.render().el);
             if (category.name === '') {
                 view.el.find('.linkCategoryName').focus();
                 view.el.get(0).scrollIntoView();
             }
+            new Links({
+                categoryid: category.id,
+                el: $('#linkcategory-' + category.id)
+            });
         },
 
         create: function() {
