@@ -21,6 +21,8 @@
       "cas-sfu": "1.0.x",
       "gzippo": "0.1.4",
       "connect-redis": "1.3.x",
-      "redis": "0.7.x"
+      "redis": "0.7.x",
+      "winston": "0.6.x",
+      "winston-syslog": "git://github.com/sfu/winston-syslog.git"
   }
 }
