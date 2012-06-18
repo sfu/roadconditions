@@ -34,8 +34,7 @@ logger = new (winston.Logger)({
             host: 'devnull.ucs.sfu.ca',
             facility: 'user',
             localhost: serverid,
-            type: 'RFC5424',
-            appName: 'foobarbat'
+            type: 'RFC5424'
         })
     ]
 });
