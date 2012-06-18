@@ -85,7 +85,7 @@ dataclient.on('connect', function(e) {
         }
 
         app.listen(port);
-        console.log("Express server listening on port %d in %s mode", port, app.settings.env);
+        logger.info('starting roadconditions server on port ' + port + ' in ' + app.settings.env + ' mode');
     });
 });
 
@@ -94,7 +94,10 @@ app.configure(function(){
     app.set('views', __dirname + '/views');
     app.use(express.favicon('public/favicon.ico'));
     express.logger.token('user', function(req, res) { var user = '-'; if (req.session && req.session.auth) { user = req.session.auth.user; } return user; });
-    app.use(express.logger({format: ':remote-addr - :user [:date] ":method :url HTTP/:http-version" :status :res[content-length] ":referrer" ":user-agent"'}));
+    app.use(express.logger({
+        stream: winstonStream,
+        format: ':remote-addr - :user [:date] ":method :url HTTP/:http-version" :status :res[content-length] ":referrer" ":user-agent"'
+    }));
     app.use(express.bodyParser());
     app.use(express.methodOverride());
     app.use(gzippo.staticGzip(__dirname + '/public'));
