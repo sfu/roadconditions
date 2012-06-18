@@ -175,7 +175,7 @@ app.configure('production', function(){
 // Authentication middleware
 var casauth = cas.getMiddleware({
     service: process.env.CAS_SERVICE || 'http://' + serverid + '/login',
-    allow: '!roadconditions-supervisors,!roadconditions-dispatchers',
+    allow: '!roadconditions-admins,!roadconditions-supervisors,!roadconditions-dispatchers',
     userObject: 'auth'
 });
 
@@ -212,6 +212,19 @@ app.get('/logout', function(req, res) {
         req.session.destroy();
     }
     res.redirect(cas.options.casBase + cas.options.logoutPath + "?url=" + encodeURIComponent(casService) + "&urltext=Click+here+to+return+to+the+Road+Conditions+application.");
+});
+
+// Server status routes
+app.get('/status', loggedin, function(req, res) {
+    if (req.session.auth.maillist !=='roadconditions-admins') {
+        res.send(403);
+    } else {
+        res.send({
+            pid: process.pid,
+            memory: process.memoryUsage(),
+            uptime: process.uptime()
+          });
+    }
 });
 
 // API Routes
