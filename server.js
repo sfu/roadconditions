@@ -7,6 +7,7 @@ var fs = require('fs')
 ,   cas = require('cas-sfu')
 ,   RedisStore = require('connect-redis')(express)
 ,   redis = require('redis')
+,   winston = require('winston')
 ,   redisport = 6379
 ,   redishost = 'redis1.its.sfu.ca'
 ,   dataclient = redis.createClient(redisport, redishost)
@@ -18,7 +19,31 @@ var fs = require('fs')
 ,   conditionsSchema = schema.Schema.create(JSON.parse(fs.readFileSync(schemaPath)))
 ,   port = process.env.PORT || 3001
 ,   serverid = os.hostname() + ':' + port
-,   cas, casService, conditions, writeConditions;
+,   cas, casService, conditions, writeConditions, logger, winstonStream;
+
+
+// set up logging
+process.title = 'roadconditions';
+require('winston-syslog').Syslog;
+logger = new (winston.Logger)({
+    transports: [
+        new (winston.transports.Console)({
+            timestamp: true
+        }),
+        new (winston.transports.Syslog)({
+            host: 'devnull.ucs.sfu.ca',
+            facility: 'user',
+            localhost: serverid,
+            type: 'RFC5424',
+            appName: 'foobarbat'
+        })
+    ]
+});
+winstonStream = {
+    write: function(str) {
+        logger.info(str);
+    }
+};
 
 writeConditions = function(data) {
     dataclient.set('roadconditions:data', JSON.stringify(data), function(err, reply) {
