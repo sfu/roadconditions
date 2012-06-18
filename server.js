@@ -47,7 +47,7 @@ winstonStream = {
 writeConditions = function(data) {
     dataclient.set('roadconditions:data', JSON.stringify(data), function(err, reply) {
         if (err) {
-            console.log('REDIS ERROR WRITING CONDITIONS: %s', err);
+            logger.error('REDIS ERROR WRITING CONDITIONS: ' + err);
         } else {
             pubclient.publish('roadconditions:update', JSON.stringify({message: 'conditionsupdated', server: serverid }));
         }
@@ -56,7 +56,7 @@ writeConditions = function(data) {
 
 
 dataclient.on('error', function(err) {
-    console.log('REDIS ERROR: %s', err);
+    logger.error('REDIS ERROR: ' + err);
 });
 
 dataclient.on('connect', function(e) {
@@ -66,7 +66,7 @@ dataclient.on('connect', function(e) {
             message = JSON.parse(message);
             if (message.server !== serverid) {
                 dataclient.get('roadconditions:data', function(err, data) {
-                    console.log('RECEIVED UPDATED DATA FROM %s', message.server);
+                    logger.info('RECEIVED UPDATED DATA FROM ' + message.server);
                     conditions = JSON.parse(data);
                 });
             }
@@ -75,7 +75,7 @@ dataclient.on('connect', function(e) {
     dataclient.get('roadconditions:data', function(err, data) {
         if (err) { throw err; }
         if (!data) {
-            console.log('no data in redis; using defaults');
+            logger.info('no data in redis; using defaults');
             conditions = JSON.parse(fs.readFileSync(defaultConditionsPath, 'UTF-8'));
             conditions.lastupdated = Date.now();
             dataclient.set('roadconditions:data', JSON.stringify(conditions));
