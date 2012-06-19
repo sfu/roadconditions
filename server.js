@@ -66,7 +66,7 @@ writeConditions = function(data) {
     });
 };
 
-// Error handlers
+// Error/exit handlers
 
 dataclient.on('error', function(err) {
     logger.error('REDIS DATA CLIENT ERROR: ' + err);
@@ -82,6 +82,10 @@ pubclient.on('error', function(err) {
 
 app.on('error', function(err) {
     logger.error('EXPRESS ERROR: ' + err);
+});
+
+process.on('exit', function() {
+    logger.info('process exiting');
 });
 
 
