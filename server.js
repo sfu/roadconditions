@@ -40,7 +40,7 @@ logger = new (winston.Logger)({
             handleExceptions: true
         }),
         new (winston.transports.Mail)({
-            to: 'grahamb@sfu.ca',
+            to: 'roadconditions-logger@sfu.ca',
             host: 'mailgate.sfu.ca',
             from: process.title + '@' + os.hostname(),
             subject: process.title + ': {{level}} {{msg}}',
