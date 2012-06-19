@@ -29,13 +29,15 @@ require('winston-mail').Mail;
 logger = new (winston.Logger)({
     transports: [
         new (winston.transports.Console)({
-            timestamp: true
+            timestamp: true,
+            handleExceptions: true
         }),
         new (winston.transports.Syslog)({
             host: 'devnull.ucs.sfu.ca',
             facility: 'user',
             localhost: serverid,
-            type: 'RFC5424'
+            type: 'RFC5424',
+            handleExceptions: true
         }),
         new (winston.transports.Mail)({
             to: 'grahamb@sfu.ca',
