@@ -25,6 +25,7 @@ var fs = require('fs')
 // set up logging
 process.title = 'roadconditions';
 require('winston-syslog').Syslog;
+require('winston-mail').Mail;
 logger = new (winston.Logger)({
     transports: [
         new (winston.transports.Console)({
@@ -35,6 +36,15 @@ logger = new (winston.Logger)({
             facility: 'user',
             localhost: serverid,
             type: 'RFC5424'
+        }),
+        new (winston.transports.Mail)({
+            to: 'grahamb@sfu.ca',
+            host: 'mailgate.sfu.ca',
+            from: process.title + '@' + os.hostname(),
+            subject: process.title + ': {{level}} {{msg}}',
+            tls: true,
+            level: 'error',
+            handleExceptions: true
         })
     ]
 });
