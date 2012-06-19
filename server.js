@@ -66,10 +66,25 @@ writeConditions = function(data) {
     });
 };
 
+// Error handlers
 
 dataclient.on('error', function(err) {
-    logger.error('REDIS ERROR: ' + err);
+    logger.error('REDIS DATA CLIENT ERROR: ' + err);
 });
+
+subclient.on('error', function(err) {
+    logger.error('REDIS SUBSCRIBER CLIENT ERROR: ' + err);
+});
+
+pubclient.on('error', function(err) {
+    logger.error('REDIS PUBLISH CLIENT ERROR: ' + err);
+});
+
+app.on('error', function(err) {
+    logger.error('EXPRESS ERROR: ' + err);
+});
+
+
 
 dataclient.on('connect', function(e) {
     subclient.subscribe('roadconditions:update');
