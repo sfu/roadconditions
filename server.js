@@ -241,7 +241,7 @@ app.get('/logout', function(req, res) {
     if (req.session) {
         req.session.destroy();
     }
-    res.redirect(cas.options.casBase + cas.options.logoutPath + "?url=" + encodeURIComponent(casService) + "&urltext=Click+here+to+return+to+the+Road+Conditions+application.");
+    res.redirect(cas.options.casBase + cas.options.logoutPath + "?url=" + encodeURIComponent(cas.options.service) + "&urltext=Click+here+to+return+to+the+Road+Conditions+application.");
 });
 
 // Server status routes
