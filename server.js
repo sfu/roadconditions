@@ -216,7 +216,8 @@ app.configure('production', function(){
     app.use(express.session({
         store: new RedisStore({
             host: redishost,
-            prefix: 'roadconditions:sess:'
+            prefix: 'roadconditions:sess:',
+            pass: redispw
         }),
         secret: 'YJrJ2wfqWRfVsaBVVFDYDKtmjAjKAXZ7AZKDtoGzaTrZPDDp',
         expires: false
