@@ -78,17 +78,11 @@ if (!redispw) {
 }
 
 dataclient = redis.createClient(redisport, redishost);
-dataclient.auth(redispw, function(response) {
-    logger.info(response);
-});
+dataclient.auth(redispw);
 subclient = redis.createClient(redisport, redishost);
-subclient.auth(redispw, function(response) {
-    logger.info(response);
-});
+subclient.auth(redispw);
 pubclient = redis.createClient(redisport, redishost);
-pubclient.auth(redispw, function(response) {
-    logger.info(response);
-});
+pubclient.auth(redispw);
 
 
 // Error/exit handlers
