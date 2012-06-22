@@ -24,6 +24,7 @@
       "redis": "0.7.x",
       "winston": "0.6.x",
       "winston-syslog": "git://github.com/sfu/winston-syslog.git",
-      "winston-mail": "0.2.x"
+      "winston-mail": "0.2.x",
+      "graphite": "0.0.6"
   }
 }
