@@ -22,7 +22,6 @@ var fs = require('fs')
 ,   serverid = os.hostname() + ':' + port
 ,   cas, casService, conditions, writeConditions, logger, winstonStream;
 
-
 // set up logging
 process.title = 'roadconditions';
 require('winston-syslog').Syslog;
@@ -30,7 +29,7 @@ require('winston-mail').Mail;
 logger = new (winston.Logger)({
     transports: [
         new (winston.transports.Console)({
-            timestamp: true,
+            timestamp: function() { return new Date().toString(); },
             handleExceptions: true
         }),
         new (winston.transports.Syslog)({
@@ -41,12 +40,13 @@ logger = new (winston.Logger)({
             handleExceptions: true
         }),
         new (winston.transports.Mail)({
-            to: 'roadconditions-logger@sfu.ca',
+            to: 'nodejsapps-logger@sfu.ca',
             host: 'mailgate.sfu.ca',
             from: process.title + '@' + os.hostname(),
-            subject: process.title + ': {{level}} {{msg}}',
+            subject: new Date().toString() + ' ' + process.title + ': {{level}} {{msg}}',
             tls: true,
             level: 'error',
+            timestamp: function() { return new Date().toString(); },
             handleExceptions: true
         })
     ]
@@ -131,9 +131,12 @@ app.configure(function(){
     app.set('views', __dirname + '/views');
     app.use(express.favicon('public/favicon.ico'));
     express.logger.token('user', function(req, res) { var user = '-'; if (req.session && req.session.auth) { user = req.session.auth.user; } return user; });
+    express.logger.token('localtime', function(req, res) {
+        return new Date().toString();
+    });
     app.use(express.logger({
         stream: winstonStream,
-        format: ':remote-addr - :user [:date] ":method :url HTTP/:http-version" :status :res[content-length] ":referrer" ":user-agent"'
+        format: 'express :remote-addr - :user [:localtime] ":method :url HTTP/:http-version" :status :res[content-length] ":referrer" ":user-agent"'
     }));
     app.use(express.bodyParser());
     app.use(express.methodOverride());
