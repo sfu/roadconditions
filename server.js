@@ -8,6 +8,7 @@ var fs = require('fs')
 ,   RedisStore = require('connect-redis')(express)
 ,   redis = require('redis')
 ,   winston = require('winston')
+,   graphite = require('graphite').createClient('plaintext://stats:2003/')
 ,   redisport = 6379
 ,   redishost = 'redis1.its.sfu.ca'
 ,   dataclient = redis.createClient(redisport, redishost)
@@ -62,6 +63,12 @@ writeConditions = function(data) {
             logger.error('REDIS ERROR WRITING CONDITIONS: ' + err);
         } else {
             pubclient.publish('roadconditions:update', JSON.stringify({message: 'conditionsupdated', server: serverid }));
+            var bucket = 'stats.nodeapps.roadconditions.updates';
+            graphite.write({bucket: 1}, function(err) {
+                if (err) {
+                    logger.error('Error writing to graphite (' + bucket + ') ' + err.toString());
+                }
+            });
         }
     });
 };
