@@ -7,20 +7,18 @@ var fs = require('fs')
 ,   cas = require('cas-sfu')
 ,   RedisStore = require('connect-redis')(express)
 ,   redis = require('redis')
+,   redispw = process.env.REDISPW
 ,   winston = require('winston')
 ,   graphite = require('graphite').createClient('plaintext://stats:2003/')
 ,   redisport = 6379
 ,   redishost = 'redis1'
-,   dataclient = redis.createClient(redisport, redishost)
-,   subclient = redis.createClient(redisport, redishost)
-,   pubclient = redis.createClient(redisport, redishost)
 ,   app = module.exports = express.createServer()
 ,   defaultConditionsPath = __dirname + '/data/conditions_default.json'
 ,   schemaPath = __dirname + '/data/conditions_schema.json'
 ,   conditionsSchema = schema.Schema.create(JSON.parse(fs.readFileSync(schemaPath)))
 ,   port = process.env.PORT || 3000
 ,   serverid = os.hostname() + ':' + port
-,   cas, casService, conditions, writeConditions, logger, winstonStream;
+,   cas, casService, conditions, writeConditions, logger, winstonStream, dataclient, subclient, pubclient;
 
 // set up logging
 process.title = 'roadconditions';
@@ -72,6 +70,26 @@ writeConditions = function(data) {
         }
     });
 };
+
+// Set up redis clients
+if (!redispw) {
+    logger.error('NO REDIS PASSWORD PROVIDED IN REDISPW ENV VARIABLE');
+    process.exit(1);
+}
+
+dataclient = redis.createClient(redisport, redishost);
+dataclient.auth(redispw, function(response) {
+    logger.info(response);
+});
+subclient = redis.createClient(redisport, redishost);
+subclient.auth(redispw, function(response) {
+    logger.info(response);
+});
+pubclient = redis.createClient(redisport, redishost);
+pubclient.auth(redispw, function(response) {
+    logger.info(response);
+});
+
 
 // Error/exit handlers
 
