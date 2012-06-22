@@ -18,7 +18,7 @@ var fs = require('fs')
 ,   defaultConditionsPath = __dirname + '/data/conditions_default.json'
 ,   schemaPath = __dirname + '/data/conditions_schema.json'
 ,   conditionsSchema = schema.Schema.create(JSON.parse(fs.readFileSync(schemaPath)))
-,   port = process.env.PORT || 3001
+,   port = process.env.PORT || 3000
 ,   serverid = os.hostname() + ':' + port
 ,   cas, casService, conditions, writeConditions, logger, winstonStream;
 
