@@ -31,7 +31,7 @@ logger = new (winston.Logger)({
             handleExceptions: true
         }),
         new (winston.transports.Syslog)({
-            host: 'devnull.ucs.sfu.ca',
+            host: process.env.DEVNULL || 'devnull.tier2.sfu.ca',
             facility: 'user',
             localhost: serverid,
             type: 'RFC5424',
