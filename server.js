@@ -142,13 +142,17 @@ app.configure(function(){
     app.set('view engine', 'ejs');
     app.set('views', __dirname + '/views');
     app.use(express.favicon('public/favicon.ico'));
+    express.logger.token('remote-ip', function(req, res) {
+        return req.headers['x-forwarded-for'] ? req.headers['x-forwarded-for'] : (req.socket && (req.socket.remoteAddress || (req.socket.socket && req.socket.socket.remoteAddress)));
+
+    });
     express.logger.token('user', function(req, res) { var user = '-'; if (req.session && req.session.auth) { user = req.session.auth.user; } return user; });
     express.logger.token('localtime', function(req, res) {
         return new Date().toString();
     });
     app.use(express.logger({
         stream: winstonStream,
-        format: 'express :remote-addr - :user [:localtime] ":method :url HTTP/:http-version" :status :res[content-length] ":referrer" ":user-agent"'
+        format: 'express :remote-ip - :user [:localtime] ":method :url HTTP/:http-version" :status :res[content-length] ":referrer" ":user-agent"'
     }));
     app.use(express.bodyParser());
     app.use(express.methodOverride());
