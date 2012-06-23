@@ -273,9 +273,12 @@ app.get('/status', loggedin, function(req, res) {
         res.send(403);
     } else {
         res.send({
-            pid: process.pid,
-            memory: process.memoryUsage(),
-            uptime: process.uptime()
+            process: {
+                pid: process.pid,
+                memory: process.memoryUsage(),
+                uptime: process.uptime()
+            },
+            headers:req.headers
           });
     }
 });
