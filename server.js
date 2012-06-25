@@ -60,17 +60,15 @@ writeConditions = function(data) {
         if (err) {
             logger.error('REDIS ERROR WRITING CONDITIONS: ' + err);
         } else {
-            pubclient.publish('roadconditions:update', JSON.stringify({message: 'conditionsupdated', server: serverid }));
-            var bucket = 'stats.nodeapps.roadconditions.updates';
-            graphite.write({bucket: 1}, function(err) {
+            graphite.write({'stats.nodeapps.roadconditions.updates': 1}, function(err) {
                 if (err) {
-                    logger.error('Error writing to graphite (' + bucket + ') ' + err.toString());
+                    logger.error('Error writing to graphite (stats.nodeapps.roadconditions.updates ' + err.toString());
                 }
             });
+            pubclient.publish('roadconditions:update', JSON.stringify({message: 'conditionsupdated', server: serverid }));
         }
     });
 };
-
 // Set up redis clients
 if (!redispw) {
     logger.error('NO REDIS PASSWORD PROVIDED IN REDISPW ENV VARIABLE');
