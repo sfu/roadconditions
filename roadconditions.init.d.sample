@@ -9,7 +9,7 @@
 
 PATH=/usr/local/bin:/sbin:/usr/bin:/bin
 
-REDISPW='CHANGE-ME-TO-THE-REDIS-PASSWORD'
+REDISPWFILE="/etc/redispw"
 NODE="/usr/local/bin/node"
 SCRIPT="/var/nodeapps/roadconditions/server.js"
 REDIS_CLI=/usr/local/bin/redis-cli
@@ -23,13 +23,18 @@ case "$1" in
         if [ -f $PIDFILE ] ; then
             echo "$PIDFILE exists, roadconditions server is already running or crashed"
         else
-            echo "Starting roadconditions server..."
-            touch $PIDFILE
-            chown $RUN_AS_USER:$RUN_AS_USER $PIDFILE
-            if [ $(whoami) = "$RUN_AS_USER" ] ; then
-                $ENVS $NODE $SCRIPT > $LOGFILE 2>&1
+            if [ ! -f $REDISPWFILE ] ; then
+                echo "Redis password file does not exist or is empty"
             else
-                su - $RUN_AS_USER -c "$ENVS $NODE $SCRIPT > $LOGFILE 2>&1"
+                echo "Starting roadconditions server..."
+                REDISPW=$(cat $REDISPWFILE)
+                touch $PIDFILE
+                chown $RUN_AS_USER:$RUN_AS_USER $PIDFILE
+                if [ $(whoami) = "$RUN_AS_USER" ] ; then
+                    REDISPW=$REDISPW $ENVS $NODE $SCRIPT > $LOGFILE 2>&1
+                else
+                    su - $RUN_AS_USER -c "REDISPW=$REDISPW $ENVS $NODE $SCRIPT > $LOGFILE 2>&1"
+                fi
             fi
         fi
         ;;
