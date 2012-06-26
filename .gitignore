@@ -2,3 +2,5 @@ node_modules
 data/conditions.json
 NOTES
 rundev
+public/js/*-min.js
+public/css/*-min.css
