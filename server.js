@@ -18,7 +18,7 @@ var fs = require('fs')
 ,   conditionsSchema = schema.Schema.create(JSON.parse(fs.readFileSync(schemaPath)))
 ,   port = process.env.PORT || 3000
 ,   serverid = os.hostname() + ':' + port
-,   cas, casService, conditions, writeConditions, logger, winstonStream, dataclient, subclient, pubclient;
+,   cas, conditions, writeConditions, logger, winstonStream, dataclient, subclient, pubclient;
 
 // set up logging
 process.title = 'roadconditions';
