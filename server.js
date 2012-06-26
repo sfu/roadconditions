@@ -150,7 +150,7 @@ app.configure(function(){
     });
     app.use(express.logger({
         stream: winstonStream,
-        format: 'express :remote-ip - :user [:localtime] ":method :url HTTP/:http-version" :status :res[content-length] ":referrer" ":user-agent"'
+        format: 'express :remote-ip - :user [:localtime] ":method :url HTTP/:http-version" :status :res[content-length] ":referrer" ":user-agent" :response-time'
     }));
     app.use(express.bodyParser());
     app.use(express.methodOverride());
