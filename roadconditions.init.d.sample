@@ -1,0 +1,50 @@
+#!/bin/sh
+#
+# roadconditions        Startup script for the SRS Road Conditions app
+#
+# chkconfig: - 90 10
+#
+# processname: roadconditions
+# pidfile: /var/run/roadconditions.pid
+
+PATH=/usr/local/bin:/sbin:/usr/bin:/bin
+
+REDISPW='CHANGE-ME-TO-THE-REDIS-PASSWORD'
+NODE="/usr/local/bin/node"
+SCRIPT="/var/nodeapps/roadconditions/server.js"
+REDIS_CLI=/usr/local/bin/redis-cli
+PIDFILE=/var/run/roadconditions.pid
+LOGFILE=/var/log/roadconditions.log
+RUN_AS_USER=nodeuser
+ENVS=''
+
+case "$1" in
+    start)
+        if [ -f $PIDFILE ] ; then
+            echo "$PIDFILE exists, roadconditions server is already running or crashed"
+        else
+            echo "Starting roadconditions server..."
+            touch $PIDFILE
+            chown $RUN_AS_USER:$RUN_AS_USER $PIDFILE
+            if [ $(whoami) = "$RUN_AS_USER" ] ; then
+                $ENVS $NODE $SCRIPT > $LOGFILE 2>&1
+            else
+                su - $RUN_AS_USER -c "$ENVS $NODE $SCRIPT > $LOGFILE 2>&1"
+            fi
+        fi
+        ;;
+    stop)
+        if [ ! -f $PIDFILE ] ; then
+            echo "$PIDFILE does not exist, process is not running"
+        else
+            PID=$(cat $PIDFILE)
+            echo "Stopping roadconditions server..."
+            kill $PID
+            while [ -x ${PIDFILE} ] ; do
+                echo "Waiting for roadconditions server to shutdown ..."
+                sleep 1
+            done
+            echo "roadconditions server stopped"
+        fi
+        ;;
+esac
