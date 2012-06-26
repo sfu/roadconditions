@@ -544,4 +544,4 @@ var app = (function(Spine, $, exports, data) {
     return new App();
 
 
-})(Spine, Spine.$, exports, JSON.parse(document.getElementById('conditions_json').innerHTML));
+})(Spine, Spine.$, window.exports, JSON.parse(document.getElementById('conditions_json').innerHTML));
