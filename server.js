@@ -9,18 +9,24 @@ var fs = require('fs')
 ,   redis = require('redis')
 ,   redispw = process.env.REDISPW
 ,   winston = require('winston')
-,   graphite = require('graphite').createClient('plaintext://stats:2003/')
-,   redisport = 6379
-,   redishost = 'redis1'
+,   usegraphite = process.env.USEGRAPHITE || true
+,   graphitehost = process.env.GRAPHITEHOST || 'stats'
+,   graphiteport = process.env.GRAPHITEPORT || 2003
+,   redisport = process.env.REDISPORT || 6379
+,   redishost = process.env.REDISHOST || 'redis1'
 ,   app = module.exports = express.createServer()
 ,   defaultConditionsPath = __dirname + '/data/conditions_default.json'
 ,   schemaPath = __dirname + '/data/conditions_schema.json'
 ,   conditionsSchema = schema.Schema.create(JSON.parse(fs.readFileSync(schemaPath)))
 ,   port = process.env.PORT || 3000
 ,   serverid = os.hostname() + ':' + port
-,   cas, conditions, writeConditions, logger, winstonStream, dataclient, subclient, pubclient;
+,   usegraphite = process.env.USEGRAPHITE || true
+,   cas, conditions, writeConditions, logger, winstonStream, dataclient, subclient, pubclient, graphite;
 
 // set up logging
+if (usegraphite) {
+    graphite = require('graphite').createClient('plaintext://' + graphitehost + ':' + graphiteport);
+}
 process.title = 'roadconditions';
 require('winston-syslog').Syslog;
 require('winston-mail').Mail;
@@ -60,11 +66,13 @@ writeConditions = function(data) {
         if (err) {
             logger.error('REDIS ERROR WRITING CONDITIONS: ' + err);
         } else {
-            graphite.write({'stats.nodeapps.roadconditions.updates': 1}, function(err) {
-                if (err) {
-                    logger.error('Error writing to graphite (stats.nodeapps.roadconditions.updates ' + err.toString());
-                }
-            });
+            if (usegraphite) {
+                graphite.write({'stats.nodeapps.roadconditions.updates': 1}, function(err) {
+                    if (err) {
+                        logger.error('Error writing to graphite (stats.nodeapps.roadconditions.updates ' + err.toString());
+                    }
+                });
+            }
             pubclient.publish('roadconditions:update', JSON.stringify({message: 'conditionsupdated', server: serverid }));
         }
     });
