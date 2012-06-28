@@ -74,43 +74,42 @@ task('install-npm-deps', [], function() {
     });
 }, true);
 
-desc('jshint node files');
-task('jshint-node', [], function() {
-    console.log('\n > Attempting to run jshint on server nodejs files'.blue);
-    var count = 0;
-    serverJsFiles.forEach(function(file) {
-        var result = jslintFile(file);
+desc('jsint files');
+task('jshint', [], function(type) {
+    console.log('\n > Attempting to jshint files'.blue);
+    var count = 0
+    ,   fileList
+    ,   options;
+
+    switch(type) {
+        case 'server':
+            fileList = serverJsFiles;
+            options = JSON.parse(fs.readFileSync(__dirname + '/.jshintrc-server', fileEnc));
+            break;
+        case 'client':
+            fileList = clientJsFiles;
+            options = JSON.parse(fs.readFileSync(__dirname + '/.jshintrc-client', fileEnc));
+            break;
+    }
+
+    fileList.forEach(function(file) {
+        var result = jslintFile(file, options)
+        ,   msg;
         if (result[0] === 0) {
-            var msg = ' +  ' + file + ' is ok';
+            msg = ' +  ' + file + ' is ok';
             console.log(msg.green);
-            if (++count === serverJsFiles.length) {
+            if (++count === fileList.length) {
                 complete();
             }
         } else {
+            msg = ' x jshint found problems with ' + file;
+            console.log(msg.red);
             console.log(result[1]);
-            throw new Error('jshint found problems with ' + file);
+            process.exit(1);
         }
     });
 });
 
-desc('jsint client-side js files');
-task('jshint-client', [], function() {
-    console.log('\n > Attempting to run jshint on client files'.blue);
-    var count = 0;
-    clientJsFiles.forEach(function(file) {
-        var result = jslintFile(file);
-        if (result[0] === 0) {
-            var msg = ' +  ' + file + ' is ok';
-            console.log(msg.green);
-            if (++count === clientJsFiles.length) {
-                complete();
-            }
-        } else {
-            console.log(result[1]);
-            throw new Error('jshint found problems with ' + file);
-        }
-        });
-});
 
 desc('minify client-side js files');
 task('minify-client-js', ['jshint-client'], function() {
