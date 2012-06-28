@@ -129,7 +129,7 @@ dataclient.on('connect', function(e) {
     dataclient.get('roadconditions:data', function(err, data) {
         if (err) { throw err; }
         if (!data) {
-            logger.info('no data in redis; using defaults');
+            logger.warn('no data in redis; using defaults');
             conditions = JSON.parse(fs.readFileSync(defaultConditionsPath, 'UTF-8'));
             conditions.lastupdated = Date.now();
             dataclient.set('roadconditions:data', JSON.stringify(conditions));
