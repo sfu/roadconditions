@@ -135,8 +135,9 @@ dataclient.on('connect', function(e) {
             dataclient.set('roadconditions:data', JSON.stringify(conditions));
         } else {
             conditions = JSON.parse(data);
+            // for some reason, in dev, the above JSON.parse isn't actually doing anything. it's fine in production and I can't be arsed to figure out why, so this is here:
+            if (typeof conditions === 'string') { logger.warn('conditions is still a string; re-parsing'); conditions = JSON.parse(conditions); }
         }
-
         app.listen(port);
         logger.info('starting roadconditions server on port ' + port + ' in ' + app.settings.env + ' mode');
     });
