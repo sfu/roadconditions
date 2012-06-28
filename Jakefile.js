@@ -43,6 +43,7 @@ var clientJsFiles = [
 var serverJsFiles = [ __dirname + '/server.js' ];
 
 var cssFiles = [
+    __dirname + '/public/css/admin.css',
     __dirname + '/public/css/admin-dispatcher.css',
     __dirname + '/public/css/base.css',
     __dirname + '/public/css/conditions.css'
