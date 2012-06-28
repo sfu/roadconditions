@@ -2,7 +2,9 @@
 
 var spawn = require('child_process').spawn
 ,   fs = require('fs')
-,   fileEnc = 'utf-8';
+,   fileEnc = 'utf-8'
+,   devserverLabel = 'ca.sfu.roadconditions'
+,   devserverPlist = __dirname + '/' + devserverLabel + '.plist';
 
 var uglify = function(file) {
     var uglyfyJS = require('uglify-js')
@@ -31,8 +33,6 @@ var jslintFile = function(file) {
 
     return jshint.JSHINT.errors.lengh ? [1, jshint.JSHINT.errors] : [0, null];
 };
-
-
 
 var clientJsFiles = [
     __dirname + '/public/js/admin.js',
@@ -114,7 +114,7 @@ task('jshint', [], function(type) {
 
 
 desc('minify client-side js files');
-task('minify-client-js', ['jshint-client'], function() {
+task('minify-client-js', function() {
     console.log('\n > Attempting to minify client js files'.blue);
     var distDir = 'public/js';
 
@@ -152,13 +152,59 @@ task('minify-css', [], function() {
     });
 });
 
+desc('loads the ca.sfu.roadconditions.plist file -- don\'t run directly');
+task('loaddev', [], function() {
+    console.log('\n > Loading plist file into launchd'.blue);
+
+    try {
+        fs.lstatSync(devserverPlist);
+    } catch (e) {
+        throw new Error(e);
+    }
+
+    var load = spawn('launchctl', ['load', devserverPlist]);
+    load.stdout.on('data', function (data) {
+        process.stdout.write(('    ' + data).grey);
+    });
+
+    load.stderr.on('data', function (data) {
+        throw new Error(data);
+    });
+
+});
+
+
+desc('runs the development server on os x');
+task('rundev', ['loaddev'], function() {
+    console.log('\n > Starting development server on localhost:3000'.blue);
+    var rundev = spawn('launchctl', ['start', devserverLabel]);
+});
+
+desc('stops the development server');
+task('stopdev', [], function() {
+    console.log('\n > Stopping development server'.blue);
+    try {
+        fs.lstatSync(devserverPlist);
+    } catch (e) {
+        throw new Error(e);
+    }
+
+    var load = spawn('launchctl', ['unload', devserverPlist]);
+    load.stdout.on('data', function (data) {
+        process.stdout.write(('    ' + data).grey);
+    });
+
+    load.stderr.on('data', function (data) {
+        throw new Error(data);
+    });
+
+});
+
 
 desc('default task');
 task('default', [], function() {
     console.log('\n\n > Nothing to do here. How about running an actual task?\n'.blue);
 });
-
-
 
 var stylize = function (str, style) {
   var styles = {
