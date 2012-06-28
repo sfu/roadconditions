@@ -79,11 +79,14 @@ writeConditions = function(data) {
 };
 // Set up redis clients
 dataclient = redis.createClient(redisport, redishost);
-dataclient.auth(redispw);
 subclient = redis.createClient(redisport, redishost);
-subclient.auth(redispw);
 pubclient = redis.createClient(redisport, redishost);
-pubclient.auth(redispw);
+
+if (redispw) {
+    dataclient.auth(redispw);
+    subclient.auth(redispw);
+    pubclient.auth(redispw);
+}
 
 
 // Error/exit handlers
