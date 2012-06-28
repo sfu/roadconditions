@@ -78,11 +78,6 @@ writeConditions = function(data) {
     });
 };
 // Set up redis clients
-if (!redispw) {
-    logger.error('NO REDIS PASSWORD PROVIDED IN REDISPW ENV VARIABLE');
-    process.exit(1);
-}
-
 dataclient = redis.createClient(redisport, redishost);
 dataclient.auth(redispw);
 subclient = redis.createClient(redisport, redishost);
