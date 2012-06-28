@@ -77,7 +77,8 @@ task('install-npm-deps', [], function() {
 
 desc('jsint files');
 task('jshint', [], function(type) {
-    console.log('\n > Attempting to jshint files'.blue);
+    var msg = '\n > Attempting to jshint ' + type + ' files';
+    console.log(msg.blue);
     var count = 0
     ,   fileList
     ,   options;
