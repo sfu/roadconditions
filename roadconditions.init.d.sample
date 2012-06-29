@@ -13,10 +13,10 @@ REDISPWFILE="/etc/redispw"
 NODE="/usr/local/bin/node"
 SCRIPT="/var/nodeapps/roadconditions/server.js"
 REDIS_CLI=/usr/local/bin/redis-cli
-PIDFILE=/var/run/roadconditions.pid
-LOGFILE=/var/log/roadconditions.log
+PIDFILE=/tmp/roadconditions.pid
+LOGFILE=/var/nodeapps/roadconditions/roadconditions.log
 RUN_AS_USER=nodeuser
-ENVS='CAS_SERVICE=http://www.sfu.ca/security/sfuroadconditions'
+ENVS='CAS_SERVICE=http://www.sfu.ca/security/sfuroadconditions/login'
 
 start() {
     if [ -f $PIDFILE ] ; then
