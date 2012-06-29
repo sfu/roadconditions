@@ -59,6 +59,8 @@ var cssFiles = [
     __dirname + '/public/css/conditions.css'
 ];
 
+////////////// NPM
+
 desc('Install modules from npm');
 task('install-npm-deps', [], function() {
     console.log('\n > Attempting to install dependencies via npm\n'.blue);
@@ -84,6 +86,8 @@ task('install-npm-deps', [], function() {
         }
     });
 }, true);
+
+////////////// MANAGE JS AND CSS FILES
 
 desc('jsint files');
 task('jshint', [], function(type) {
