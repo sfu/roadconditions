@@ -1,0 +1,5 @@
+.git
+.gitignore
+.jshint*
+*.plist*
+roadconditions.init.d.*
