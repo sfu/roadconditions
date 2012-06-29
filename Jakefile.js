@@ -190,6 +190,9 @@ desc('runs the development server on os x');
 task('rundev', ['loaddev'], function() {
     console.log('\n > Starting development server on localhost:3000'.blue);
     var rundev = spawn('launchctl', ['start', devserverLabel]);
+    setTimeout(function() {
+        spawn('open', ['http://localhost:3000']);
+    },1000);
 });
 
 desc('stops the development server');
