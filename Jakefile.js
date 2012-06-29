@@ -34,6 +34,14 @@ var jslintFile = function(file) {
     return jshint.JSHINT.errors.lengh ? [1, jshint.JSHINT.errors] : [0, null];
 };
 
+var pathExists = function(path) {
+    var ret;
+        ret = fs.lstatSync(path);
+    } catch(e) {}
+
+    return ret ? true : false;
+};
+
 var clientJsFiles = [
     __dirname + '/public/js/admin.js',
     __dirname + '/public/js/menus.js',
