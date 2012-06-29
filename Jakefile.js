@@ -121,6 +121,12 @@ task('jshint', [], function(type) {
     });
 });
 
+desc('jshint server files');
+task('jshint-server', [], function() {
+    var hint = jake.Task.jshint;
+    hint.invoke.apply(hint, ['server']);
+    hint.reenable(true);
+});
 
 desc('minify client-side js files');
 task('minify-client-js', function() {
