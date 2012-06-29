@@ -239,6 +239,11 @@ task('stopdev', [], function() {
     });
 });
 
+desc('restarts the developement server');
+task('restartdev', ['stopdev', 'startdev'], function() {});
+
+////////////// DEPLOY THE APP
+
 desc('create versioned directory');
 task('createdir', [], function() {
     console.log('\n > Creating versioned directory'.blue);
@@ -277,6 +282,25 @@ task('symlink', [], function() {
         msg = ' + created symlink';
         console.log(msg.green);
     }
+});
+
+desc('copy files from temp location to deploy directory');
+task('install', [], function() {
+    console.log('\n > Attempting to install files in deploy directory'.blue);
+    var rsync = spawn('rsync', ['-a', '--exclude-from=deploy-exclude', '.', deployDir]);
+    rsync.stdout.on('data', function(data) {
+        console.log('    ' + data.grey);
+    });
+    rsync.stderr.on('data', function(data) {
+        console.log('    ' + data.grey);
+    });
+    rsync.on('exit', function(code) {
+        if (code === 0) {
+            console.log(' + finished installing files in deploy directory'.green);
+        } else {
+            throw new Error('rsync exited with error code ' + code);
+        }
+    });
 });
 
 desc('default task');
