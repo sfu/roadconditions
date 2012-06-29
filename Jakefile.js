@@ -5,7 +5,9 @@ var spawn = require('child_process').spawn
 ,   fileEnc = 'utf-8'
 ,   devserverLabel = 'ca.sfu.roadconditions'
 ,   devserverPlist = __dirname + '/' + devserverLabel + '.plist'
-,   pkg = require('./package.json');
+,   pkg = require('./package.json')
+,   deployBasepath = '/var/nodeapps/roadconditions'
+,   deployDir = deployBasepath + '@' + pkg.version;
 
 var uglify = function(file) {
     var uglyfyJS = require('uglify-js')
@@ -240,22 +242,19 @@ task('stopdev', [], function() {
 desc('create versioned directory');
 task('createdir', [], function() {
     console.log('\n > Creating versioned directory'.blue);
-
-    var basepath = '/var/nodeapps/'
-    ,   dirname = basepath + 'roadconditions@' + pkg.version
-    ,   msg;
+    var msg;
 
     // does the directory already exist?
-    if (pathExists(dirname)) {
-        msg = dirname + ' already exists. You should bump the version number and try again.';
+    if (pathExists(deployDir)) {
+        msg = deployDir + ' already exists. You should bump the version number and try again.';
         throw new Error(msg.red);
     }
 
-    var ret = fs.mkdirSync(dirname);
+    var ret = fs.mkdirSync(deployDir);
     if (ret) {
         throw new Error(ret);
     } else {
-        msg = ' + created versioned directory at ' + dirname;
+        msg = ' + created versioned directory at ' + deployDir;
         console.log(msg.green);
     }
 });
@@ -263,17 +262,15 @@ task('createdir', [], function() {
 desc('symlink versioned directory');
 task('symlink', [], function() {
     console.log('\n > Attempting to symlink versioned directory'.blue);
-    var basepath = '/var/nodeapps/roadconditions'
-    ,   dirname = basepath + '@' + pkg.version
-    ,   msg;
+    var msg;
 
     // remove the old symlink
     try {
-        fs.unlinkSync(basepath);
+        fs.unlinkSync(deployBasepath);
     } catch(e) {}
 
     // make new link
-    var ret = fs.symlinkSync(dirname, basepath);
+    var ret = fs.symlinkSync(deployDir, deployBasepath);
     if (ret) {
         throw new Error(ret);
     } else {
