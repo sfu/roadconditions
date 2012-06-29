@@ -238,7 +238,7 @@ task('stopdev', [], function() {
 });
 
 desc('create versioned directory');
-task('create-ver-dir', [], function() {
+task('createdir', [], function() {
     console.log('\n > Creating versioned directory'.blue);
 
     var basepath = '/var/nodeapps/'
