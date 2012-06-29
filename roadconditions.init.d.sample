@@ -16,40 +16,51 @@ REDIS_CLI=/usr/local/bin/redis-cli
 PIDFILE=/var/run/roadconditions.pid
 LOGFILE=/var/log/roadconditions.log
 RUN_AS_USER=nodeuser
-ENVS=''
+ENVS='CAS_SERVICE=http://www.sfu.ca/security/sfuroadconditions'
+
+start() {
+    if [ -f $PIDFILE ] ; then
+        echo "$PIDFILE exists, roadconditions server is already running or crashed"
+    else
+        if [ ! -f $REDISPWFILE ] ; then
+            echo "Redis password file does not exist or is empty"
+        else
+            echo "Starting roadconditions server..."
+            REDISPW=$(cat $REDISPWFILE)
+            touch $PIDFILE
+            chown $RUN_AS_USER:$RUN_AS_USER $PIDFILE
+            if [ $(whoami) = "$RUN_AS_USER" ] ; then
+                REDISPW=$REDISPW $ENVS $NODE $SCRIPT > $LOGFILE 2>&1
+            else
+                su - $RUN_AS_USER -c "REDISPW=$REDISPW $ENVS $NODE $SCRIPT > $LOGFILE 2>&1"
+            fi
+        fi
+    fi
+}
+
+stop() {
+    if [ ! -f $PIDFILE ] ; then
+        echo "$PIDFILE does not exist, process is not running"
+    else
+        PID=$(cat $PIDFILE)
+        echo "Stopping roadconditions server..."
+        kill $PID
+        while [ -x ${PIDFILE} ] ; do
+            echo "Waiting for roadconditions server to shutdown ..."
+            sleep 1
+        done
+        echo "roadconditions server stopped"
+    fi
+}
 
 case "$1" in
     start)
-        if [ -f $PIDFILE ] ; then
-            echo "$PIDFILE exists, roadconditions server is already running or crashed"
-        else
-            if [ ! -f $REDISPWFILE ] ; then
-                echo "Redis password file does not exist or is empty"
-            else
-                echo "Starting roadconditions server..."
-                REDISPW=$(cat $REDISPWFILE)
-                touch $PIDFILE
-                chown $RUN_AS_USER:$RUN_AS_USER $PIDFILE
-                if [ $(whoami) = "$RUN_AS_USER" ] ; then
-                    REDISPW=$REDISPW $ENVS $NODE $SCRIPT > $LOGFILE 2>&1
-                else
-                    su - $RUN_AS_USER -c "REDISPW=$REDISPW $ENVS $NODE $SCRIPT > $LOGFILE 2>&1"
-                fi
-            fi
-        fi
+        start
         ;;
     stop)
-        if [ ! -f $PIDFILE ] ; then
-            echo "$PIDFILE does not exist, process is not running"
-        else
-            PID=$(cat $PIDFILE)
-            echo "Stopping roadconditions server..."
-            kill $PID
-            while [ -x ${PIDFILE} ] ; do
-                echo "Waiting for roadconditions server to shutdown ..."
-                sleep 1
-            done
-            echo "roadconditions server stopped"
-        fi
+        stop
         ;;
+    restart)
+        stop
+        start
 esac
