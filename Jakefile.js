@@ -1,4 +1,4 @@
-/*global desc, task, complete*/
+/*global jake, desc, task, complete*/
 
 var spawn = require('child_process').spawn
 ,   fs = require('fs')
@@ -115,6 +115,10 @@ task('jshint', [], function(type) {
 
 desc('minify client-side js files');
 task('minify-client-js', function() {
+
+    var hint = jake.Task['jshint'];
+    hint.invoke.apply(hint, ['client']);
+
     console.log('\n > Attempting to minify client js files'.blue);
     var distDir = 'public/js';
 
