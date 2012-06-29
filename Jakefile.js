@@ -4,7 +4,8 @@ var spawn = require('child_process').spawn
 ,   fs = require('fs')
 ,   fileEnc = 'utf-8'
 ,   devserverLabel = 'ca.sfu.roadconditions'
-,   devserverPlist = __dirname + '/' + devserverLabel + '.plist';
+,   devserverPlist = __dirname + '/' + devserverLabel + '.plist'
+,   pkg = require('./package.json');
 
 var uglify = function(file) {
     var uglyfyJS = require('uglify-js')
