@@ -150,6 +150,7 @@ task('minify-client-js', function() {
 
 desc('minify css files');
 task('minify-css', [], function() {
+    console.log('\n > Attempting to minify css files'.blue);
     var less = require('less')
     ,   parser = new less.Parser()
     ,   path = require('path')
