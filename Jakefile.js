@@ -204,12 +204,12 @@ task('loaddev', [], function() {
     load.stderr.on('data', function (data) {
         throw new Error(data);
     });
-
 });
 
-
-desc('runs the development server on os x');
-task('rundev', ['loaddev'], function() {
+desc('startdev the development server on os x');
+task('startdev', [], function() {
+    jake.Task.prepfiles.invoke();
+    jake.Task.loaddev.invoke();
     console.log('\n > Starting development server on localhost:3000'.blue);
     var rundev = spawn('launchctl', ['start', devserverLabel]);
     setTimeout(function() {
