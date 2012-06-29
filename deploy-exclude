@@ -3,3 +3,7 @@
 .jshint*
 *.plist*
 roadconditions.init.d.*
+.DS_Store
+NOTES
+deploy-exclude
+Jakefile.js
