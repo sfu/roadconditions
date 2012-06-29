@@ -176,6 +176,16 @@ task('minify-css', [], function() {
     });
 });
 
+desc('prep all files');
+task('prepfiles', [], function() {
+    jake.Task['minify-css'].invoke();
+    jake.Task['jshint-server'].invoke();
+    var clienthint = jake.Task.jshint;
+    clienthint.invoke.apply(clienthint, ['client']);
+});
+
+////////////// DEVELOPMENT SERVER
+
 desc('loads the ca.sfu.roadconditions.plist file -- don\'t run directly');
 task('loaddev', [], function() {
     console.log('\n > Loading plist file into launchd'.blue);
