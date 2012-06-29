@@ -136,7 +136,7 @@ task('jshint-server', [], function() {
 desc('minify client-side js files');
 task('minify-client-js', function() {
 
-    var hint = jake.Task['jshint'];
+    var hint = jake.Task.jshint;
     hint.invoke.apply(hint, ['client']);
 
     console.log('\n > Attempting to minify client js files'.blue);
