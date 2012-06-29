@@ -9,7 +9,7 @@ var fs = require('fs')
 ,   redis = require('redis')
 ,   redispw = process.env.REDISPW
 ,   winston = require('winston')
-,   usegraphite = process.env.USEGRAPHITE || true
+,   usegraphite = (process.env.USEGRAPHITE) || true
 ,   graphitehost = process.env.GRAPHITEHOST || 'stats'
 ,   graphiteport = process.env.GRAPHITEPORT || 2003
 ,   redisport = process.env.REDISPORT || 6379
@@ -20,11 +20,18 @@ var fs = require('fs')
 ,   conditionsSchema = schema.Schema.create(JSON.parse(fs.readFileSync(schemaPath)))
 ,   port = process.env.PORT || 3000
 ,   serverid = os.hostname() + ':' + port
-,   usegraphite = process.env.USEGRAPHITE || true
 ,   cas, conditions, writeConditions, logger, winstonStream, dataclient, subclient, pubclient, graphite;
 
 // set up logging
-if (usegraphite) {
+if (typeof usegraphite === 'string') {
+    if (usegraphite === 'false') {
+        usegraphite = false;
+    } else {
+        usegraphite = true;
+    }
+}
+console.log(typeof usegraphite, usegraphite);
+if (usegraphite === 'true') {
     graphite = require('graphite').createClient('plaintext://' + graphitehost + ':' + graphiteport);
 }
 process.title = 'roadconditions';
