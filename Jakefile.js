@@ -37,6 +37,7 @@ var jslintFile = function(file) {
 
 var pathExists = function(path) {
     var ret;
+    try {
         ret = fs.lstatSync(path);
     } catch(e) {}
 
