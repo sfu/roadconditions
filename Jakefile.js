@@ -209,9 +209,52 @@ task('stopdev', [], function() {
     load.stderr.on('data', function (data) {
         throw new Error(data);
     });
-
 });
 
+desc('create versioned directory');
+task('create-ver-dir', [], function() {
+    console.log('\n > Creating versioned directory'.blue);
+
+    var basepath = '/var/nodeapps/'
+    ,   dirname = basepath + 'roadconditions@' + pkg.version
+    ,   msg;
+
+    // does the directory already exist?
+    if (pathExists(dirname)) {
+        msg = dirname + ' already exists. You should bump the version number and try again.';
+        throw new Error(msg.red);
+    }
+
+    var ret = fs.mkdirSync(dirname);
+    if (ret) {
+        throw new Error(ret);
+    } else {
+        msg = ' + created versioned directory at ' + dirname;
+        console.log(msg.green);
+    }
+});
+
+desc('symlink versioned directory');
+task('symlink', [], function() {
+    console.log('\n > Attempting to symlink versioned directory'.blue);
+    var basepath = '/var/nodeapps/roadconditions'
+    ,   dirname = basepath + '@' + pkg.version
+    ,   msg;
+
+    // remove the old symlink
+    try {
+        fs.unlinkSync(basepath);
+    } catch(e) {}
+
+    // make new link
+    var ret = fs.symlinkSync(dirname, basepath);
+    if (ret) {
+        throw new Error(ret);
+    } else {
+        msg = ' + created symlink';
+        console.log(msg.green);
+    }
+});
 
 desc('default task');
 task('default', [], function() {
