@@ -121,15 +121,6 @@ process.on('exit', function() {
     logger.info('process exiting');
 });
 
-process.on('SIGINT', function() {
-    logger.info('received SIGINT, process exiting');
-});
-
-process.on('SIGKILL', function() {
-    logger.info('received SIGKILL, process exiting');
-});
-
-
 dataclient.on('connect', function(e) {
     subclient.subscribe('roadconditions:update');
     subclient.on('message', function(channel, message) {
