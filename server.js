@@ -33,7 +33,7 @@ if (typeof usegraphite === 'string') {
         usegraphite = true;
     }
 }
-console.log(typeof usegraphite, usegraphite);
+
 if (usegraphite === 'true') {
     graphite = require('graphite').createClient('plaintext://' + graphitehost + ':' + graphiteport);
 }
