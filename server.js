@@ -20,7 +20,10 @@ var fs = require('fs')
 ,   conditionsSchema = schema.Schema.create(JSON.parse(fs.readFileSync(schemaPath)))
 ,   port = process.env.PORT || 3000
 ,   serverid = os.hostname() + ':' + port
+,   pidfile = __dirname + '/roadconditions.pid'
 ,   cas, conditions, writeConditions, logger, winstonStream, dataclient, subclient, pubclient, graphite;
+
+fs.writeFileSync(pidfile, process.pid, 'utf-8');
 
 // set up logging
 if (typeof usegraphite === 'string') {
