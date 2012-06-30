@@ -7,33 +7,30 @@
 # processname: roadconditions
 # pidfile: /var/run/roadconditions.pid
 
+. /etc/rc.d/init.d/functions
+
 PATH=/usr/local/bin:/sbin:/usr/bin:/bin
 
-REDISPWFILE="/etc/redispw"
+RPW=''
+CAS='http://www.sfu.ca/security/new-sfuroadconditions/login'
 NODE="/usr/local/bin/node"
-SCRIPT="/var/nodeapps/roadconditions/server.js"
-REDIS_CLI=/usr/local/bin/redis-cli
-PIDFILE=/tmp/roadconditions.pid
-LOGFILE=/var/nodeapps/roadconditions/roadconditions.log
+APP_DIR='/var/nodeapps/roadconditions'
+SCRIPT="$APP_DIR/server.js"
+PIDFILE="$APP_DIR/roadconditions.pid"
+LOGFILE="$APP_DIR/roadconditions.log"
 RUN_AS_USER=nodeuser
-ENVS='CAS_SERVICE=http://www.sfu.ca/security/sfuroadconditions/login'
 
 start() {
     if [ -f $PIDFILE ] ; then
-        echo "$PIDFILE exists, roadconditions server is already running or crashed"
+	PID=$(cat $PIDFILE)
+        echo "$PIDFILE exists, roadconditions server is already running or crashed ($PID)"
     else
-        if [ ! -f $REDISPWFILE ] ; then
-            echo "Redis password file does not exist or is empty"
+        echo "Starting roadconditions server..."
+        if [ $(whoami) = "$RUN_AS_USER" ] ; then
+            NODE_ENV=production REDISPW=$RPW CAS_SERVICE=$CAS $NODE $SCRIPT > $LOGFILE 2>&1 &
         else
-            echo "Starting roadconditions server..."
-            REDISPW=$(cat $REDISPWFILE)
-            touch $PIDFILE
-            chown $RUN_AS_USER:$RUN_AS_USER $PIDFILE
-            if [ $(whoami) = "$RUN_AS_USER" ] ; then
-                REDISPW=$REDISPW $ENVS $NODE $SCRIPT > $LOGFILE 2>&1
-            else
-                su - $RUN_AS_USER -c "REDISPW=$REDISPW $ENVS $NODE $SCRIPT > $LOGFILE 2>&1"
-            fi
+    	    CMD="NODE_ENV=production REDISPW='${RPW}' CAS_SERVICE=${CAS} $NODE $SCRIPT > $LOGFILE 2>&1 &"
+            su - $RUN_AS_USER -c "${CMD}"
         fi
     fi
 }
@@ -43,12 +40,13 @@ stop() {
         echo "$PIDFILE does not exist, process is not running"
     else
         PID=$(cat $PIDFILE)
-        echo "Stopping roadconditions server..."
+        echo "Stopping roadconditions server ($PID)..."
         kill $PID
         while [ -x ${PIDFILE} ] ; do
             echo "Waiting for roadconditions server to shutdown ..."
             sleep 1
         done
+	rm -rf $PIDFILE
         echo "roadconditions server stopped"
     fi
 }
