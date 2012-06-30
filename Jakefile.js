@@ -8,7 +8,6 @@ var spawn = require('child_process').spawn
 ,   pkg = require('./package.json')
 ,   deployBasepath = '/var/nodeapps/roadconditions'
 ,   deployDir = deployBasepath + '@' + pkg.version;
-
 var uglify = function(file) {
     var uglyfyJS = require('uglify-js')
     ,   path = require('path')
@@ -299,6 +298,30 @@ task('install', [], function() {
             console.log(' + finished installing files in deploy directory'.green);
         } else {
             throw new Error('rsync exited with error code ' + code);
+        }
+    });
+});
+
+desc('start app');
+task('start', [], function() {
+    console.log('\n > Attempting to (re)start roadconditions app\n'.blue);
+
+    var app = spawn('/sbin/service', ['roadconditions', 'restart']);
+
+    app.stdout.on('data', function (data) {
+        process.stdout.write(('    ' + data).grey);
+    });
+
+    app.stderr.on('data', function (data) {
+        process.stdout.write(('    ' + data).grey);
+    });
+
+    app.on('exit', function (code) {
+        if (code === 0) {
+            console.log('\n + started roadconditions app successfully'.green);
+            complete();
+        } else {
+            throw new Error('npm exited with error code ' + code);
         }
     });
 });
