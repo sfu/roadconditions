@@ -329,11 +329,11 @@ task('start', [], function() {
 desc('deploy the application');
 task('deploy', ['install-npm-deps'], function() {
     console.log('\n > Attempting to deploy roadconditions\n'.blue);
-    /*jake.Task.prepfiles.invoke();
+    jake.Task.prepfiles.invoke();
     jake.Task.createdir.invoke();
     jake.Task.symlink.invoke();
     jake.Task.install.invoke();
-    jake.Task.start.invoke(); */
+    jake.Task.start.invoke();
 });
 
 desc('default task');
