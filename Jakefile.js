@@ -86,7 +86,7 @@ task('install-npm-deps', [], function() {
             throw new Error('npm exited with error code ' + code);
         }
     });
-}, true);
+}, false);
 
 ////////////// MANAGE JS AND CSS FILES
 
