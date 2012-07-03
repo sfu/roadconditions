@@ -1,6 +1,4 @@
 node_modules
-!node_modules/express*
-!node_modules/winston-syslog*
 data/conditions.json
 NOTES
 rundev
