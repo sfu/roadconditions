@@ -21,6 +21,7 @@ var fs = require('fs')
 ,   port = process.env.PORT || 3000
 ,   serverid = os.hostname() + ':' + port
 ,   pidfile = __dirname + '/roadconditions.pid'
+,   pkg = JSON.parse(fs.readFileSync(__dirname + '/package.json'))
 ,   cas, conditions, writeConditions, logger, winstonStream, dataclient, subclient, pubclient, graphite;
 
 fs.writeFileSync(pidfile, process.pid, 'utf-8');
@@ -147,7 +148,7 @@ dataclient.on('connect', function(e) {
             if (typeof conditions === 'string') { logger.warn('conditions is still a string; re-parsing'); conditions = JSON.parse(conditions); }
         }
         app.listen(port);
-        logger.info('starting roadconditions server on port ' + port + ' in ' + app.settings.env + ' mode');
+        logger.info('starting roadconditions server version ' + pkg.version + ' on port ' + port + ' in ' + app.settings.env + ' mode');
     });
 });
 
