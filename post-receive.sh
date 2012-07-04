@@ -11,10 +11,10 @@ mkdir $TMPDIR
 echo "checking out files to $TMPDIR"
 git --work-tree=$TMPDIR checkout -f master
 cd $TMPDIR
-service roadconditions stop
 jake install-npm-deps
 jake prepfiles
 jake createdir
+service roadconditions stop
 jake symlink
 jake install
 jake start
