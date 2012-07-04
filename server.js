@@ -237,7 +237,10 @@ app.configure('production', function(){
             pass: redispw
         }),
         secret: 'YJrJ2wfqWRfVsaBVVFDYDKtmjAjKAXZ7AZKDtoGzaTrZPDDp',
-        expires: false
+        cookie: {
+            expires: false,
+            domain: '.sfu.ca'
+        }
     }));
     app.use(express.errorHandler());
 });
