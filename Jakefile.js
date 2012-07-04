@@ -180,6 +180,7 @@ task('minify-css', [], function() {
 
 desc('prep all files');
 task('prepfiles', [], function() {
+    jake.Task['minify-client-js'].invoke();
     jake.Task['minify-css'].invoke();
     jake.Task['jshint-server'].invoke();
     var clienthint = jake.Task.jshint;
