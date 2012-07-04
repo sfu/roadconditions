@@ -19,17 +19,18 @@ SCRIPT="$APP_DIR/server.js"
 PIDFILE="$APP_DIR/roadconditions.pid"
 LOGFILE="$APP_DIR/roadconditions.log"
 RUN_AS_USER=nodeuser
+BASE_PATH='/security/new-sfuroadconditions'
 
 start() {
     if [ -f $PIDFILE ] ; then
-	PID=$(cat $PIDFILE)
+    PID=$(cat $PIDFILE)
         echo "$PIDFILE exists, roadconditions server is already running or crashed ($PID)"
     else
         echo "Starting roadconditions server..."
         if [ $(whoami) = "$RUN_AS_USER" ] ; then
-            NODE_ENV=production REDISPW=$RPW CAS_SERVICE=$CAS $NODE $SCRIPT > $LOGFILE 2>&1 &
+            NODE_ENV=production REDISPW=$RPW CAS_SERVICE=$CAS BASEPATH=$BASE_PATH $NODE $SCRIPT > $LOGFILE 2>&1 &
         else
-    	    CMD="NODE_ENV=production REDISPW='${RPW}' CAS_SERVICE=${CAS} $NODE $SCRIPT > $LOGFILE 2>&1 &"
+        CMD="NODE_ENV=production REDISPW='${RPW}' CAS_SERVICE=${CAS} BASEPATH=${BASE_PATH} $NODE $SCRIPT > $LOGFILE 2>&1 &"
             su - $RUN_AS_USER -c "${CMD}"
         fi
     fi
@@ -46,7 +47,7 @@ stop() {
             echo "Waiting for roadconditions server to shutdown ..."
             sleep 1
         done
-	rm -rf $PIDFILE
+    rm -rf $PIDFILE
         echo "roadconditions server stopped"
     fi
 }
