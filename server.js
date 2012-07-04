@@ -34,7 +34,7 @@ if (typeof usegraphite === 'string') {
     }
 }
 
-if (usegraphite === 'true') {
+if (usegraphite) {
     graphite = require('graphite').createClient('plaintext://' + graphitehost + ':' + graphiteport);
 }
 process.title = 'roadconditions';
