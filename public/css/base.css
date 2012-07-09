@@ -427,7 +427,7 @@ h4 {
 /* Mobile Display */
 
 /* Landscape & Portrait Common */
-@media screen and (min-device-width: 320px) and (max-device-width: 480px) {
+@media screen and (min-width: 320px) and (max-width: 480px) {
 
     html {
         width: auto;
