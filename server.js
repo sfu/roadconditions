@@ -173,9 +173,23 @@ app.configure(function(){
     app.use(gzippo.staticGzip(__dirname + '/public'));
     app.enable('jsonp callback');
     app.helpers({
-        dateFormat: function(date, format) {
+        dateFormat: function(date, relative) {
             if (moment) {
-                return moment(new Date(date)).format(format);
+                if (!relative) {
+                    return moment(new Date(date)).format('[at] h:mm a [on] dddd, MMMM DD, YYYY');
+                }
+
+                // cache the default moment.calendar object and alter it to suit our needs
+                var calendar_cache = moment.calendar
+                ,   retval;
+                ['nextDay', 'nextWeek', 'lastDay', 'lastWeek', 'sameElse'].forEach(function(key) {
+                    moment.calendar[key] = '[at] h:mm a [on] dddd, MMMM DD, YYYY';
+                });
+                moment.calendar.sameDay = '[today at] h:mm a';
+                console.log(moment.calendar);
+                retval = moment(new Date(date)).calendar();
+                moment.calendar = calendar_cache;
+                return retval;
             } else {
                 return date;
             }

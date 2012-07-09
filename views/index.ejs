@@ -7,7 +7,7 @@
 
         <ul>
             <li><h2>The university is <span class="<%= conditions.campus.severity %>"><%= conditions.campus.status %></span></h2></li>
-            <li class="datestamp" data-lastupdated="<%= lastupdated %>">Report updated at <span><%= dateFormat(lastupdated, "h:mm a [on] MMMM DD YYYY") %><span></li>
+            <li class="datestamp" data-lastupdated="<%= lastupdated %>" title="Conditions updated <%= dateFormat(lastupdated, false) %>">Conditions updated <span><%= dateFormat(lastupdated, true) %><span></li>
         </ul>
 
     </div>
