@@ -41,6 +41,10 @@ span.warning {
 	color: #777;
 }
 
+.datestamp:hover {
+	cursor: pointer;
+}
+
 .datestamp span {
 	font-weight: bold;
 }
