@@ -168,6 +168,22 @@ app.configure(function(){
         stream: winstonStream,
         format: 'express :remote-ip - :user [:localtime] ":method :url HTTP/:http-version" :status :res[content-length] ":referrer" ":user-agent" :response-time'
     }));
+    app.set('basepath', process.env.BASEPATH);
+    app.set('basehost', process.env.BASEHOST);
+    app.use(express.cookieParser());
+    app.use(express.session({
+        store: new RedisStore({
+            host: redishost,
+            prefix: 'roadconditions:sess:',
+            pass: redispw
+        }),
+        secret: 'YJrJ2wfqWRfVsaBVVFDYDKtmjAjKAXZ7AZKDtoGzaTrZPDDp',
+        cookie: {
+            expires: false,
+            domain: '.sfu.ca'
+        }
+    }));
+    app.use(express.errorHandler());
     app.use(express.bodyParser());
     app.use(express.methodOverride());
     app.use(gzippo.staticGzip(__dirname + '/public'));
@@ -196,14 +212,18 @@ app.configure(function(){
         },
         renderHeadTags: function(all) {
             var templates = {
-                scripts: '<script src="js/FILENAME"></script>',
+                js: '<script src="js/FILENAME"></script>',
                 css: '<link rel="stylesheet" href="css/FILENAME">'
             }
             ,   buf = '';
             var rendertags = function(type, tmpl, arr) {
-                var buf = [];
+                var buf = [], filename;
                 for (var i = 0; i < arr.length; i++) {
-                    buf.push(tmpl.replace('FILENAME', arr[i]));
+                    filename = arr[i];
+                    if (type === 'css') {
+                        filename = process.env.NODE_ENV === 'production' ? filename + '-min.css' : filename + '.css';
+                    }
+                    buf.push(tmpl.replace('FILENAME', filename));
                 }
                 return buf.join('\n');
             };
@@ -215,9 +235,10 @@ app.configure(function(){
             return buf;
         },
         addBodyScriptTags: function(all) {
-            var buf = [];
+            var buf = [], filename;
             for (var i = 0; i < all.length; i++) {
-                buf.push('<script src="js/' + all[i] + '"></script>');
+                filename = process.env.NODE_ENV === 'production' ? all[i] + '-min.js' : all[i] + '.js';
+                buf.push('<script src="js/' + filename + '"></script>');
             }
             return buf.join('\n');
         }
@@ -225,39 +246,14 @@ app.configure(function(){
     app.dynamicHelpers({
         headResources: function(req, res) {
             return {
-                scripts: [],
-                css:['base-min.css']
+                js: [],
+                css:['base']
             };
         },
         bodyScripts: function(req, res) {
-            return ['menus-min.js'];
+            return ['menus'];
         }
     });
-});
-
-app.configure('development', function(){
-    app.use(express.cookieParser());
-    app.use(express.session({secret: 'YJrJ2wfqWRfVsaBVVFDYDKtmjAjKAXZ7AZKDtoGzaTrZPDDp', expires: false}));
-    app.use(express.errorHandler({ dumpExceptions: true, showStack: true }));
-});
-
-app.configure('production', function(){
-    app.set('basepath', process.env.BASEPATH);
-    app.set('basehost', process.env.BASEHOST);
-    app.use(express.cookieParser());
-    app.use(express.session({
-        store: new RedisStore({
-            host: redishost,
-            prefix: 'roadconditions:sess:',
-            pass: redispw
-        }),
-        secret: 'YJrJ2wfqWRfVsaBVVFDYDKtmjAjKAXZ7AZKDtoGzaTrZPDDp',
-        cookie: {
-            expires: false,
-            domain: '.sfu.ca'
-        }
-    }));
-    app.use(express.errorHandler());
 });
 
 // Authentication middleware
