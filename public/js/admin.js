@@ -307,7 +307,9 @@ var app = (function(Spine, $, exports, data) {
 
         addOne: function(link) {
             var view = new LinksItem( {item: link });
-            this.el.append(view.render().el);
+            // hackityhackhack
+            var el = $('#linkcategory-' + view.item.category_id);
+            el.append(view.render().el);
         },
 
         create: function() {
