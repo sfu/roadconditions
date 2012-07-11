@@ -41,6 +41,10 @@ span.warning {
 	color: #777;
 }
 
+.lastupdatedtime {
+	color: #bbb;
+}
+
 .datestamp:hover {
 	cursor: pointer;
 }
