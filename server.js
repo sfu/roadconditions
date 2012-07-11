@@ -202,7 +202,6 @@ app.configure(function(){
                     moment.calendar[key] = '[at] h:mm a [on] dddd, MMMM DD, YYYY';
                 });
                 moment.calendar.sameDay = '[today at] h:mm a';
-                console.log(moment.calendar);
                 retval = moment(new Date(date)).calendar();
                 moment.calendar = calendar_cache;
                 return retval;
