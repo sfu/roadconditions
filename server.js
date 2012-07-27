@@ -199,7 +199,7 @@ app.configure(function(){
                 var calendar_cache = moment.calendar
                 ,   retval;
                 ['nextDay', 'nextWeek', 'lastDay', 'lastWeek', 'sameElse'].forEach(function(key) {
-                    moment.calendar[key] = '[at] h:mm a [on] dddd, MMMM DD, YYYY';
+                    moment.calendar[key] = 'h:mm a [on] dddd, MMMM DD, YYYY';
                 });
                 moment.calendar.sameDay = '[today at] h:mm a';
                 retval = moment(new Date(date)).calendar();
