@@ -4,7 +4,7 @@
         "roads": {"status": "wet", "severity": "alert"},
         "adjacentroads": {"status": "not applicable", "severity": "warning"},
         "transit": {"status": "on schedule", "severity": "normal"},
-        "classes": {"status": "on schedule", "severity": "normal"},
+        "classes_and_exams": {"status": "on schedule", "severity": "normal"},
         "exams": {"status": "postponed", "severity": "alert"}
     },
 

@@ -69,23 +69,7 @@
                         }
                     }
                 },
-                "classes": {
-                    "type": "object",
-                    "properties": {
-                        "status": {
-                            "type": "string"
-                        },
-                        "severity": {
-                            "type": "string",
-                            "enum": [
-                                "normal",
-                                "warning",
-                                "alert"
-                            ]
-                        }
-                    }
-                },
-                "exams": {
+                "classes_exams": {
                     "type": "object",
                     "properties": {
                         "status": {

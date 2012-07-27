@@ -53,13 +53,20 @@
 </script>
 
 <script type="application/json" id="conditions_map">
-    {"campus":{"open":"normal","closed":"alert","reopened":"warning"},"roads":{"dry":"normal","partially clear":"warning","closed - see below":"alert","snow-covered":"alert","snow (beware of possible ice)":"alert","light snow":"warning","icy":"alert","wet":"warning","wet (beware of possible ice)":"warning"},"adjacentroads":{"not applicable":"normal","closed":"alert","use caution":"warning","use extreme caution":"alert"},"transit":{"on schedule":"normal","delayed":"warning","not running":"alert"},"classes":{"on schedule":"normal","cancelled (morning classes)":"alert","cancelled (afternoon classes)":"alert","cancelled (evening classes)":"alert","cancelled (all classes)":"alert","cancelled until further notice":"alert"},"exams":{"on schedule":"normal","postponed":"alert"}}
+    {"campus":{"open":"normal","closed":"alert","reopened":"warning"},"roads":{"dry":"normal","partially clear":"warning","closed - see below":"alert","snow-covered":"alert","snow (beware of possible ice)":"alert","light snow":"warning","icy":"alert","wet":"warning","wet (beware of possible ice)":"warning"},"adjacentroads":{"not applicable":"normal","closed":"alert","use caution":"warning","use extreme caution":"alert"},"transit":{"on schedule":"normal","delayed":"warning","not running":"alert"},"classes_exams":{"on schedule":"normal","cancelled (morning classes)":"alert","cancelled (afternoon classes)":"alert","cancelled (evening classes)":"alert","cancelled (all classes)":"alert","cancelled until further notice":"alert"}}
 </script>
 
 <script type="text/template" id="conditionItemTmpl">
     [%
         var severities = ['normal', 'warning', 'alert']
-        ,   val = name === 'adjacentroads' ? 'Adjacent roads' : name.toSentenceCase()
+        ,   conditions_map = {
+            campus: 'Campus',
+            roads: 'Roads',
+            adjacentroads: 'Adjacent Roads',
+            transit: 'Transit',
+            classes_exams: 'Classes and Exams'
+        }
+        ,   val = conditions_map.hasOwnProperty(name) ? conditions_map[name] : name.toSentenceCase()
         ,   selected;
     %]
 
