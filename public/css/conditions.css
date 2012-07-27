@@ -17,8 +17,7 @@ span.warning {
 }
 
 #status .primary {
-	padding: 14px 28px;
-	height: 190px;
+	padding: 45px 28px;
 	width: 190px;
 	background-color: #000;
 	float: left;
@@ -37,11 +36,15 @@ span.warning {
 	font-size: 36px;
 }
 
+#status .primary .datestamp {
+	display: none;
+}
+
 .datestamp {
 	color: #777;
 }
 
-.lastupdatedtime {
+.datestamp .lastupdatedtime {
 	color: #bbb;
 }
 
@@ -49,7 +52,7 @@ span.warning {
 	cursor: pointer;
 }
 
-.datestamp span {
+.lastupdatedtime {
 	font-weight: bold;
 }
 
@@ -136,6 +139,13 @@ span.warning {
 	margin-right: 0px;
 }
 
+#datestamp {
+	width: 830px;
+	clear: left;
+	float: left;
+	pading-top: 14px;
+}
+
 /* Mobile Display */
 
 /* Landscape & Portrait Common */
@@ -148,6 +158,11 @@ span.warning {
 	    float: none;
 	    height: auto;
 	    padding-bottom: 24px;
+	    padding-top:14px;
+	}
+
+	#status .primary .datestamp {
+		display: inline;
 	}
 
 	#status .secondary {
@@ -189,6 +204,10 @@ span.warning {
 	#links div {
 	    float: none;
 	    margin-right: none;
+	}
+
+	#datestamp {
+		display: none;
 	}
 }
 
