@@ -84,7 +84,9 @@
     </div>
 
     <script>
-        window.scrollTo(0, 1);
+        if (window.innerWidth <= 320) {
+            window.scrollTo(0, 65);
+        }
     </script>
     <%- addBodyScriptTags(bodyScripts) %>
 </body>
