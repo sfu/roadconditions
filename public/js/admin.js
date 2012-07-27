@@ -513,7 +513,7 @@ var app = (function(Spine, $, exports, data) {
             });
 
             tinyMCE.init({
-                mode: 'textareas',
+                mode: 'none',
                 theme: 'advanced',
                 plugins: 'paste',
                 theme_advanced_buttons1: 'bold,italic,|,link,unlink,|,cut,copy,paste,pastetext,pasteword',
