@@ -2,7 +2,7 @@
 source ~/.bash_profile
 source ~/.bashrc
 TMPDIR=/tmp/roadconditions
-
+SHA=`git rev-parse --verify HEAD`
 if [ -d "$TMPDIR" ]; then
         rm -rf $TMPDIR
 fi
@@ -16,7 +16,7 @@ jake prepfiles
 jake createdir
 service roadconditions stop
 jake symlink
-printf `git rev-parse --verify HEAD` > $TMPDIR/gitsha
+printf $SHA > $TMPDIR/gitsha
 jake install
 jake start
 cd ~
