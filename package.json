@@ -3,7 +3,7 @@
   "description": "Road Conditions application for SFU Safety & Risk Services (Security)",
   "author": "Graham Ballantyne <grahamb@sfu.ca>",
   "contributors": [ "Eryn Holbrook <hexaln@sfu.ca>" ],
-  "version": "1.0.9",
+  "version": "1.0.10",
   "repository": {
     "type": "git",
     "url": "https://github.com/sfu/node-cas-sfu"
