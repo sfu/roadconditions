@@ -303,6 +303,26 @@ task('install', [], function() {
     });
 });
 
+desc('get last git sha and put into a file');
+task('gitsha', [], function() {
+    console.log('\n > Attempting to create git sha file'.blue);
+    var gitsha = spawn('git', ['rev-parse', '--verify', 'HEAD']);
+    gitsha.stdout.on('data', function(data) {
+        data = data.toString();
+        fs.writeFileSync(deployDir + '/gitsha', data, 'utf-8');
+    });
+    gitsha.stderr.on('data', function(data) {
+        console.log('    ' + data.grey);
+    });
+    gitsha.on('exit', function(code) {
+        if (code === 0) {
+            console.log(' + finished writing git sha file'.green);
+        } else {
+            throw new Error('git exited with error code ' + code);
+        }
+    });
+});
+
 desc('start app');
 task('start', [], function() {
     console.log('\n > Attempting to (re)start roadconditions app\n'.blue);

@@ -17,6 +17,7 @@ jake createdir
 service roadconditions stop
 jake symlink
 jake install
+jake gitsha
 jake start
 cd ~
 rm -rf $TMPDIR
