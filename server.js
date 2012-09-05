@@ -308,7 +308,9 @@ app.get('/status', loggedin, function(req, res) {
                 memory: process.memoryUsage(),
                 uptime: process.uptime()
             },
-            headers:req.headers
+            headers:req.headers,
+            version: pkg.version,
+            server: serverid
           });
     }
 });
