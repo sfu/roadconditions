@@ -16,8 +16,8 @@ jake prepfiles
 jake createdir
 service roadconditions stop
 jake symlink
+printf `git rev-parse --verify HEAD` > $TMPDIR/gitsha
 jake install
-jake gitsha
 jake start
 cd ~
 rm -rf $TMPDIR
