@@ -515,8 +515,12 @@ var app = (function(Spine, $, exports, data) {
             tinyMCE.init({
                 mode: 'none',
                 theme: 'advanced',
+                oninit: 'setPlainText',
                 plugins: 'paste',
-                theme_advanced_buttons1: 'bold,italic,|,link,unlink,|,cut,copy,paste,pastetext,pasteword',
+                paste_postprocess: function(pl, o) {
+                    $(o.node).children().removeAttr('align style');
+                },
+                theme_advanced_buttons1: 'bold,italic,|,link,unlink,|,cut,copy,paste',
                 theme_advanced_buttons2: '',
                 theme_advanced_buttons3: '',
                 theme_advanced_toolbar_location : "top",
