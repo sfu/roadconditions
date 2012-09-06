@@ -32,6 +32,10 @@ span.warning {
 	color: #E3E30A;
 }
 
+#status .primary p {
+	text-align: left !important;
+}
+
 #status .primary .warning {
 	font-size: 36px;
 }
