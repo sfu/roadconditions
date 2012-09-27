@@ -304,6 +304,7 @@ app.get('/status', loggedin, function(req, res) {
         res.send(403);
     } else {
         res.send({
+            env: process.env.NODE_ENV,
             process: {
                 pid: process.pid,
                 memory: process.memoryUsage(),
