@@ -313,6 +313,7 @@ app.get('/status', loggedin, function(req, res) {
             version: pkg.version,
             server: serverid,
             commit: gitsha
+            redishost: redishost + ':' + redisport
           });
     }
 });
