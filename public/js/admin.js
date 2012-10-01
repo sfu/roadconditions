@@ -544,6 +544,17 @@ var app = (function(Spine, $, exports, data) {
             new Announcements({ attr: 'announcements' });
             new Sidebars( { attr: 'sidebars' } );
             new Categories();
+
+            window.isDirty = false;
+            $('#updateconditions :input').change(function() {
+                window.isDirty = true;
+            });
+            window.onbeforeunload = function() {
+                if (window.isDirty) {
+                    return 'You\'ve made changes on this page which aren\'t saved. If you leave you will lose these changes.';
+                }
+            };
+
         }
     });
 
