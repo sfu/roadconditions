@@ -251,8 +251,10 @@ task('createdir', [], function() {
 
     // does the directory already exist?
     if (pathExists(deployDir)) {
-        msg = deployDir + ' already exists. You should bump the version number and try again.';
-        throw new Error(msg.red);
+        var renameDirTo = deployDir + '-' + new Date().getTime();
+        msg = deployDir + ' already exists. Setting aside as ' + renameDirTo;
+        console.log(msg.yellow);
+        fs.renameSync(deployDir, renameDirTo);
     }
 
     var ret = fs.mkdirSync(deployDir);
