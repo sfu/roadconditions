@@ -38,4 +38,3 @@ fi
 BUCKET="stats.nodeapps.roadconditions.deploy.$HOST"
 DATE=`date +%s`
 echo "$BUCKET 1 $DATE" | nc $GRAPHITE 2003
-
