@@ -28,4 +28,14 @@ printf $SHA > $TMPDIR/gitsha
 jake install
 jake start
 cd ~
-rm -rf $TMPDIR
+
+# log deploy to graphite
+HOST=`echo $HOSTNAME | cut -d . -f 1 -`
+GRAPHITE=stats.tier2.sfu.ca
+if [ "$HOST" = "node-stage" ] ; then
+    GRAPHITE=stats.its.sfu.ca
+fi
+BUCKET="stats.nodeapps.roadconditions.deploy.$HOST"
+DATE=`date +%s`
+echo "$BUCKET 1 $DATE" | nc $GRAPHITE 2003
+
