@@ -283,7 +283,16 @@ app.get('/isup', function(req, res) {
 });
 
 app.get('/admin', loggedin, function(req, res) {
-    res.render('admin', {auth: req.session.auth, current: conditions});
+    var tmplData = {auth: req.session.auth, current: conditions};
+    if (process.env.NODE_ENV === 'development') {
+        tmplData.devInfo = {
+            version: pkg.version,
+            server: serverid,
+            commit: gitsha,
+            redishost: redishost + ':' + redisport
+        };
+    }
+    res.render('admin', tmplData);
 });
 
 // Authentication Routes
@@ -315,7 +324,7 @@ app.get('/admin/status', loggedin, function(req, res) {
             server: serverid,
             commit: gitsha,
             redishost: redishost + ':' + redisport
-          });
+        });
     }
 });
 
