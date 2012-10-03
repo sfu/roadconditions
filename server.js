@@ -128,7 +128,7 @@ dataclient.on('connect', function(e) {
     subclient.on('message', function(channel, message) {
         if (channel === 'roadconditions:update') {
             message = JSON.parse(message);
-            if (message.server !== serverid) {
+            if (message.server !== serverid || process.env.NODE_ENV !== 'production') {
                 dataclient.get('roadconditions:data', function(err, data) {
                     logger.info('RECEIVED UPDATED DATA FROM ' + message.server);
                     conditions = JSON.parse(data);
