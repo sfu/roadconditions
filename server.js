@@ -299,7 +299,7 @@ app.get('/logout', function(req, res) {
 });
 
 // Server status routes
-app.get('/status', loggedin, function(req, res) {
+app.get('/admin/status', loggedin, function(req, res) {
     if (req.session.auth.maillist !=='roadconditions-admins') {
         res.send(403);
     } else {
