@@ -2,6 +2,20 @@
 <% headResources.js.push('vendor/jquery-1.7.1.min.js', 'vendor/jquery.validate.min.js', 'vendor/spine-build.js', 'vendor/ejs_production.js', 'vendor/tiny_mce/tiny_mce.js', 'vendor/moment/moment.min.js'); %>
 <% bodyScripts.push('admin'); %>
 
+<% if (process.env.NODE_ENV === 'development') { %>
+
+<div id="developmentControls">
+    <h2>Development Mode</h2>
+    <ul>
+        <li>Version: <%= devInfo.version %></li>
+        <li>Commit: <%= devInfo.commit %></li>
+        <li>Server: <%= devInfo.server %></li>
+        <li>Redis host: <%= devInfo.redishost %></li>
+    </ul>
+</div>
+
+<% } %>
+
 <div id="metaContainer">
     <ul>
         <li><a href="./">View Current Conditions Page</a></li>
