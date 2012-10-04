@@ -7,3 +7,4 @@ roadconditions.init.d.*
 NOTES
 deploy-exclude
 Jakefile.js
+forceRedisStageUpdate.sh
