@@ -325,7 +325,8 @@ app.get('/admin/info', loggedin, function(req, res) {
             version: pkg.version,
             server: serverid,
             commit: gitsha,
-            redishost: redishost + ':' + redisport
+            redishost: redishost + ':' + redisport,
+            process_env: process.env
         });
     }
 });
