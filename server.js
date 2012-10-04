@@ -307,8 +307,8 @@ app.get('/logout', function(req, res) {
     res.redirect(cas.options.casBase + cas.options.logoutPath + "?url=" + encodeURIComponent(cas.options.service) + "&urltext=Click+here+to+return+to+the+Road+Conditions+application.");
 });
 
-// Server status routes
-app.get('/admin/status', loggedin, function(req, res) {
+// Server info routes
+app.get('/admin/info', loggedin, function(req, res) {
     if (req.session.auth.maillist !=='roadconditions-admins') {
         res.send(403);
     } else {
