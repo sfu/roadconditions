@@ -286,6 +286,7 @@ app.get('/admin', loggedin, function(req, res) {
     var tmplData = {auth: req.session.auth, current: conditions};
     if (process.env.NODE_ENV === 'development') {
         tmplData.devInfo = {
+            node: process.version,
             version: pkg.version,
             server: serverid,
             commit: gitsha,
@@ -319,6 +320,7 @@ app.get('/admin/info', loggedin, function(req, res) {
                 memory: process.memoryUsage(),
                 uptime: process.uptime()
             },
+            node: process.version,
             headers:req.headers,
             version: pkg.version,
             server: serverid,
