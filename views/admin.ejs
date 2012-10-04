@@ -4,7 +4,7 @@
 
 <% if (process.env.NODE_ENV === 'development') { %>
 
-<div id="developmentControls">
+<div id="devInfo">
     <h2>Development Mode</h2>
     <ul>
         <li>Version: <%= devInfo.version %></li>
@@ -13,7 +13,6 @@
         <li>Redis host: <%= devInfo.redishost %></li>
     </ul>
 </div>
-
 <% } %>
 
 <div id="metaContainer">
