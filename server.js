@@ -219,7 +219,7 @@ app.configure(function(){
                 for (var i = 0; i < arr.length; i++) {
                     filename = arr[i];
                     if (type === 'css') {
-                        filename = process.env.NODE_ENV === 'production' ? filename + '-min.css' : filename + '.css';
+                        filename += '.css';
                     }
                     buf.push(tmpl.replace('FILENAME', filename));
                 }
@@ -235,7 +235,7 @@ app.configure(function(){
         addBodyScriptTags: function(all) {
             var buf = [], filename;
             for (var i = 0; i < all.length; i++) {
-                filename = process.env.NODE_ENV === 'production' ? all[i] + '-min.js' : all[i] + '.js';
+                filename = all[i] + '.js';
                 buf.push('<script src="js/' + filename + '"></script>');
             }
             return buf.join('\n');
