@@ -1,6 +1,5 @@
 var fs = require('fs')
 ,   os = require('os')
-,   gzippo = require('gzippo')
 ,   express = require('express')
 ,   cabinet = require('cabinet')
 ,   moment = require('moment')
@@ -188,7 +187,6 @@ app.configure(function(){
     app.use(express.errorHandler());
     app.use(express.bodyParser());
     app.use(express.methodOverride());
-    app.use(gzippo.staticGzip(__dirname + '/public'));
     app.enable('jsonp callback');
     app.helpers({
         dateFormat: function(date, relative) {
