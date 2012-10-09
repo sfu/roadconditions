@@ -499,6 +499,7 @@ var app = (function(Spine, $, exports, data) {
                             var msg = $('<div>').html('<strong>Success!</strong><br/>The Road and Traffic Report has been updated.');
                             $('#messageContainer').removeClass().addClass('success').empty().append(msg).fadeIn().delay(4000).fadeOut();
                             window.scrollTo(0, 1);
+                            window.isDirty = false;
                         },
                         error: function(jqXHR, textStatus, errorThrown) {
                             var msg = $('<div>').html('<strong>Oh dear, something has gone awry.</strong><br/>The server reported an error when trying to process the form. Please wait a moment and try again.');
