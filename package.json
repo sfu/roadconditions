@@ -15,7 +15,8 @@
   "private": true,
   "dependencies": {
     "cas-sfu": "1.0.x",
-    "cabinet": "0.1.3",
+    "cabinet": "https://github.com/grahamb/cabinet/tarball/master",
+    "connect-redis": "1.3.x",
     "ejs": "0.7.1",
     "express": "https://github.com/sfu/express/tarball/basepath-patch-2.x",
     "graphite": "0.0.6",
