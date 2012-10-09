@@ -184,7 +184,6 @@ app.configure(function(){
             domain: '.sfu.ca'
         }
     }));
-    app.use(express.errorHandler());
     app.use(express.bodyParser());
     app.use(express.methodOverride());
     app.enable('jsonp callback');
@@ -253,6 +252,24 @@ app.configure(function(){
             return ['menus'];
         }
     });
+});
+
+app.configure('development', function() {
+    app.use(express.errorHandler({ dumpExceptions: true, showStack: true }));
+    app.use(cabinet(__dirname + '/public'));
+});
+
+app.configure('production', function() {
+    app.use(express.errorHandler());
+    app.use(cabinet(__dirname + '/public', {
+        gzip: true,
+        minjs: true,
+        css: true,
+        cache: {
+            maxSize: 16384,
+            maxObjects: 256
+        }
+    }));
 });
 
 // Authentication middleware
