@@ -26,6 +26,7 @@ var fs = require('fs')
 ,   cas, conditions, writeConditions, logger, winstonStream, dataclient, subclient, pubclient, graphite;
 
 fs.writeFileSync(pidfile, process.pid, 'utf-8');
+process.title = 'roadconditions';
 
 // set up logging
 if (typeof usegraphite === 'string') {
@@ -39,7 +40,6 @@ if (typeof usegraphite === 'string') {
 if (usegraphite) {
     graphite = require('graphite').createClient('plaintext://' + graphitehost + ':' + graphiteport);
 }
-process.title = 'roadconditions';
 require('winston-syslog').Syslog;
 require('winston-mail').Mail;
 logger = new (winston.Logger)({
