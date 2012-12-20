@@ -520,7 +520,10 @@ var app = (function(Spine, $, exports, data) {
                 paste_remove_spans: true,
                 paste_strip_class_attributes: 'all',
                 paste_postprocess: function(pl, o) {
+                    var html = o.node.innerHTML
+                    ,   nbspregex = /<p>&nbsp;<\/p>/g
                     $(o.node).children().removeAttr('align style');
+                    o.node.innerHTML = html.replace('nbspregex', '');
                 },
                 theme_advanced_buttons1: 'bold,italic,|,link,unlink,|,cut,copy,paste',
                 theme_advanced_buttons2: '',
