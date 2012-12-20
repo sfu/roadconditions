@@ -517,6 +517,8 @@ var app = (function(Spine, $, exports, data) {
                 theme: 'advanced',
                 oninit: 'setPlainText',
                 plugins: 'paste',
+                paste_remove_spans: true,
+                paste_strip_class_attributes: 'all',
                 paste_postprocess: function(pl, o) {
                     $(o.node).children().removeAttr('align style');
                 },
