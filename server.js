@@ -23,6 +23,7 @@ var fs = require('fs')
 ,   pidfile = __dirname + '/roadconditions.pid'
 ,   pkg = JSON.parse(fs.readFileSync(__dirname + '/package.json'))
 ,   gitsha = fs.readFileSync(__dirname + '/gitsha', 'utf-8')
+,   releasedate = fs.readFileSync(__dirname + '/releasedate', 'utf-8')
 ,   cas, conditions, writeConditions, logger, winstonStream, dataclient, subclient, pubclient, graphite;
 
 fs.writeFileSync(pidfile, process.pid, 'utf-8');
@@ -312,7 +313,8 @@ app.get('/status', loggedin, function(req, res) {
             headers:req.headers,
             version: pkg.version,
             server: serverid,
-            commit: gitsha
+            commit: gitsha,
+            releasedate: new Date(releasedate).toString()
           });
     }
 });
