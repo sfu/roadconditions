@@ -1,25 +1,87 @@
-set :application, "set your application name here"
-set :repository,  "set your repository location here"
+set :stages,        %w(production staging)
+set :default_stage, "staging"
+require "capistrano/ext/multistage"
 
-# set :scm, :git # You can set :scm explicitly or Capistrano will make an intelligent guess based on known version control directory names
-# Or: `accurev`, `bzr`, `cvs`, `darcs`, `git`, `mercurial`, `perforce`, `subversion` or `none`
+def current_git_branch
+  branch = `git symbolic-ref HEAD 2> /dev/null`.strip.gsub(/^refs\/heads\//, '')
+  puts "Deploying branch #{branch}"
+  branch
+end
 
-role :web, "your web-server here"                          # Your HTTP server, Apache/etc
-role :app, "your app-server here"                          # This may be the same as your `Web` server
-role :db,  "your primary db-server here", :primary => true # This is where Rails migrations will run
-role :db,  "your slave db-server here"
+set :application,   "roadconditions"
+set :repository,    "grahamb@icat-graham.its.sfu.ca:/Users/grahamb/code/sfu/roadconditions"
+set :scm,           :git
+set :user,          "nodeuser"
+set :branch,        current_git_branch
+set :deploy_via,    :remote_cache
+set :deploy_to,     "/var/nodeapps/roadconditions"
+set :use_sudo,      false
+set :node_env,      "production"
+default_run_options[:pty] = true
+ssh_options[:paranoid] = false
+ssh_options[:keys] = [File.join(ENV["HOME"], ".ssh", "id_rsa")]
 
-# if you want to clean up old releases on each deploy uncomment this:
-# after "deploy:restart", "deploy:cleanup"
 
-# if you're still using the script/reaper helper you will need
-# these http://github.com/rails/irs_process_scripts
 
-# If you are using Passenger mod_rails uncomment this:
-# namespace :deploy do
-#   task :start do ; end
-#   task :stop do ; end
-#   task :restart, :roles => :app, :except => { :no_release => true } do
-#     run "#{try_sudo} touch #{File.join(current_path,'tmp','restart.txt')}"
-#   end
-# end
+
+# this tells capistrano what to do when you deploy
+namespace :deploy do
+
+  desc <<-DESC
+  A macro-task that updates the code and fixes the symlink.
+  DESC
+  task :default do
+    transaction do
+      update_code
+      node.node_modules_symlink
+      node.npminstall
+      symlink
+    end
+  end
+
+    task :update_code, :except => { :no_release => true } do
+        on_rollback { run "rm -rf #{release_path}; true" }
+        strategy.deploy!
+    end
+
+    task :after_deploy do
+        cleanup
+    end
+
+    task :restart do
+        run "/sbin/service roadconditions stop"
+        run "/sbin/service roadconditions start"
+    end
+
+end
+
+namespace :node do
+
+    desc "Create node_modules symlink"
+    task :node_modules_symlink do
+        run "cd #{latest_release} && ln -s #{shared_path}/node_modules node_modules"
+    end
+
+    desc "Install node modules with npm"
+    task :npminstall do
+        run "cd #{latest_release} && npm install"
+    end
+end
+
+namespace :roadconditions do
+
+    desc "Get the sha of the current HEAD and write to a file"
+    task :gitsha do
+        run "cd #{latest_release} && git rev-parse --verify HEAD > gitsha"
+    end
+
+    desc "Get the release date and write it to a file"
+    task :releasedate do
+        releasedate = Time.now.to_i * 1000
+        run "cd #{latest_release} && echo #{releasedate} > releasedate"
+    end
+end
+
+after(:deploy, "roadconditions:gitsha")
+after(:deploy, "roadconditions:releasedate")
+after(:deploy, "deploy:restart")
