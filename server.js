@@ -20,9 +20,10 @@ var fs = require('fs')
 ,   conditionsSchema = schema.Schema.create(JSON.parse(fs.readFileSync(schemaPath)))
 ,   port = process.env.PORT || 3000
 ,   serverid = os.hostname() + ':' + port
-,   pidfile = __dirname + '/roadconditions.pid'
+,   pidfile = '/tmp/roadconditions.pid'
 ,   pkg = JSON.parse(fs.readFileSync(__dirname + '/package.json'))
 ,   gitsha = fs.readFileSync(__dirname + '/gitsha', 'utf-8')
+,   releasedate = fs.readFileSync(__dirname + '/releasedate', 'utf-8')
 ,   cas, conditions, writeConditions, logger, winstonStream, dataclient, subclient, pubclient, graphite;
 
 fs.writeFileSync(pidfile, process.pid, 'utf-8');
@@ -342,8 +343,10 @@ app.get('/admin/info', loggedin, function(req, res) {
             server: serverid,
             commit: gitsha,
             redishost: redishost + ':' + redisport,
-            process_env: process.env
-        });
+            process_env: process.env,
+            releasedate: new Date(parseInt(releasedate, 10)).toString(),
+            cwd: __dirname
+          });
     }
 });
 
