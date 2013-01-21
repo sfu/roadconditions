@@ -314,7 +314,8 @@ app.get('/status', loggedin, function(req, res) {
             version: pkg.version,
             server: serverid,
             commit: gitsha,
-            releasedate: new Date(releasedate).toString()
+            releasedate: new Date(releasedate).toString(),
+            cwd: __dirname
           });
     }
 });
