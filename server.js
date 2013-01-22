@@ -20,13 +20,11 @@ var fs = require('fs')
 ,   conditionsSchema = schema.Schema.create(JSON.parse(fs.readFileSync(schemaPath)))
 ,   port = process.env.PORT || 3000
 ,   serverid = os.hostname() + ':' + port
-,   pidfile = process.env.PID_FILE ? process.env.PID_FILE : '/tmp/roadconditions.pid'
 ,   pkg = JSON.parse(fs.readFileSync(__dirname + '/package.json'))
 ,   gitsha = fs.readFileSync(__dirname + '/gitsha', 'utf-8')
 ,   releasedate = fs.readFileSync(__dirname + '/releasedate', 'utf-8')
 ,   cas, conditions, writeConditions, logger, winstonStream, dataclient, subclient, pubclient, graphite;
 
-fs.writeFileSync(pidfile, process.pid, 'utf-8');
 process.title = 'roadconditions';
 
 // set up logging
@@ -150,7 +148,7 @@ dataclient.on('connect', function(e) {
             if (typeof conditions === 'string') { logger.warn('conditions is still a string; re-parsing'); conditions = JSON.parse(conditions); }
         }
         app.listen(port);
-        logger.info('starting roadconditions server version ' + pkg.version + ' on port ' + port + ' in ' + app.settings.env + ' mode');
+        logger.info('starting roadconditions server version ' + pkg.version + ' on port ' + port + ' in ' + app.settings.env + ' mode, PID: ' + process.pid);
     });
 });
 
