@@ -4,6 +4,14 @@ window.exports = {};
 
 var app = (function(Spine, $, exports, data) {
 
+    var stripwhitespace = function() {
+        $('textarea').each(function() {
+            var html = this.innerHTML
+            ,   nbspregex = /<p>&nbsp;<\/p>\n/g;
+            this.innerHTML = html.replace(nbspregex, '');
+        });
+    };
+
     /********************************************************
         CONDITIONS
     ********************************************************/
@@ -484,6 +492,12 @@ var app = (function(Spine, $, exports, data) {
                         sidebars: Sidebar.serialize(),
                         links: Category.serialize()
                     };
+
+                    var nbspregex = /<p>&nbsp;<\/p>\n/g;
+                    for (var i = 0; i < data.announcements.length; i++) {
+                        data.announcements[i] = data.announcements[i].replace(nbspregex, '');
+                    }
+
                     $.ajax({
                         type: 'POST',
                         url: form.action,
@@ -521,10 +535,8 @@ var app = (function(Spine, $, exports, data) {
                 paste_remove_spans: true,
                 paste_strip_class_attributes: 'all',
                 paste_postprocess: function(pl, o) {
-                    var html = o.node.innerHTML
-                    ,   nbspregex = /<p>&nbsp;<\/p>/g;
                     $(o.node).children().removeAttr('align style');
-                    o.node.innerHTML = html.replace(nbspregex, '');
+                    o.node.innerHTML = o.node.innerHTML.replace(/<p>\s*(<br>|&nbsp;)\s*<\/p>/ig, "");
                 },
                 theme_advanced_buttons1: 'bold,italic,|,link,unlink,|,cut,copy,paste',
                 theme_advanced_buttons2: '',
