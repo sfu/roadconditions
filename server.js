@@ -28,6 +28,7 @@ var fs = require('fs')
 process.title = 'roadconditions';
 releasedate = fs.existsSync(releasedatefile) ? fs.readFileSync(releasedatefile, 'utf-8') : null;
 gitsha = fs.existsSync(gitshafile) ? fs.readFileSync(gitshafile, 'utf-8') : null;
+gitsha = gitsha.replace(/(\n|\r)+$/, '');
 
 // set up logging
 if (typeof usegraphite === 'string') {
@@ -309,7 +310,9 @@ app.get('/admin', loggedin, function(req, res) {
             version: pkg.version,
             server: serverid,
             commit: gitsha,
-            redishost: redishost + ':' + redisport
+            redishost: redishost + ':' + redisport,
+            releasedate: releasedate ? new Date(parseInt(releasedate, 10)).toString() : null,
+            cwd: __dirname
         };
     }
     res.render('admin', tmplData);
