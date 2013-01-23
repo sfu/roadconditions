@@ -70,6 +70,7 @@ logger = new (winston.Logger)({
 });
 winstonStream = {
     write: function(str) {
+        str = str.replace(/(\n|\r)+$/, '');
         logger.info(str);
     }
 };
