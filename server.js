@@ -331,7 +331,7 @@ app.get('/admin/info', loggedin, function(req, res) {
     if (req.session.auth.maillist !=='roadconditions-admins') {
         res.send(403);
     } else {
-        res.send({
+        var data = {
             env: process.env.NODE_ENV,
             process: {
                 pid: process.pid,
@@ -345,9 +345,10 @@ app.get('/admin/info', loggedin, function(req, res) {
             commit: gitsha,
             redishost: redishost + ':' + redisport,
             process_env: process.env,
-            releasedate: new Date(parseInt(releasedate, 10)).toString(),
+            releasedate: releasedate ? new Date(parseInt(releasedate, 10)).toString() : null,
             cwd: __dirname
-          });
+        };
+        res.send(data);
     }
 });
 
