@@ -21,11 +21,13 @@ var fs = require('fs')
 ,   port = process.env.PORT || 3000
 ,   serverid = os.hostname() + ':' + port
 ,   pkg = JSON.parse(fs.readFileSync(__dirname + '/package.json'))
-,   gitsha = fs.readFileSync(__dirname + '/gitsha', 'utf-8')
-,   releasedate = fs.readFileSync(__dirname + '/releasedate', 'utf-8')
-,   cas, conditions, writeConditions, logger, winstonStream, dataclient, subclient, pubclient, graphite;
+,   gitshafile = __dirname + '/gitsha'
+,   releasedatefile = __dirname + '/releasedate'
+,   cas, conditions, writeConditions, logger, winstonStream, dataclient, subclient, pubclient, graphite, releasedate, gitsha;
 
 process.title = 'roadconditions';
+releasedate = fs.existsSync(releasedatefile) ? fs.readFileSync(releasedatefile, 'utf-8') : null;
+gitsha = fs.existsSync(gitshafile) ? fs.readFileSync(gitshafile, 'utf-8') : null;
 
 // set up logging
 if (typeof usegraphite === 'string') {
