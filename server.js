@@ -120,8 +120,9 @@ app.on('error', function(err) {
     logger.error('EXPRESS ERROR: ' + err);
 });
 
-process.on('exit', function() {
-    logger.info('process exiting');
+process.on('SIGTERM', function() {
+    logger.warn('received SIGTERM request, stopping roadconditions server PID: ' + process.pid);
+    process.exit(0);
 });
 
 dataclient.on('connect', function(e) {
