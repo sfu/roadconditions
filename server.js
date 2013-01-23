@@ -266,7 +266,7 @@ app.configure('production', function() {
     app.use(cabinet(__dirname + '/public', {
         gzip: true,
         minjs: true,
-        css: true,
+        mincss: true,
         cache: {
             maxSize: 16384,
             maxObjects: 256
