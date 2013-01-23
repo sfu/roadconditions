@@ -40,10 +40,6 @@ namespace :deploy do
         strategy.deploy!
     end
 
-    task :after_deploy do
-        cleanup
-    end
-
     task :restart do
         find_servers_for_task(current_task).each do |server|
             run_locally "ssh #{user}@#{server} /etc/init.d/roadconditions restart"
@@ -82,3 +78,4 @@ end
 after(:deploy, "roadconditions:gitsha")
 after(:deploy, "roadconditions:releasedate")
 after(:deploy, "deploy:restart")
+after "deploy:restart", "deploy:cleanup"
