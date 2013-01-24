@@ -7,19 +7,18 @@
 
         <ul>
             <li><h2>Burnaby Campus is <span class="<%= conditions.campus.severity %>"><%= conditions.campus.status %></span></h2></li>
-            <li class="datestamp" data-lastupdated="<%= lastupdated %>" title="Conditions updated <%= dateFormat(lastupdated, false) %>">Conditions updated <span class="lastupdatedtime"><%= dateFormat(lastupdated, true) %></span>. This report will be updated as conditions change.</li>
         </ul>
 
     </div>
 
     <div class="secondary">
+        <p class="datestamp" data-lastupdated="<%= lastupdated %>" title="Conditions updated <%= dateFormat(lastupdated, false) %>">Conditions updated <span class="lastupdatedtime"><%= dateFormat(lastupdated, true) %></span>. This report will be updated as conditions change.</p>
         <ul>
             <li>University roads: <span class="<%= conditions.roads.severity %>"><%= conditions.roads.status %></span></li>
             <li>Adjacent roads: <span class="<%= conditions.adjacentroads.severity %>"><%= conditions.adjacentroads.status %></span></li>
             <li>Classes and exams are: <span class="<%= conditions.classes_exams.severity %>"><%= conditions.classes_exams.status %></span></li>
             <li>Translink buses are: <span class="<%= conditions.transit.severity %>"><%= conditions.transit.status %></span></li>
         </ul>
-
     </div>
 
 </div>
@@ -75,10 +74,6 @@
             </ul>
         </div>
     <% } %>
-</div>
-
-<div id="datestamp">
-    <p title="Conditions updated at <%= dateFormat(lastupdated, false) %>">Conditions updated <span class="lastupdatedtime"><%= dateFormat(lastupdated, true) %></span>. This report will be updated as conditions change.</p>
 </div>
 
 <script type="text/javascript">

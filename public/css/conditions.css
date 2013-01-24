@@ -40,22 +40,6 @@ span.warning {
 	font-size: 36px;
 }
 
-#status .primary .datestamp {
-	display: none;
-}
-
-.datestamp {
-	color: #777;
-}
-
-.datestamp .lastupdatedtime {
-	color: #bbb;
-}
-
-.datestamp:hover {
-	cursor: pointer;
-}
-
 .lastupdatedtime {
 	font-weight: bold;
 }
@@ -65,7 +49,7 @@ span.warning {
 	width: 540px;
 	float: left;
 	margin-left: 32px;
-	padding-top: 32px;
+	/*padding-top: 32px;*/
 	font-size: 16px;
 	line-height: 18px;
 }
@@ -81,6 +65,10 @@ span.warning {
 
 #status .secondary li {
 	border-bottom: 1px dotted #fff;
+}
+
+.datestamp {
+	font-size: 12px;
 }
 
 #announcements {
@@ -143,13 +131,6 @@ span.warning {
 	margin-right: 0px;
 }
 
-#datestamp {
-	width: 830px;
-	clear: left;
-	float: left;
-	pading-top: 14px;
-}
-
 /* Mobile Display */
 
 /* Landscape & Portrait Common */
@@ -163,10 +144,6 @@ span.warning {
 	    height: auto;
 	    padding-bottom: 24px;
 	    padding-top:14px;
-	}
-
-	#status .primary .datestamp {
-		display: inline;
 	}
 
 	#status .secondary {
@@ -208,10 +185,6 @@ span.warning {
 	#links div {
 	    float: none;
 	    margin-right: none;
-	}
-
-	#datestamp {
-		display: none;
 	}
 }
 

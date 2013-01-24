@@ -1,7 +1,7 @@
 var fs = require('fs')
 ,   os = require('os')
-,   gzippo = require('gzippo')
 ,   express = require('express')
+,   cabinet = require('cabinet')
 ,   moment = require('moment')
 ,   schema = require('schema')('conditions')
 ,   cas = require('cas-sfu')
@@ -20,12 +20,15 @@ var fs = require('fs')
 ,   conditionsSchema = schema.Schema.create(JSON.parse(fs.readFileSync(schemaPath)))
 ,   port = process.env.PORT || 3000
 ,   serverid = os.hostname() + ':' + port
-,   pidfile = __dirname + '/roadconditions.pid'
 ,   pkg = JSON.parse(fs.readFileSync(__dirname + '/package.json'))
-,   gitsha = fs.readFileSync(__dirname + '/gitsha', 'utf-8')
-,   cas, conditions, writeConditions, logger, winstonStream, dataclient, subclient, pubclient, graphite;
+,   gitshafile = __dirname + '/gitsha'
+,   releasedatefile = __dirname + '/releasedate'
+,   cas, conditions, writeConditions, logger, winstonStream, dataclient, subclient, pubclient, graphite, releasedate, gitsha;
 
-fs.writeFileSync(pidfile, process.pid, 'utf-8');
+process.title = 'roadconditions';
+releasedate = fs.existsSync(releasedatefile) ? fs.readFileSync(releasedatefile, 'utf-8') : null;
+gitsha = fs.existsSync(gitshafile) ? fs.readFileSync(gitshafile, 'utf-8') : null;
+gitsha = gitsha.replace(/(\n|\r)+$/, '');
 
 // set up logging
 if (typeof usegraphite === 'string') {
@@ -39,7 +42,6 @@ if (typeof usegraphite === 'string') {
 if (usegraphite) {
     graphite = require('graphite').createClient('plaintext://' + graphitehost + ':' + graphiteport);
 }
-process.title = 'roadconditions';
 require('winston-syslog').Syslog;
 require('winston-mail').Mail;
 logger = new (winston.Logger)({
@@ -69,6 +71,7 @@ logger = new (winston.Logger)({
 });
 winstonStream = {
     write: function(str) {
+        str = str.replace(/(\n|\r)+$/, '');
         logger.info(str);
     }
 };
@@ -119,8 +122,9 @@ app.on('error', function(err) {
     logger.error('EXPRESS ERROR: ' + err);
 });
 
-process.on('exit', function() {
-    logger.info('process exiting');
+process.on('SIGTERM', function() {
+    logger.warn('received SIGTERM request, stopping roadconditions server PID: ' + process.pid);
+    process.exit(0);
 });
 
 dataclient.on('connect', function(e) {
@@ -128,7 +132,7 @@ dataclient.on('connect', function(e) {
     subclient.on('message', function(channel, message) {
         if (channel === 'roadconditions:update') {
             message = JSON.parse(message);
-            if (message.server !== serverid) {
+            if (message.server !== serverid || process.env.NODE_ENV !== 'production') {
                 dataclient.get('roadconditions:data', function(err, data) {
                     logger.info('RECEIVED UPDATED DATA FROM ' + message.server);
                     conditions = JSON.parse(data);
@@ -149,7 +153,7 @@ dataclient.on('connect', function(e) {
             if (typeof conditions === 'string') { logger.warn('conditions is still a string; re-parsing'); conditions = JSON.parse(conditions); }
         }
         app.listen(port);
-        logger.info('starting roadconditions server version ' + pkg.version + ' on port ' + port + ' in ' + app.settings.env + ' mode');
+        logger.info('starting roadconditions server version ' + pkg.version + ' on port ' + port + ' in ' + app.settings.env + ' mode, PID: ' + process.pid);
     });
 });
 
@@ -184,10 +188,8 @@ app.configure(function(){
             domain: '.sfu.ca'
         }
     }));
-    app.use(express.errorHandler());
     app.use(express.bodyParser());
     app.use(express.methodOverride());
-    app.use(gzippo.staticGzip(__dirname + '/public'));
     app.enable('jsonp callback');
     app.helpers({
         dateFormat: function(date, relative) {
@@ -221,7 +223,7 @@ app.configure(function(){
                 for (var i = 0; i < arr.length; i++) {
                     filename = arr[i];
                     if (type === 'css') {
-                        filename = process.env.NODE_ENV === 'production' ? filename + '-min.css' : filename + '.css';
+                        filename += '.css';
                     }
                     buf.push(tmpl.replace('FILENAME', filename));
                 }
@@ -237,7 +239,7 @@ app.configure(function(){
         addBodyScriptTags: function(all) {
             var buf = [], filename;
             for (var i = 0; i < all.length; i++) {
-                filename = process.env.NODE_ENV === 'production' ? all[i] + '-min.js' : all[i] + '.js';
+                filename = all[i] + '.js';
                 buf.push('<script src="js/' + filename + '"></script>');
             }
             return buf.join('\n');
@@ -254,6 +256,24 @@ app.configure(function(){
             return ['menus'];
         }
     });
+});
+
+app.configure('development', function() {
+    app.use(express.errorHandler({ dumpExceptions: true, showStack: true }));
+    app.use(cabinet(__dirname + '/public'));
+});
+
+app.configure('production', function() {
+    app.use(express.errorHandler());
+    app.use(cabinet(__dirname + '/public', {
+        gzip: true,
+        minjs: true,
+        mincss: true,
+        cache: {
+            maxSize: 16384,
+            maxObjects: 256
+        }
+    }));
 });
 
 // Authentication middleware
@@ -283,7 +303,19 @@ app.get('/isup', function(req, res) {
 });
 
 app.get('/admin', loggedin, function(req, res) {
-    res.render('admin', {auth: req.session.auth, current: conditions});
+    var tmplData = {auth: req.session.auth, current: conditions};
+    if (process.env.NODE_ENV === 'development') {
+        tmplData.devInfo = {
+            node: process.version,
+            version: pkg.version,
+            server: serverid,
+            commit: gitsha,
+            redishost: redishost + ':' + redisport,
+            releasedate: releasedate ? new Date(parseInt(releasedate, 10)).toString() : null,
+            cwd: __dirname
+        };
+    }
+    res.render('admin', tmplData);
 });
 
 // Authentication Routes
@@ -298,22 +330,29 @@ app.get('/logout', function(req, res) {
     res.redirect(cas.options.casBase + cas.options.logoutPath + "?url=" + encodeURIComponent(cas.options.service) + "&urltext=Click+here+to+return+to+the+Road+Conditions+application.");
 });
 
-// Server status routes
-app.get('/status', loggedin, function(req, res) {
+// Server info routes
+app.get('/admin/info', loggedin, function(req, res) {
     if (req.session.auth.maillist !=='roadconditions-admins') {
         res.send(403);
     } else {
-        res.send({
+        var data = {
+            env: process.env.NODE_ENV,
             process: {
                 pid: process.pid,
                 memory: process.memoryUsage(),
                 uptime: process.uptime()
             },
+            node: process.version,
             headers:req.headers,
             version: pkg.version,
             server: serverid,
-            commit: gitsha
-          });
+            commit: gitsha,
+            redishost: redishost + ':' + redisport,
+            process_env: process.env,
+            releasedate: releasedate ? new Date(parseInt(releasedate, 10)).toString() : null,
+            cwd: __dirname
+        };
+        res.send(data);
     }
 });
 

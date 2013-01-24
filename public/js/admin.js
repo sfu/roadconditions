@@ -4,6 +4,14 @@ window.exports = {};
 
 var app = (function(Spine, $, exports, data) {
 
+    var stripwhitespace = function() {
+        $('textarea').each(function() {
+            var html = this.innerHTML
+            ,   nbspregex = /<p>&nbsp;<\/p>\n/g;
+            this.innerHTML = html.replace(nbspregex, '');
+        });
+    };
+
     /********************************************************
         CONDITIONS
     ********************************************************/
@@ -484,6 +492,12 @@ var app = (function(Spine, $, exports, data) {
                         sidebars: Sidebar.serialize(),
                         links: Category.serialize()
                     };
+
+                    var nbspregex = /<p>&nbsp;<\/p>\n/g;
+                    for (var i = 0; i < data.announcements.length; i++) {
+                        data.announcements[i] = data.announcements[i].replace(nbspregex, '');
+                    }
+
                     $.ajax({
                         type: 'POST',
                         url: form.action,
@@ -499,6 +513,7 @@ var app = (function(Spine, $, exports, data) {
                             var msg = $('<div>').html('<strong>Success!</strong><br/>The Road and Traffic Report has been updated.');
                             $('#messageContainer').removeClass().addClass('success').empty().append(msg).fadeIn().delay(4000).fadeOut();
                             window.scrollTo(0, 1);
+                            window.isDirty = false;
                         },
                         error: function(jqXHR, textStatus, errorThrown) {
                             var msg = $('<div>').html('<strong>Oh dear, something has gone awry.</strong><br/>The server reported an error when trying to process the form. Please wait a moment and try again.');
@@ -520,10 +535,8 @@ var app = (function(Spine, $, exports, data) {
                 paste_remove_spans: true,
                 paste_strip_class_attributes: 'all',
                 paste_postprocess: function(pl, o) {
-                    var html = o.node.innerHTML
-                    ,   nbspregex = /<p>&nbsp;<\/p>/g;
                     $(o.node).children().removeAttr('align style');
-                    o.node.innerHTML = html.replace(nbspregex, '');
+                    o.node.innerHTML = o.node.innerHTML.replace(/<p>\s*(<br>|&nbsp;)\s*<\/p>/ig, "");
                 },
                 theme_advanced_buttons1: 'bold,italic,|,link,unlink,|,cut,copy,paste',
                 theme_advanced_buttons2: '',
@@ -549,6 +562,17 @@ var app = (function(Spine, $, exports, data) {
             new Announcements({ attr: 'announcements' });
             new Sidebars( { attr: 'sidebars' } );
             new Categories();
+
+            window.isDirty = false;
+            $('#updateconditions :input').change(function() {
+                window.isDirty = true;
+            });
+            window.onbeforeunload = function() {
+                if (window.isDirty) {
+                    return 'You\'ve made changes on this page which aren\'t saved. If you leave you will lose these changes.';
+                }
+            };
+
         }
     });
 
