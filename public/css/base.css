@@ -316,7 +316,7 @@ ul#services li input#submit:hover{
     src: url('../fonts/dinpro-regular-webfont.eot?#iefix') format('embedded-opentype'),
          url('../fonts/dinpro-regular-webfont.woff') format('woff'),
          url('../fonts/dinpro-regular-webfont.ttf') format('truetype'),
-         url('../fonts/adinpro-regular-webfont.svg#DINProRegular') format('svg');
+         url('../fonts/dinpro-regular-webfont.svg#DINProRegular') format('svg');
     font-weight: normal;
     font-style: normal;
 }
