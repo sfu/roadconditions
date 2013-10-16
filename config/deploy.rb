@@ -12,13 +12,13 @@ set :application,   "roadconditions"
 set :repository,    "git@github.com:sfu/roadconditions.git"
 set :scm,           :git
 set :user,          "nodeuser"
-set :deploy_via,    :remote_cache
 set :deploy_to,     "/var/nodeapps/roadconditions"
 set :use_sudo,      false
 set :node_env,      "production"
 default_run_options[:pty] = true
 ssh_options[:paranoid] = false
 ssh_options[:keys] = [File.join(ENV["HOME"], ".ssh", "id_rsa")]
+set :ssh_options, {:forward_agent => true}
 
 # this tells capistrano what to do when you deploy
 namespace :deploy do
