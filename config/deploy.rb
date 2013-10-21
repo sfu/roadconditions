@@ -20,6 +20,12 @@ ssh_options[:paranoid] = false
 ssh_options[:keys] = [File.join(ENV["HOME"], ".ssh", "id_rsa")]
 set :ssh_options, {:forward_agent => true}
 
+if (ENV.has_key?('gateway') && ENV['gateway'].downcase == "true")
+  gateway_user =  ENV['gateway_user'] || ENV['USER']
+  set :gateway, "#{gateway_user}@welcome.its.sfu.ca"
+end
+
+
 # this tells capistrano what to do when you deploy
 namespace :deploy do
 
