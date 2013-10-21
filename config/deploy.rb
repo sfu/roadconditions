@@ -29,7 +29,7 @@ namespace :deploy do
   task :default do
     transaction do
       update_code
-      node.node_modules_symlink
+      #node.node_modules_symlink
       node.npminstall
       symlink
     end
