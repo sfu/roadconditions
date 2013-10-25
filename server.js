@@ -21,11 +21,10 @@ var fs = require('fs')
 ,   port = process.env.PORT || 3000
 ,   serverid = os.hostname() + ':' + port
 ,   pkg = JSON.parse(fs.readFileSync(__dirname + '/package.json'))
-,   releasedatefile = __dirname + '/releasedate'
-,   cas, conditions, writeConditions, logger, winstonStream, dataclient, subclient, pubclient, graphite, releasedate;
+,   cas, conditions, writeConditions, logger, winstonStream, dataclient, subclient, pubclient, graphite, config;
 
 process.title = 'roadconditions';
-releasedate = fs.existsSync(releasedatefile) ? fs.readFileSync(releasedatefile, 'utf-8') : null;
+
 
 // set up logging
 if (typeof usegraphite === 'string') {
@@ -312,7 +311,6 @@ app.get('/admin', loggedin, function(req, res) {
             version: pkg.version,
             server: serverid,
             redishost: redishost + ':' + redisport,
-            releasedate: releasedate ? new Date(parseInt(releasedate, 10)).toString() : null,
             cwd: __dirname
         };
     }
@@ -349,7 +347,6 @@ app.get('/admin/info', loggedin, function(req, res) {
             server: serverid,
             redishost: redishost + ':' + redisport,
             process_env: process.env,
-            releasedate: releasedate ? new Date(parseInt(releasedate, 10)).toString() : null,
             cwd: __dirname
         };
         res.send(data);

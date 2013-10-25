@@ -65,15 +65,6 @@ namespace :node do
     end
 end
 
-namespace :roadconditions do
-
-    desc "Get the release date and write it to a file"
-    task :releasedate do
-        releasedate = Time.now.to_i * 1000
-        run "cd #{latest_release} && echo #{releasedate} > releasedate"
-    end
-end
-
 after(:deploy, "roadconditions:releasedate")
 after(:deploy, "deploy:restart")
 after "deploy:restart", "deploy:cleanup"
