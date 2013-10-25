@@ -21,4 +21,9 @@
             "host": "syslog-server"
         }
     }
+
+    "cas_service": null,
+
+    "basepath": null,
+    "basehost": null
 }
