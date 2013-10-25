@@ -509,7 +509,7 @@ var app = (function(Spine, $, exports, data) {
                             $('input[type="submit"]').attr('disabled', false);
                         },
                         success: function(data, textStatus, jqXHR) {
-                            $('#lastupdated span').text(moment(new Date(data.lastupdated)).format('h:mm a [on] MMMM DD YYYY'));
+                            $('#lastupdated span').text(moment(new Date(data.lastupdated)).format('[at] h:mm a [on] dddd, MMMM DD, YYYY'));
                             var msg = $('<div>').html('<strong>Success!</strong><br/>The Road and Traffic Report has been updated.');
                             $('#messageContainer').removeClass().addClass('success').empty().append(msg).fadeIn().delay(4000).fadeOut();
                             window.scrollTo(0, 1);
