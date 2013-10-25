@@ -39,6 +39,21 @@ if (typeof usegraphite === 'string') {
     }
 }
 
+// alter moment's nextDay', 'nextWeek', 'lastDay', 'lastWeek', 'sameElse' to be the same full-date string
+(function(moment) {
+    var langStrings = {
+        calendar: {
+            sameDay: '[today at] h:mm a'
+        }
+    };
+
+    ['nextDay', 'nextWeek', 'lastDay', 'lastWeek', 'sameElse'].forEach(function(key) {
+        langStrings.calendar[key] = 'h:mm a [on] dddd, MMMM DD, YYYY';
+    });
+    moment.lang('en', langStrings);
+})(moment);
+
+
 if (usegraphite) {
     graphite = require('graphite').createClient('plaintext://' + graphitehost + ':' + graphiteport);
 }
@@ -197,17 +212,7 @@ app.configure(function(){
                 if (!relative) {
                     return moment(new Date(date)).format('[at] h:mm a [on] dddd, MMMM DD, YYYY');
                 }
-
-                // cache the default moment.calendar object and alter it to suit our needs
-                var calendar_cache = moment.calendar
-                ,   retval;
-                ['nextDay', 'nextWeek', 'lastDay', 'lastWeek', 'sameElse'].forEach(function(key) {
-                    moment.calendar[key] = 'h:mm a [on] dddd, MMMM DD, YYYY';
-                });
-                moment.calendar.sameDay = '[today at] h:mm a';
-                retval = moment(new Date(date)).calendar();
-                moment.calendar = calendar_cache;
-                return retval;
+                return moment(new Date(date)).calendar();
             } else {
                 return date;
             }
