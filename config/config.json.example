@@ -1,18 +1,24 @@
 {
     "port": 3000,
 
-    "redishost": "redismaster",
-    "redisport": 6379,
-    "redispassword": "xxxxxxxxxxx",
+    "redis": {
+        "host": "redis-server",
+        "port": 6379,
+        "password": "xxxxx"
+    },
 
-    "usegraphite": true,
-    "graphitehost": "stats",
-    "graphiteport": 2003,
+    "graphite": {
+        "enabled": true,
+        "host": "graphite-server",
+        "port": 2003
+    },
 
-    "devnull": "devnull.tier2.sfu.ca",
-
-    "basepath": "",
-    "basehost": "",
-
-    "cas_service": ""
+    "logging": {
+        "console": { "enabled": true },
+        "mail": { "enabled": false },
+        "syslog": {
+            "enabled": true,
+            "host": "syslog-server"
+        }
+    }
 }
