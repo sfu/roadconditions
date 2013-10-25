@@ -65,7 +65,7 @@ namespace :roadconditions do
 
   desc "Copy environment-speficic config file"
   task :copy_config do
-    run "cp #{shared_path}/config/#{config_file} #{latest_release}/config"
+    run "cp #{shared_path}/config/config.json #{latest_release}/config"
   end
 
 end
