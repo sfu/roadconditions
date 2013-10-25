@@ -1,5 +1,6 @@
 var fs = require('fs')
 ,   os = require('os')
+,   path = require('path')
 ,   express = require('express')
 ,   cabinet = require('cabinet')
 ,   moment = require('moment')
@@ -7,33 +8,24 @@ var fs = require('fs')
 ,   cas = require('cas-sfu')
 ,   RedisStore = require('connect-redis')(express)
 ,   redis = require('redis')
-,   redispw = process.env.REDISPW
 ,   winston = require('winston')
-,   usegraphite = (process.env.USEGRAPHITE) || true
-,   graphitehost = process.env.GRAPHITEHOST || 'stats'
-,   graphiteport = process.env.GRAPHITEPORT || 2003
-,   redisport = process.env.REDISPORT || 6379
-,   redishost = process.env.REDISHOST || 'redis1'
-,   app = module.exports = express.createServer()
+,   configFile = process.env.CONFIGFILE || './config/config.json'
 ,   defaultConditionsPath = __dirname + '/data/conditions_default.json'
 ,   schemaPath = __dirname + '/data/conditions_schema.json'
 ,   conditionsSchema = schema.Schema.create(JSON.parse(fs.readFileSync(schemaPath)))
-,   port = process.env.PORT || 3000
-,   serverid = os.hostname() + ':' + port
 ,   pkg = JSON.parse(fs.readFileSync(__dirname + '/package.json'))
-,   cas, conditions, writeConditions, logger, winstonStream, dataclient, subclient, pubclient, graphite, config;
+,   serverid, app, cas, conditions, writeConditions, logger, winstonStream, dataclient, subclient, pubclient, graphite, config;
 
 process.title = 'roadconditions';
 
-
-// set up logging
-if (typeof usegraphite === 'string') {
-    if (usegraphite === 'false') {
-        usegraphite = false;
-    } else {
-        usegraphite = true;
-    }
+try {
+    config = require(path.resolve(configFile));
+} catch (e) {
+    throw new Error(e);
 }
+
+serverid = os.hostname() + ':' + config.port;
+app = module.exports = express.createServer();
 
 // alter moment's nextDay', 'nextWeek', 'lastDay', 'lastWeek', 'sameElse' to be the same full-date string
 (function(moment) {
@@ -50,9 +42,10 @@ if (typeof usegraphite === 'string') {
 })(moment);
 
 
-if (usegraphite) {
-    graphite = require('graphite').createClient('plaintext://' + graphitehost + ':' + graphiteport);
+if (config.graphite && config.graphite.enabled) {
+    graphite = require('graphite').createClient('plaintext://' + config.graphite.host + ':' + config.graphite.port || 2003);
 }
+
 require('winston-syslog').Syslog;
 require('winston-mail').Mail;
 logger = new (winston.Logger)({
@@ -62,7 +55,7 @@ logger = new (winston.Logger)({
             handleExceptions: true
         }),
         new (winston.transports.Syslog)({
-            host: process.env.DEVNULL || 'devnull.tier2.sfu.ca',
+            host: config.logging.syslog.host,
             facility: 'user',
             localhost: serverid,
             type: 'RFC5424',
@@ -92,7 +85,7 @@ writeConditions = function(data) {
         if (err) {
             logger.error('REDIS ERROR WRITING CONDITIONS: ' + err);
         } else {
-            if (usegraphite) {
+            if (config.graphite && config.graphite.enabled) {
                 graphite.write({'stats.nodeapps.roadconditions.updates': 1}, function(err) {
                     if (err) {
                         logger.error('Error writing to graphite (stats.nodeapps.roadconditions.updates ' + err.toString());
@@ -104,14 +97,14 @@ writeConditions = function(data) {
     });
 };
 // Set up redis clients
-dataclient = redis.createClient(redisport, redishost);
-subclient = redis.createClient(redisport, redishost);
-pubclient = redis.createClient(redisport, redishost);
+dataclient = redis.createClient(config.redis.port, config.redis.host);
+subclient = redis.createClient(config.redis.port, config.redis.host);
+pubclient = redis.createClient(config.redis.port, config.redis.host);
 
-if (redispw) {
-    dataclient.auth(redispw);
-    subclient.auth(redispw);
-    pubclient.auth(redispw);
+if (config.redis.password) {
+    dataclient.auth(config.redis.password);
+    subclient.auth(config.redis.password);
+    pubclient.auth(config.redis.password);
 }
 
 
@@ -163,8 +156,8 @@ dataclient.on('connect', function(e) {
             // for some reason, in dev, the above JSON.parse isn't actually doing anything. it's fine in production and I can't be arsed to figure out why, so this is here:
             if (typeof conditions === 'string') { logger.warn('conditions is still a string; re-parsing'); conditions = JSON.parse(conditions); }
         }
-        app.listen(port);
-        logger.info('starting roadconditions server version ' + pkg.version + ' on port ' + port + ' in ' + app.settings.env + ' mode, PID: ' + process.pid);
+        app.listen(config.port);
+        logger.info('starting roadconditions server version ' + pkg.version + ' on port ' + config.port + ' in ' + app.settings.env + ' mode, PID: ' + process.pid);
     });
 });
 
@@ -184,14 +177,14 @@ app.configure(function(){
         stream: winstonStream,
         format: 'express :remote-ip - :user [:localtime] ":method :url HTTP/:http-version" :status :res[content-length] ":referrer" ":user-agent" :response-time'
     }));
-    app.set('basepath', process.env.BASEPATH);
-    app.set('basehost', process.env.BASEHOST);
+    if (config.basepath) { app.set('basepath', config.basepath); }
+    if (config.basehost) { app.set('basehost', config.basepath); }
     app.use(express.cookieParser());
     app.use(express.session({
         store: new RedisStore({
-            host: redishost,
+            host: config.redis.host,
             prefix: 'roadconditions:sess:',
-            pass: redispw
+            pass: config.redis.password
         }),
         secret: 'YJrJ2wfqWRfVsaBVVFDYDKtmjAjKAXZ7AZKDtoGzaTrZPDDp',
         cookie: {
@@ -279,7 +272,7 @@ app.configure('production', function() {
 
 // Authentication middleware
 var casauth = cas.getMiddleware({
-    service: process.env.CAS_SERVICE || 'http://' + serverid + '/login',
+    service: config.cas_service || 'http://' + serverid + '/login',
     allow: '!roadconditions-admins,!roadconditions-supervisors,!roadconditions-dispatchers',
     userObject: 'auth'
 });
@@ -310,7 +303,7 @@ app.get('/admin', loggedin, function(req, res) {
             node: process.version,
             version: pkg.version,
             server: serverid,
-            redishost: redishost + ':' + redisport,
+            redishost: config.redis.host + ':' + config.redis.port,
             cwd: __dirname
         };
     }
@@ -335,6 +328,7 @@ app.get('/admin/info', loggedin, function(req, res) {
         res.send(403);
     } else {
         var data = {
+            config: config,
             env: process.env.NODE_ENV,
             process: {
                 pid: process.pid,
@@ -345,7 +339,6 @@ app.get('/admin/info', loggedin, function(req, res) {
             headers:req.headers,
             version: pkg.version,
             server: serverid,
-            redishost: redishost + ':' + redisport,
             process_env: process.env,
             cwd: __dirname
         };
