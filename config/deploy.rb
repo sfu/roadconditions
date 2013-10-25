@@ -2,12 +2,6 @@ set :stages,        %w(production_all production_1 production_2 staging)
 set :default_stage, "staging"
 require "capistrano/ext/multistage"
 
-def current_git_branch
-  branch = `git symbolic-ref HEAD 2> /dev/null`.strip.gsub(/^refs\/heads\//, '')
-  puts "Deploying branch #{branch}"
-  branch
-end
-
 set :application,   "roadconditions"
 set :repository,    "git@github.com:sfu/roadconditions.git"
 set :scm,           :git
