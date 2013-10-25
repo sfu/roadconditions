@@ -35,8 +35,8 @@ namespace :deploy do
   task :default do
     transaction do
       update_code
-      #node.node_modules_symlink
       node.npminstall
+      roadconditions.copy_config
       symlink
     end
   end
@@ -63,8 +63,17 @@ namespace :node do
     task :npminstall do
         run "cd #{latest_release} && npm install"
     end
+
 end
 
-after(:deploy, "roadconditions:releasedate")
+namespace :roadconditions do
+
+  desc "Copy environment-speficic config file"
+  task :copy_config do
+    run "cp #{shared_path}/config/#{config_file} #{latest_release}/config"
+  end
+
+end
+
 after(:deploy, "deploy:restart")
 after "deploy:restart", "deploy:cleanup"
