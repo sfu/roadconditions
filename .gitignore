@@ -5,5 +5,5 @@ public/js/*-min.js
 public/css/*-min.css
 *.log
 *.pid
-config/config.json*
+config/config*json
 !config/config.json.example
