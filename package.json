@@ -16,16 +16,16 @@
   "dependencies": {
     "cas-sfu": "1.0.x",
     "cabinet": "https://github.com/grahamb/cabinet/tarball/master",
-    "connect-redis": "1.3.x",
-    "ejs": "0.7.1",
+    "connect-redis": "1.4.x",
+    "ejs": "0.8.x",
     "express": "https://github.com/sfu/express/tarball/basepath-patch-2.x",
     "graphite": "0.0.6",
-    "gzippo": "0.1.4",
-    "moment": "1.5.0",
-    "redis": "0.7.x",
-    "schema": "0.2.0",
-    "winston": "0.6.x",
+    "gzippo": "0.2.x",
+    "moment": "2.3.x",
+    "redis": "0.9.x",
+    "schema": "0.2.x",
+    "winston": "0.7.x",
     "winston-mail": "0.2.x",
-    "winston-syslog": "https://github.com/sfu/winston-syslog/tarball/master"
+    "winston-syslog": "0.2.x"
   }
 }
