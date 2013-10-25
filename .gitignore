@@ -8,3 +8,5 @@ public/css/*-min.css
 *.pid
 gitsha
 releasedate
+config/config.json*
+!config/config.json.example
