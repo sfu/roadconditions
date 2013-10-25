@@ -21,14 +21,11 @@ var fs = require('fs')
 ,   port = process.env.PORT || 3000
 ,   serverid = os.hostname() + ':' + port
 ,   pkg = JSON.parse(fs.readFileSync(__dirname + '/package.json'))
-,   gitshafile = __dirname + '/gitsha'
 ,   releasedatefile = __dirname + '/releasedate'
-,   cas, conditions, writeConditions, logger, winstonStream, dataclient, subclient, pubclient, graphite, releasedate, gitsha;
+,   cas, conditions, writeConditions, logger, winstonStream, dataclient, subclient, pubclient, graphite, releasedate;
 
 process.title = 'roadconditions';
 releasedate = fs.existsSync(releasedatefile) ? fs.readFileSync(releasedatefile, 'utf-8') : null;
-gitsha = fs.existsSync(gitshafile) ? fs.readFileSync(gitshafile, 'utf-8') : null;
-gitsha = gitsha.replace(/(\n|\r)+$/, '');
 
 // set up logging
 if (typeof usegraphite === 'string') {
@@ -314,7 +311,6 @@ app.get('/admin', loggedin, function(req, res) {
             node: process.version,
             version: pkg.version,
             server: serverid,
-            commit: gitsha,
             redishost: redishost + ':' + redisport,
             releasedate: releasedate ? new Date(parseInt(releasedate, 10)).toString() : null,
             cwd: __dirname
@@ -351,7 +347,6 @@ app.get('/admin/info', loggedin, function(req, res) {
             headers:req.headers,
             version: pkg.version,
             server: serverid,
-            commit: gitsha,
             redishost: redishost + ':' + redisport,
             process_env: process.env,
             releasedate: releasedate ? new Date(parseInt(releasedate, 10)).toString() : null,

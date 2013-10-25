@@ -67,11 +67,6 @@ end
 
 namespace :roadconditions do
 
-    desc "Get the sha of the current HEAD and write to a file"
-    task :gitsha do
-        run "cd #{latest_release} && git rev-parse --verify HEAD > gitsha"
-    end
-
     desc "Get the release date and write it to a file"
     task :releasedate do
         releasedate = Time.now.to_i * 1000
@@ -79,7 +74,6 @@ namespace :roadconditions do
     end
 end
 
-after(:deploy, "roadconditions:gitsha")
 after(:deploy, "roadconditions:releasedate")
 after(:deploy, "deploy:restart")
 after "deploy:restart", "deploy:cleanup"

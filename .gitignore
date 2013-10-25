@@ -1,12 +1,10 @@
 node_modules
 data/conditions.json
 NOTES
-rundev
 public/js/*-min.js
 public/css/*-min.css
 *.log
 *.pid
-gitsha
 releasedate
 config/config.json*
 !config/config.json.example
