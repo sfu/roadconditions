@@ -9,7 +9,7 @@
     "url": "https://github.com/sfu/node-cas-sfu"
   },
   "engines": {
-    "node": "0.6.x"
+    "node": "0.10.x"
   },
   "main": "server.js",
   "private": true,
