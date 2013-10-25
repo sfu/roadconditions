@@ -11,6 +11,7 @@ end
 set :application,   "roadconditions"
 set :repository,    "git@github.com:sfu/roadconditions.git"
 set :scm,           :git
+set :branch,        "master"
 set :user,          "nodeuser"
 set :deploy_to,     "/var/nodeapps/roadconditions"
 set :use_sudo,      false
