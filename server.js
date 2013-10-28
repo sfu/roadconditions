@@ -14,7 +14,7 @@ var fs = require('fs')
 ,   schemaPath = __dirname + '/data/conditions_schema.json'
 ,   conditionsSchema = schema.Schema.create(JSON.parse(fs.readFileSync(schemaPath)))
 ,   pkg = JSON.parse(fs.readFileSync(__dirname + '/package.json'))
-,   serverid, app, cas, conditions, writeConditions, logger, winstonStream, dataclient, subclient, pubclient, graphite, config;
+,   serverid, app, cas, conditions, writeConditions, logger, winstonTransports = [], winstonStream, dataclient, subclient, pubclient, graphite, config;
 
 process.title = 'roadconditions';
 
@@ -46,33 +46,39 @@ if (config.graphite && config.graphite.enabled) {
     graphite = require('graphite').createClient('plaintext://' + config.graphite.host + ':' + config.graphite.port || 2003);
 }
 
+if (config.logging && config.logging.console && config.logging.console.enabled) {
+    winstonTransports.push(new (winston.transports.Console)({
+        timestamp: function() { return new Date().toString(); },
+        handleExceptions: true
+    }));
+}
+
+if (config.logging && config.logging.mail && config.logging.mail.enabled) {
+    winstonTransports.push(new (winston.transports.Mail)({
+        to: 'nodejsapps-logger@sfu.ca',
+        host: 'mailgate.sfu.ca',
+        from: process.title + '@' + os.hostname(),
+        subject: new Date().toString() + ' ' + process.title + ': {{level}} {{msg}}',
+        tls: true,
+        level: 'error',
+        timestamp: function() { return new Date().toString(); },
+        handleExceptions: true
+    }));
+}
+
+if (config.logging && config.logging.syslog && config.logging.syslog.enabled) {
+    winstonTransports.push(new (winston.transports.Syslog)({
+        host: config.logging.syslog.host,
+        facility: 'user',
+        localhost: serverid,
+        type: 'RFC5424',
+        handleExceptions: true
+    }));
+}
+
 require('winston-syslog').Syslog;
 require('winston-mail').Mail;
-logger = new (winston.Logger)({
-    transports: [
-        new (winston.transports.Console)({
-            timestamp: function() { return new Date().toString(); },
-            handleExceptions: true
-        }),
-        new (winston.transports.Syslog)({
-            host: config.logging.syslog.host,
-            facility: 'user',
-            localhost: serverid,
-            type: 'RFC5424',
-            handleExceptions: true
-        }),
-        new (winston.transports.Mail)({
-            to: 'nodejsapps-logger@sfu.ca',
-            host: 'mailgate.sfu.ca',
-            from: process.title + '@' + os.hostname(),
-            subject: new Date().toString() + ' ' + process.title + ': {{level}} {{msg}}',
-            tls: true,
-            level: 'error',
-            timestamp: function() { return new Date().toString(); },
-            handleExceptions: true
-        })
-    ]
-});
+logger = new (winston.Logger)({ transports: winstonTransports });
 winstonStream = {
     write: function(str) {
         str = str.replace(/(\n|\r)+$/, '');
