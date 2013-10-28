@@ -1,20 +1,20 @@
-var fs = require('fs')
-,   os = require('os')
-,   path = require('path')
-,   express = require('express')
-,   cabinet = require('cabinet')
-,   moment = require('moment')
-,   schema = require('schema')('conditions')
-,   cas = require('cas-sfu')
-,   RedisStore = require('connect-redis')(express)
-,   redis = require('redis')
-,   winston = require('winston')
-,   configFile = process.env.CONFIGFILE || __dirname + '/config/config.json'
-,   defaultConditionsPath = __dirname + '/data/conditions_default.json'
-,   schemaPath = __dirname + '/data/conditions_schema.json'
-,   conditionsSchema = schema.Schema.create(JSON.parse(fs.readFileSync(schemaPath)))
-,   pkg = JSON.parse(fs.readFileSync(__dirname + '/package.json'))
-,   serverid, app, cas, conditions, writeConditions, logger, winstonTransports = [], winstonStream, dataclient, subclient, pubclient, graphite, config;
+var fs = require('fs'),
+    os = require('os'),
+    path = require('path'),
+    express = require('express'),
+    cabinet = require('cabinet'),
+    moment = require('moment'),
+    schema = require('schema')('conditions'),
+    cas = require('cas-sfu'),
+    RedisStore = require('connect-redis')(express),
+    redis = require('redis'),
+    winston = require('winston'),
+    configFile = process.env.CONFIGFILE || __dirname + '/config/config.json',
+    defaultConditionsPath = __dirname + '/data/conditions_default.json',
+    schemaPath = __dirname + '/data/conditions_schema.json',
+    conditionsSchema = schema.Schema.create(JSON.parse(fs.readFileSync(schemaPath))),
+    pkg = JSON.parse(fs.readFileSync(__dirname + '/package.json')),
+    serverid, app, cas, conditions, writeConditions, logger, winstonTransports = [], winstonStream, dataclient, subclient, pubclient, graphite, config;
 
 process.title = 'roadconditions';
 
