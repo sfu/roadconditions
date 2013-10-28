@@ -8,13 +8,14 @@ var fs = require('fs'),
     cas = require('cas-sfu'),
     RedisStore = require('connect-redis')(express),
     redis = require('redis'),
-    winston = require('winston'),
+    winstonLogger = require('./lib/logger.js'),
+
     configFile = process.env.CONFIGFILE || __dirname + '/config/config.json',
     defaultConditionsPath = __dirname + '/data/conditions_default.json',
     schemaPath = __dirname + '/data/conditions_schema.json',
     conditionsSchema = schema.Schema.create(JSON.parse(fs.readFileSync(schemaPath))),
     pkg = JSON.parse(fs.readFileSync(__dirname + '/package.json')),
-    serverid, app, cas, conditions, writeConditions, logger, winstonTransports = [], winstonStream, dataclient, subclient, pubclient, graphite, config;
+    serverid, app, cas, conditions, writeConditions, dataclient, subclient, pubclient, graphite, config;
 
 process.title = 'roadconditions';
 
@@ -46,45 +47,7 @@ if (config.graphite && config.graphite.enabled) {
     graphite = require('graphite').createClient('plaintext://' + config.graphite.host + ':' + config.graphite.port || 2003);
 }
 
-if (config.logging && config.logging.console && config.logging.console.enabled) {
-    winstonTransports.push(new (winston.transports.Console)({
-        timestamp: function() { return new Date().toString(); },
-        handleExceptions: true
-    }));
-}
-
-if (config.logging && config.logging.mail && config.logging.mail.enabled) {
-    winstonTransports.push(new (winston.transports.Mail)({
-        to: 'nodejsapps-logger@sfu.ca',
-        host: 'mailgate.sfu.ca',
-        from: process.title + '@' + os.hostname(),
-        subject: new Date().toString() + ' ' + process.title + ': {{level}} {{msg}}',
-        tls: true,
-        level: 'error',
-        timestamp: function() { return new Date().toString(); },
-        handleExceptions: true
-    }));
-}
-
-if (config.logging && config.logging.syslog && config.logging.syslog.enabled) {
-    winstonTransports.push(new (winston.transports.Syslog)({
-        host: config.logging.syslog.host,
-        facility: 'user',
-        localhost: serverid,
-        type: 'RFC5424',
-        handleExceptions: true
-    }));
-}
-
-require('winston-syslog').Syslog;
-require('winston-mail').Mail;
-logger = new (winston.Logger)({ transports: winstonTransports });
-winstonStream = {
-    write: function(str) {
-        str = str.replace(/(\n|\r)+$/, '');
-        logger.info(str);
-    }
-};
+logger = winstonLogger.createLogger(config);
 
 writeConditions = function(data) {
     dataclient.set('roadconditions:data', JSON.stringify(data), function(err, reply) {
@@ -180,7 +143,7 @@ app.configure(function(){
         return new Date().toString();
     });
     app.use(express.logger({
-        stream: winstonStream,
+        stream: winstonLogger.winstonStream,
         format: 'express :remote-ip - :user [:localtime] ":method :url HTTP/:http-version" :status :res[content-length] ":referrer" ":user-agent" :response-time'
     }));
     if (config.basepath) { app.set('basepath', config.basepath); }
