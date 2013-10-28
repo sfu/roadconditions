@@ -3,7 +3,7 @@ var fs = require('fs'),
     path = require('path'),
     express = require('express'),
     cabinet = require('cabinet'),
-    moment = require('moment'),
+    moment = require('./lib/moment'),
     schema = require('schema')('conditions'),
     cas = require('cas-sfu'),
     RedisStore = require('connect-redis')(express),
@@ -27,21 +27,6 @@ try {
 
 serverid = os.hostname() + ':' + config.port;
 app = module.exports = express.createServer();
-
-// alter moment's nextDay', 'nextWeek', 'lastDay', 'lastWeek', 'sameElse' to be the same full-date string
-(function(moment) {
-    var langStrings = {
-        calendar: {
-            sameDay: '[today at] h:mm a'
-        }
-    };
-
-    ['nextDay', 'nextWeek', 'lastDay', 'lastWeek', 'sameElse'].forEach(function(key) {
-        langStrings.calendar[key] = 'h:mm a [on] dddd, MMMM DD, YYYY';
-    });
-    moment.lang('en', langStrings);
-})(moment);
-
 
 if (config.graphite && config.graphite.enabled) {
     graphite = require('graphite').createClient('plaintext://' + config.graphite.host + ':' + config.graphite.port || 2003);
