@@ -26,7 +26,7 @@ try {
     throw new Error(e);
 }
 
-serverid = os.hostname() + ':' + config.port;
+serverid = config.serverid = os.hostname() + ':' + config.port;
 app = module.exports = express.createServer();
 
 if (config.graphite && config.graphite.enabled) {
