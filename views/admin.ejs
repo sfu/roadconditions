@@ -1,3 +1,4 @@
+<% layout('layout') %>
 <% headResources.css.push('admin'); if (auth.maillist === 'roadconditions-dispatchers') { headResources.css.push('admin-dispatcher'); } %>
 <% headResources.js.push('vendor/jquery-1.7.1.min.js', 'vendor/jquery.validate.min.js', 'vendor/spine.js', 'vendor/ejs.min.js', 'vendor/tiny_mce/tiny_mce.js', 'vendor/moment/moment.min.js'); %>
 <% bodyScripts.push('admin'); %>
