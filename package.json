@@ -18,7 +18,7 @@
     "cabinet": "https://github.com/grahamb/cabinet/tarball/master",
     "connect-redis": "1.4.x",
     "ejs": "0.8.x",
-    "express": "https://github.com/sfu/express/tarball/basepath-patch-2.x",
+    "express": "3.4.x",
     "graphite": "0.0.6",
     "gzippo": "0.2.x",
     "moment": "2.3.x",
