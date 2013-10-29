@@ -15,7 +15,7 @@
   "private": true,
   "dependencies": {
     "cas-sfu": "1.0.x",
-    "cabinet": "https://github.com/grahamb/cabinet/tarball/master",
+    "cabinet": "0.2.x",
     "connect-redis": "1.4.x",
     "ejs": "0.8.x",
     "express": "3.4.x",
