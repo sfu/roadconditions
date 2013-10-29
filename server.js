@@ -9,6 +9,7 @@ var fs = require('fs'),
     RedisStore = require('connect-redis')(express),
     redis = require('redis'),
     winston = require('./lib/logger'),
+    helpers = require('./lib/helpers'),
 
     configFile = process.env.CONFIGFILE || __dirname + '/config/config.json',
     defaultConditionsPath = __dirname + '/data/conditions_default.json',
@@ -150,59 +151,13 @@ app.configure(function(){
     app.use(express.methodOverride());
     app.enable('jsonp callback');
     app.helpers({
-        dateFormat: function(date, relative) {
-            if (moment) {
-                if (!relative) {
-                    return moment(new Date(date)).format('[at] h:mm a [on] dddd, MMMM DD, YYYY');
-                }
-                return moment(new Date(date)).calendar();
-            } else {
-                return date;
-            }
-        },
-        renderHeadTags: function(all) {
-            var templates = {
-                js: '<script src="js/FILENAME"></script>',
-                css: '<link rel="stylesheet" href="css/FILENAME">'
-            }
-            ,   buf = '';
-            var rendertags = function(type, tmpl, arr) {
-                var buf = [], filename;
-                for (var i = 0; i < arr.length; i++) {
-                    filename = arr[i];
-                    if (type === 'css') {
-                        filename += '.css';
-                    }
-                    buf.push(tmpl.replace('FILENAME', filename));
-                }
-                return buf.join('\n');
-            };
-            if (all) {
-                for (var type in all) {
-                    buf += rendertags(type, templates[type], all[type]);
-                }
-            }
-            return buf;
-        },
-        addBodyScriptTags: function(all) {
-            var buf = [], filename;
-            for (var i = 0; i < all.length; i++) {
-                filename = all[i] + '.js';
-                buf.push('<script src="js/' + filename + '"></script>');
-            }
-            return buf.join('\n');
-        }
+        dateFormat: helpers.dateFormat(moment),
+        renderHeadTags: helpers.renderHeadTags,
+        addBodyScriptTags: helpers.addBodyScriptTags
     });
     app.dynamicHelpers({
-        headResources: function(req, res) {
-            return {
-                js: [],
-                css:['base']
-            };
-        },
-        bodyScripts: function(req, res) {
-            return ['menus'];
-        }
+        headResources: helpers.headResources,
+        bodyScripts: helpers.bodyScripts
     });
 });
 
