@@ -8,7 +8,7 @@ var fs = require('fs'),
     cas = require('cas-sfu'),
     RedisStore = require('connect-redis')(express),
     redis = require('redis'),
-    winstonLogger = require('./lib/logger.js'),
+    winston = require('./lib/logger'),
 
     configFile = process.env.CONFIGFILE || __dirname + '/config/config.json',
     defaultConditionsPath = __dirname + '/data/conditions_default.json',
@@ -32,7 +32,7 @@ if (config.graphite && config.graphite.enabled) {
     graphite = require('graphite').createClient('plaintext://' + config.graphite.host + ':' + config.graphite.port || 2003);
 }
 
-logger = winstonLogger.createLogger(config);
+logger = winston.createLogger(config);
 
 writeConditions = function(data) {
     dataclient.set('roadconditions:data', JSON.stringify(data), function(err, reply) {
@@ -128,7 +128,7 @@ app.configure(function(){
         return new Date().toString();
     });
     app.use(express.logger({
-        stream: winstonLogger.winstonStream,
+        stream: winston.winstonStream,
         format: 'express :remote-ip - :user [:localtime] ":method :url HTTP/:http-version" :status :res[content-length] ":referrer" ":user-agent" :response-time'
     }));
     if (config.basepath) { app.set('basepath', config.basepath); }
