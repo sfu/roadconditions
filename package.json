@@ -26,6 +26,7 @@
     "schema": "0.2.x",
     "winston": "0.7.x",
     "winston-mail": "0.2.x",
-    "winston-syslog": "0.2.x"
+    "winston-syslog": "0.2.x",
+    "ejs-locals": "~1.0.2"
   }
 }

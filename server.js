@@ -8,6 +8,7 @@ var fs = require('fs'),
     cas = require('cas-sfu'),
     RedisStore = require('connect-redis')(express),
     redis = require('redis'),
+    engine = require('ejs-locals'),
     winston = require('./lib/logger'),
     helpers = require('./lib/helpers'),
 
@@ -117,6 +118,7 @@ dataclient.on('connect', function(e) {
 });
 
 app.configure(function(){
+    app.engine('ejs', engine);
     app.set('view engine', 'ejs');
     app.set('views', __dirname + '/views');
     app.use(express.favicon('public/favicon.ico'));
