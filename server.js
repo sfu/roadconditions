@@ -28,7 +28,7 @@ try {
 }
 
 serverid = config.serverid = os.hostname() + ':' + config.port;
-app = module.exports = express.createServer();
+app = module.exports = express();
 
 if (config.graphite && config.graphite.enabled) {
     graphite = require('graphite').createClient('plaintext://' + config.graphite.host + ':' + config.graphite.port || 2003);
@@ -149,17 +149,19 @@ app.configure(function(){
             domain: '.sfu.ca'
         }
     }));
-    app.use(express.bodyParser());
+    app.use(express.json());
+    app.use(express.urlencoded());
     app.use(express.methodOverride());
     app.enable('jsonp callback');
-    app.helpers({
+    app.use(function(req, res, next) {
+        res.locals.headResources = helpers.headResources;
+        res.locals.bodyScripts = helpers.bodyScripts;
+        next();
+    });
+    app.locals({
         dateFormat: helpers.dateFormat(moment),
         renderHeadTags: helpers.renderHeadTags,
         addBodyScriptTags: helpers.addBodyScriptTags
-    });
-    app.dynamicHelpers({
-        headResources: helpers.headResources,
-        bodyScripts: helpers.bodyScripts
     });
 });
 
