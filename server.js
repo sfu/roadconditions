@@ -11,13 +11,14 @@ var fs = require('fs'),
     engine = require('ejs-locals'),
     winston = require('./lib/logger'),
     helpers = require('./lib/helpers'),
+    RedirectResolver = require('./lib/redirectResolver'),
 
     configFile = process.env.CONFIGFILE || __dirname + '/config/config.json',
     defaultConditionsPath = __dirname + '/data/conditions_default.json',
     schemaPath = __dirname + '/data/conditions_schema.json',
     conditionsSchema = schema.Schema.create(JSON.parse(fs.readFileSync(schemaPath))),
     pkg = JSON.parse(fs.readFileSync(__dirname + '/package.json')),
-    serverid, app, cas, conditions, writeConditions, dataclient, subclient, pubclient, graphite, config;
+    serverid, app, cas, conditions, writeConditions, dataclient, subclient, pubclient, graphite, config, redirectResolver;
 
 process.title = 'roadconditions';
 
@@ -28,6 +29,7 @@ try {
 }
 
 serverid = config.serverid = os.hostname() + ':' + config.port;
+redirectResolver = new RedirectResolver(config);
 app = module.exports = express();
 
 if (config.graphite && config.graphite.enabled) {
@@ -196,7 +198,7 @@ var loggedin = function(req, res, next) {
         return;
     }
     req.session.referer = req.url;
-    res.redirect('/login');
+    res.redirect(redirectResolver.resolve('/login'));
 };
 
 
@@ -225,7 +227,7 @@ app.get('/admin', loggedin, function(req, res) {
 
 // Authentication Routes
 app.get('/login', casauth, function(req, res) {
-    res.redirect(req.session.referer || '/admin');
+    res.redirect(redirectResolver.resolve(req.session.referer) || redirectResolver.resolve('/admin'));
 });
 
 app.get('/logout', function(req, res) {
