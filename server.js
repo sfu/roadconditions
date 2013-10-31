@@ -125,7 +125,7 @@ app.configure(function(){
     app.set('views', __dirname + '/views');
     app.use(express.favicon('public/favicon.ico'));
     express.logger.token('remote-ip', function(req, res) {
-        return req.headers['x-forwarded-for'] ? req.headers['x-forwarded-for'] : (req.socket && (req.socket.remoteAddress || (req.socket.socket && req.socket.socket.remoteAddress)));
+        return req.ip;
 
     });
     express.logger.token('user', function(req, res) { var user = '-'; if (req.session && req.session.auth) { user = req.session.auth.user; } return user; });
@@ -153,6 +153,7 @@ app.configure(function(){
     app.use(express.urlencoded());
     app.use(express.methodOverride());
     app.enable('jsonp callback');
+    app.enable('trust proxy');
     app.use(function(req, res, next) {
         res.locals.headResources = helpers.headResources;
         res.locals.bodyScripts = helpers.bodyScripts;
