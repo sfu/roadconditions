@@ -136,8 +136,6 @@ app.configure(function(){
         stream: winston.winstonStream,
         format: 'express :remote-ip - :user [:localtime] ":method :url HTTP/:http-version" :status :res[content-length] ":referrer" ":user-agent" :response-time'
     }));
-    if (config.basepath) { app.set('basepath', config.basepath); }
-    if (config.basehost) { app.set('basehost', config.basepath); }
     app.use(express.cookieParser());
     app.use(express.session({
         store: new RedisStore({
