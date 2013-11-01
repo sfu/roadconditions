@@ -2,7 +2,6 @@ var fs = require('fs'),
     os = require('os'),
     path = require('path'),
     express = require('express'),
-    cabinet = require('cabinet'),
     moment = require('./lib/moment'),
     schema = require('schema')('conditions'),
     cas = require('cas-sfu'),
@@ -119,8 +118,9 @@ dataclient.on('connect', function(e) {
     });
 });
 
-app.configure(function(){
+app.configure(function() {
     app.engine('ejs', engine);
+    app.use(express.compress());
     app.set('view engine', 'ejs');
     app.set('views', __dirname + '/views');
     app.use(express.favicon('public/favicon.ico'));
@@ -168,20 +168,28 @@ app.configure(function(){
 
 app.configure('development', function() {
     app.use(express.errorHandler({ dumpExceptions: true, showStack: true }));
-    app.use(cabinet(__dirname + '/public'));
+    app.use(require('less-middleware')({
+        dest: __dirname + '/public/css',
+        src: __dirname + '/src/less',
+        prefix: '/css',
+        compress: false,
+        sourceMap: true,
+        force: true,
+        debug: true
+    }));
+    app.use(express.static(path.join(__dirname, 'public')));
 });
 
 app.configure('production', function() {
     app.use(express.errorHandler());
-    app.use(cabinet(__dirname + '/public', {
-        gzip: true,
-        minjs: true,
-        mincss: true,
-        cache: {
-            maxSize: 16384,
-            maxObjects: 256
-        }
+    app.use(require('less-middleware')({
+        dest: __dirname + '/public/css',
+        src: __dirname + '/src/less',
+        prefix: '/css',
+        compress: true,
+        sourceMap: true
     }));
+    app.use(express.static(path.join(__dirname, 'public')));
 });
 
 // Authentication middleware

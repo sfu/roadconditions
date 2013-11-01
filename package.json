@@ -15,18 +15,18 @@
   "private": true,
   "dependencies": {
     "cas-sfu": "1.0.x",
-    "cabinet": "0.2.x",
     "connect-redis": "1.4.x",
     "ejs": "0.8.x",
+    "ejs-locals": "~1.0.2",
     "express": "3.4.x",
     "graphite": "0.0.6",
     "gzippo": "0.2.x",
+    "less-middleware": "*",
     "moment": "2.3.x",
     "redis": "0.9.x",
     "schema": "0.2.x",
     "winston": "0.7.x",
     "winston-mail": "0.2.x",
-    "winston-syslog": "0.2.x",
-    "ejs-locals": "~1.0.2"
+    "winston-syslog": "0.2.x"
   }
 }
