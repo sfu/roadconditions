@@ -1,93 +1,40 @@
-<%
-    var onlineservices = [
-        {"label":"SFU Connect + mySFU","link":"http://connect.sfu.ca"},
-        {"label":"Alumni Mail","link":"http://www.sfu.ca/alumni/emailforwarding/"},
-        {"label":"Student Information System","link":"http://go.sfu.ca"}
-    ];
-%>
-
 <!DOCTYPE html>
+
 <html>
-
-<head>
-	<meta http-equiv="content-type" content="text/html; charset=UTF-8" />
-	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-	<title>Road and Traffic Report – Burnaby Campus – Simon Fraser University</title>
-    <%- renderHeadTags(headResources) %>
-</head>
-
-<body>
-
-	<div id="container">
-		<div id="banner">
-			<a href="//www.sfu.ca">Simon Fraser University</a>
-		</div>
-
-		<div id="globalNav">
-		        <ul id="campuses">
-		            <li class="sfu"><a href="//www.sfu.ca">sfu.ca</a></li>
-		            <li><a href="http://www.burnaby.sfu.ca">Burnaby</a></li>
-		            <li><a href="http://www.surrey.sfu.ca/">Surrey</a></li>
-
-		            <li class="last"><a href="http://www.vancouver.sfu.ca/">Vancouver</a></li>
-		        </ul>
-
-		        <ul id="services">
-		            <li class="dropdown" id="online">
-		                <a class="tabs" href="//www.sfu.ca/onlineservices/">SFU Online</a>
-                        <ul id="onlineServices">
-                        <% for (var i = 0; i < onlineservices.length; i++) { %>
-                            <li>
-                                <a href="<%= onlineservices[i].link %>"><%= onlineservices[i].label %></a>
-                            </li>
-                        <% } %>
-                        </ul>
-		            </li>
-		            <li class="dropdown" id="directory">
-		                <a class="tabs" href="//www.sfu.ca/dir/">A-Z Links</a>
-                        <ul id="AtoZ">
-                            <% var letter; for (var z=65; z<91; z++) { %>
-                                <% letter = String.fromCharCode(z+32); %>
-                                <li>
-                                    <a href="http://www.sfu.ca/dir/?<%= letter %>"><%= letter %></a>
-                                </li>
-                            <% } %>
-                        </ul>
-		            </li>
-		            <li class="last" id="search">
-		              <form action="//www.sfu.ca/search.html" class="search" method="GET">
-		                    <input id="s" name="q" type="text" placeholder="Search sfu.ca"/>
-		                    <span class="button"><input id="submit" type="submit" value="Search"/></span>
-		              </form>
-		            </li>
-		        </ul>
-		</div>
-		<div id="content">
-            <div id="title">
-                <h1><span>Burnaby Mountain Campus</span><br />
-                Road and Traffic Report</h1>
+    <head>
+        <meta http-equiv="X-UA-Compatible" content="IE=Edge, chrome=1">
+        <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+        <title>Road Report - Simon Fraser University</title>
+        <%- renderHeadTags(headResources) %>
+        <link rel="stylesheet" href="css/clf-base.css" type="text/css" media="screen">
+        <!--[if lt IE 9]>
+            <script type="text/javascript" src="js/html5shiv.js"></script>
+            <script type="text/javascript" src="js/respond.js"></script>
+        <![endif]-->
+    </head>
+    <body>
+        <div id="container">
+            <div id="page">
+                <header>
+                    <section class="heading">
+                        <div class="brand-title">
+                            <a href="http://www.sfu.ca">
+                                <div class="branding">
+                                    <h1>Simon Fraser University<br/>Engaging the World</h1>
+                                </div>
+                            </a>
+                            <div class="site-title">
+                                <h2><a href="/index.html">Road Report</a></h2>
+                            </div>
+                        </div>
+                    </section>
+                </header>
+                <div class="header-divider" />
+                <div id="page-content">
+                    <%- body %>
+                </div>
             </div>
-            <%- body %>
         </div>
-	</div>
-
-	<div id="footer">
-        <ul>
-            <li>8888 University Drive, Burnaby, B.C. Canada V5A 1S6</li>
-            <li><a href="http://www.sfu.ca/webmaster/terms.html">Terms / Privacy</a></li>
-            <li><a href="http://www.sfu.ca/contact/index.html">Contact SFU</a></li>
-            <li><a href="http://www.sfu.ca/about/sitemap.html">SiteMap</a></li>
-            <li><a href="http://www.sfu.ca/security/sfuroadconditions/">Road Conditions</a></li>
-
-            <li>&copy; Simon Fraser University</li>
-        </ul>
-    </div>
-
-    <script>
-        if (window.innerWidth <= 320) {
-            window.scrollTo(0, 65);
-        }
-    </script>
-    <%- addBodyScriptTags(bodyScripts) %>
-</body>
+    </body>
 </html>
