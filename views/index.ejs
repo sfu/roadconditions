@@ -1,84 +1,166 @@
 <% layout('layout') %>
-<% headResources.css.push('conditions'); %>
 <% bodyScripts.push('refreshcameras'); %>
 
-<div id="status">
+<%
+    var iconmap = {
+        "dry": "dry",
+        "partially clear": "partially-clear",
+        "closed - see below": "closed-roads",
+        "snow-covered": "snow-covered",
+        "snow (beware of possible ice)": "snow-ice",
+        "light snow": "light-snow",
+        "icy": "icy",
+        "wet": "wet",
+        "wet (beware of possible ice)": "wet-ice"
+    };
+%>
 
-    <div class="primary">
-
-        <ul>
-            <li><h2>Burnaby Campus is <span class="<%= conditions.campus.severity %>"><%= conditions.campus.status %></span></h2></li>
-        </ul>
-
-    </div>
-
-    <div class="secondary">
-        <p class="datestamp" data-lastupdated="<%= lastupdated %>" title="Conditions updated <%= dateFormat(lastupdated, false) %>">Conditions updated <span class="lastupdatedtime"><%= dateFormat(lastupdated, true) %></span>. This report will be updated as conditions change.</p>
-        <ul>
-            <li>University roads: <span class="<%= conditions.roads.severity %>"><%= conditions.roads.status %></span></li>
-            <li>Adjacent roads: <span class="<%= conditions.adjacentroads.severity %>"><%= conditions.adjacentroads.status %></span></li>
-            <li>Classes and exams are: <span class="<%= conditions.classes_exams.severity %>"><%= conditions.classes_exams.status %></span></li>
-            <li>Translink buses are: <span class="<%= conditions.transit.severity %>"><%= conditions.transit.status %></span></li>
-        </ul>
-    </div>
-
-</div>
-
-<div id="announcements">
-
-    <h3>Campus announcements</h3>
-
-    <div class="primary">
-        <% for (item in announcements) { %>
-            <div><%- announcements[item] %></div>
-        <% } %>
-    </div>
+<section class="main update">
+    <p title="Report updated <%= dateFormat(lastupdated, false) %>">Report updated <strong><%= dateFormat(lastupdated, true) %></strong>. This report will be updated as conditions change.</p>
+</section>
 
 
-    <div class="secondary">
-        <% for (item in sidebars) { %>
-            <div><%- sidebars[item] %></div>
-        <% } %>
-    </div>
+<section class="main one">
 
-</div>
+    <div class="main-campus-status half first">
 
-<div id="webcams">
-
-    <h3>Burnaby webcams</h3>
-
-    <ul>
-        <li><h4>University Drive North</h4>
-            <a href="http://www.sfu.ca/itservices/technical/webcams/webcams_library.html"><img class="webcamimg" src="http://www.sfu.ca/~netops/webcams/libcam.jpg" alt="University Drive North" /></a>
-        </li>
-        <li><h4>Gaglardi intersection</h4>
-            <a href="http://www.sfu.ca/itservices/technical/webcams/webcams_gaglardi.html"><img class="webcamimg" src="http://www.sfu.ca/~netops/webcams/gaglardicam.jpg" alt="Gaglardi intersection" /></a>
-        </li>
-        <li><h4>Convocation Mall</h4>
-            <a href="http://www.sfu.ca/itservices/technical/webcams/webcams_convo.html"><img class="webcamimg" src="http://www.sfu.ca/~netops/webcams/mallcam.jpg" alt="Convocation Mall" /></a>
-        </li>
-    </ul>
-
-</div>
-
-<div id="links">
-    <h3>Other resources</h3>
-    <% for (i in links) {
-        var thislink = links[i];
-    %>
-        <div>
-            <h4><%= thislink.category %></h4>
-            <ul>
-            <% for (i in thislink.links) {%>
-                <li><a href="<%= thislink.links[i].url %>"><%= thislink.links[i].text %></a></li>
-            <% } %>
-            </ul>
+        <div class="campus-status <%= conditions.campus.severity %>">
+            <div class="campus"><h3>Burnaby Campus</h3></div>
+            <h1><%= conditions.campus.status %></h1>
         </div>
-    <% } %>
-</div>
+
+    </div>
+
+    <div class="main-campus-info half last">
+
+        <div class="road-weather-conditions">
+
+            <div class="road-conditions">
+
+                <div class="status-title">
+                    <h3>Burnaby Roads:</h3>
+                </div> <!-- end of status-title -->
+
+                <div>
+
+                    <div class="status-image-text clearfix">
+
+                        <div class="status-text <%=iconmap[conditions.roads.status] %> <%= conditions.roads.severity %>"><%= conditions.roads.status %>
+                        </div> <!-- end of status-text -->
+
+                    </div> <!-- end of status-image-title -->
+
+                    <div class="extra-weather-conditions">
+                        <ul>
+                            <li>Adjacent roads: <span class="<%= conditions.adjacentroads.severity %>"><%= conditions.adjacentroads.status %></span></li>
+                            <li>Classes and exams: <span class="<%= conditions.classes_exams.severity %>"><%= conditions.classes_exams.status %></span></li>
+                            <li>Translink Buses: <span class="<%= conditions.transit.severity %>"><%= conditions.transit.status %></span></li>
+                    </div>
+
+                </div>
+
+            </div> <!-- End of road-conditions -->
+
+        </div> <!-- End of road-weather-conditions -->
+
+
+
+    </div> <!-- end of main-campus-info -->
+
+    <!-- <div class="other-campus-conditions half first">
+
+        <div class="status-container half first">
+            <a href="http://www.surrey.sfu.ca/welcome" target="_blank">
+                <div class="campus-status normal other-campuses">
+                    <div class="campus"><h4>Surrey Campus</h4></div>
+                    <h3>Open</h3>
+                </div>
+            </a>
+            <p>Classes and exams: <strong>On schedule</strong></p>
+        </div>
+
+        <div class="status-container half last">
+            <a href="http://www.sfu.ca/vancouver/welcome.html" target="_blank">
+                <div class="campus-status normal other-campuses">
+                    <div class="campus"><h4>Vancouver Campus</h4></div>
+                    <h3>Open</h3>
+                </div>
+            </a>
+            <p>Classes and exams: <strong>Cancelled (morning classes)</strong></p>
+        </div>
+
+    </div> -->
+
+</section> <!-- end of main one -->
+
+<section class="commentary">
+
+    <section class="announcements">
+            <h3>Burnaby Announcements</h3>
+            <% for (item in announcements) { %>
+                <div><%- announcements[item] %></div>
+            <% } %>
+    </section>
+
+    <section class="sidebar">
+            <% for (item in sidebars) { %>
+                <div><%- sidebars[item] %></div>
+            <% } %>
+    </section>
+
+</section> <!-- end of commentary -->
+
+
+
+<section class="main three clearfix">
+
+    <div class="clearfix">
+
+        <h3>Burnaby Webcams</h3>
+
+        <div class="webcam">
+            <h4>University Drive North</h4>
+            <a href="http://www.sfu.ca/itservices/technical/webcams/webcams_library.html"><img class="webcamimg" src="http://www.sfu.ca/~netops/webcams/libcam.jpg" alt="University Drive North" /></a>
+        </div>
+        <div class="webcam">
+            <h4>Gaglardi Intersection</h4>
+            <a href="http://www.sfu.ca/itservices/technical/webcams/webcams_gaglardi.html"><img class="webcamimg" src="http://www.sfu.ca/~netops/webcams/gaglardicam.jpg" alt="Gaglardi intersection" /></a>
+        </div>
+        <div class="webcam">
+            <h4>Convocation Malll</h4>
+            <a href="http://www.sfu.ca/itservices/technical/webcams/webcams_convo.html"><img class="webcamimg" src="http://www.sfu.ca/~netops/webcams/mallcam.jpg" alt="Convocation Mall" /></a>
+        </div>
+
+    </div>
+
+    <div class="other-resources clearfix">
+
+        <h3>Other Resources</h3>
+
+        <div class="clearfix">
+            <% for (i in links) {
+                var thislink = links[i];
+            %>
+                <div class="resource quarter">
+                    <h4><%= thislink.category %></h4>
+                    <ul>
+                        <% for (i in thislink.links) {%>
+                            <li><a href="<%= thislink.links[i].url %>"><%= thislink.links[i].text %></a></li>
+                        <% } %>
+                    </ul>
+                </div>
+            <% } %>
+        </div>
+    </div>
+
+
+
+</section> <!-- end of main three -->
+
+
+<%- partial('footer') %>
 
 <script type="text/javascript">
-
   var _gaq = _gaq || [];
   // ICAT GA Account
   _gaq.push(['_setAccount', 'UA-33032885-1']);
@@ -86,12 +168,9 @@
   // SRS GA Account
   _gaq.push(['_setAccount', 'UA-31612222-1']);
   _gaq.push(['_trackPageview']);
-
-
   (function() {
     var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
     ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
     var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
   })();
-
 </script>
