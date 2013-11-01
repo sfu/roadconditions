@@ -7,3 +7,5 @@ public/css/*-min.css
 *.pid
 config/config*json
 !config/config.json.example
+public/css/roadconditions.css
+public/css/roadconditions-admin.css
