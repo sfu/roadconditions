@@ -26,7 +26,7 @@
 
         <div class="campus-status <%= conditions.campus.severity %>">
             <div class="campus"><h3>Burnaby Campus</h3></div>
-            <h1><%= conditions.campus.status %></h1>
+            <h1><%=: conditions.campus.status | capitalize %></h1>
         </div>
 
     </div>
@@ -52,9 +52,9 @@
 
                     <div class="extra-weather-conditions">
                         <ul>
-                            <li>Adjacent roads: <span class="<%= conditions.adjacentroads.severity %>"><%= conditions.adjacentroads.status %></span></li>
-                            <li>Classes and exams: <span class="<%= conditions.classes_exams.severity %>"><%= conditions.classes_exams.status %></span></li>
-                            <li>Translink Buses: <span class="<%= conditions.transit.severity %>"><%= conditions.transit.status %></span></li>
+                            <li>Adjacent roads: <span class="<%= conditions.adjacentroads.severity %>"><%=: conditions.adjacentroads.status | capitalize %></span></li>
+                            <li>Classes and exams: <span class="<%= conditions.classes_exams.severity %>"><%=: conditions.classes_exams.status | capitalize %></span></li>
+                            <li>Translink Buses: <span class="<%= conditions.transit.severity %>"><%=: conditions.transit.status | capitalize %></span></li>
                     </div>
 
                 </div>
