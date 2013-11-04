@@ -267,19 +267,18 @@ ul {
     h4 {
         margin-bottom: 0;
     }
-}
 
-.resource:first-child {
-    padding-left: 0;
-}
+    &:first-child {
+        padding-left: 0;
+    }
 
-.resource:nth-child(4n+1) {
-    padding-left: 0;
-    clear: both;
-}
+    &::nth-child(4n+1) {
+        clear: both;
+    }
 
-.resource:nth-child(4n+4) {
-    padding-right: 0;
+    &:last-child {
+        padding-right: 0;
+    }
 }
 
 /* ------------------ BREAKPOINT 2: 980 ----------------- */
