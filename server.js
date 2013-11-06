@@ -262,7 +262,8 @@ app.get('/admin/info', loggedin, function(req, res) {
             version: pkg.version,
             server: serverid,
             process_env: process.env,
-            cwd: __dirname
+            cwd: __dirname,
+            conditions: conditions
         };
         res.send(data);
     }
