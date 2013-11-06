@@ -1,20 +1,6 @@
 <% layout('layout') %>
 <% bodyScripts.push('refreshcameras'); %>
 
-<%
-    var iconmap = {
-        "dry": "dry",
-        "partially clear": "partially-clear",
-        "closed - see below": "closed-roads",
-        "snow-covered": "snow-covered",
-        "snow (beware of possible ice)": "snow-ice",
-        "light snow": "light-snow",
-        "icy": "icy",
-        "wet": "wet",
-        "wet (beware of possible ice)": "wet-ice"
-    };
-%>
-
 <section class="main update">
     <p title="Report updated <%= dateFormat(lastupdated, false) %>">Report updated <strong><%= dateFormat(lastupdated, true) %></strong>. This report will be updated as conditions change.</p>
 </section>
