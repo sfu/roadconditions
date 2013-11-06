@@ -151,10 +151,6 @@ ul {
     float:left;
 }
 
-.status-text, .status-image {
-    float: left;
-}
-
 .status-image-text {
     position: relative;
     margin-bottom: 1em;
@@ -167,15 +163,16 @@ ul {
 
 .status-title h3 {
     color: #777;
+    font-size: 1.6em;
+
+    span {
+        display: inline-block;
+    }
 }
 
 .status-text {
     text-transform: uppercase;
-    .brand-font-medium (1.7em);
     line-height: 1em;
-    height: 50px;
-    padding-left: 60px;
-    padding-top: .4em;
 }
 
 .status-text span {
@@ -186,48 +183,9 @@ ul {
     line-height: 1em;
 }
 
-/* Road conditions */
-
-.dry {
-    background: url(../images/icons/clear.png) top left no-repeat;
-}
-
-.partially-clear {
-    background: url(../images/icons/partially-clear.png) top left no-repeat;
-}
-
-.closed-roads {
-    background: url(../images/icons/closed.png) top left no-repeat;
-}
-
-.snow-covered {
-    background: url(../images/icons/snow-covered-roads.png) top left no-repeat;
-}
-
-.snow-ice {
-    background: url(../images/icons/snowy-and-icy.png) top left no-repeat;
-}
-
-.light-snow {
-    background: url(../images/icons/light-snow.png) top left no-repeat;
-}
-
-.icy {
-    background: url(../images/icons/snowy-and-icy.png) top left no-repeat;
-}
-
-.wet {
-    background: url(../images/icons/wet.png) top left no-repeat;
-}
-
-.wet-ice {
-    background: url(../images/icons/wet-and-icy.png) top left no-repeat;
-}
-
-/* end Road conditions */
-
 .extra-weather-conditions {
     margin-bottom: 1em;
+    padding-left: 0;
 }
 
 .main-campus-status .normal, .other-campus-conditions .normal {
