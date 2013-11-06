@@ -32,42 +32,23 @@
     </div>
 
     <div class="main-campus-info half last">
-
         <div class="road-weather-conditions">
-
             <div class="road-conditions">
-
-                <div class="status-title">
-                    <h3>Burnaby Roads:</h3>
-                </div> <!-- end of status-title -->
-
-                <div>
-
-                    <div class="status-image-text clearfix">
-
-                        <div class="status-text <%=iconmap[conditions.roads.status] %> <%= conditions.roads.severity %>"><%= conditions.roads.status %>
-                        </div> <!-- end of status-text -->
-
-                    </div> <!-- end of status-image-title -->
-
-                    <div class="extra-weather-conditions">
-                        <ul>
-                            <li>Adjacent roads: <span class="<%= conditions.adjacentroads.severity %>"><%=: conditions.adjacentroads.status | capitalize %></span></li>
-                            <li>Classes and exams: <span class="<%= conditions.classes_exams.severity %>"><%=: conditions.classes_exams.status | capitalize %></span></li>
-                            <li>Translink Buses: <span class="<%= conditions.transit.severity %>"><%=: conditions.transit.status | capitalize %></span></li>
-                    </div>
-
+                <div class="status-title first">
+                    <h3>Burnaby Roads: <span class="status-text <%= conditions.roads.severity %>"><%= conditions.roads.status %></span></h3>
                 </div>
+                <div class="extra-weather-conditions last">
+                    <ul>
+                        <li>Adjacent roads: <span class="<%= conditions.adjacentroads.severity %>"><%=: conditions.adjacentroads.status | capitalize %></span></li>
+                        <li>Classes and exams: <span class="<%= conditions.classes_exams.severity %>"><%=: conditions.classes_exams.status | capitalize %></span></li>
+                        <li>Translink Buses: <span class="<%= conditions.transit.severity %>"><%=: conditions.transit.status | capitalize %></span></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
 
-            </div> <!-- End of road-conditions -->
-
-        </div> <!-- End of road-weather-conditions -->
-
-
-
-    </div> <!-- end of main-campus-info -->
-
-    <!-- <div class="other-campus-conditions half first">
+    <div class="other-campus-conditions half first">
 
         <div class="status-container half first">
             <a href="http://www.surrey.sfu.ca/welcome" target="_blank">
