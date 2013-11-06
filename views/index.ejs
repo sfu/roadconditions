@@ -6,18 +6,14 @@
     <p title="Report updated <%= dateFormat(lastupdated, false) %>">Report updated <strong><%= dateFormat(lastupdated, true) %></strong>. This report will be updated as conditions change.</p>
 </section>
 
-
 <section class="main one">
-
     <div class="main-campus-status half first">
-
         <div class="campus-status <%= conditions.campus.severity %>">
             <div class="campus"><h3>Burnaby Campus</h3></div>
             <h1><%=: conditions.campus.status | capitalize %></h1>
         </div>
 
     </div>
-
     <div class="main-campus-info half last">
         <div class="road-weather-conditions">
             <div class="road-conditions">
@@ -36,7 +32,6 @@
     </div>
 
     <div class="other-campus-conditions half first">
-
         <div class="status-container half first">
             <a href="http://www.surrey.sfu.ca/welcome" target="_blank">
                 <div class="campus-status normal other-campuses">
@@ -46,7 +41,6 @@
             </a>
             <p>Classes and exams: <strong>On schedule</strong></p>
         </div>
-
         <div class="status-container half last">
             <a href="http://www.sfu.ca/vancouver/welcome.html" target="_blank">
                 <div class="campus-status normal other-campuses">
@@ -56,36 +50,26 @@
             </a>
             <p>Classes and exams: <strong>Cancelled (morning classes)</strong></p>
         </div>
-
-    </div> -->
-
-</section> <!-- end of main one -->
+    </div>
+</section>
 
 <section class="main commentary">
-
     <section class="announcements">
             <h3>Burnaby Announcements</h3>
             <% for (item in announcements) { %>
                 <div><%- announcements[item] %></div>
             <% } %>
     </section>
-
     <section class="sidebar">
             <% for (item in sidebars) { %>
                 <div><%- sidebars[item] %></div>
             <% } %>
     </section>
-
-</section> <!-- end of commentary -->
-
-
+</section>
 
 <section class="main three clearfix">
-
     <div class="clearfix">
-
         <h3>Burnaby Webcams</h3>
-
         <div class="webcam">
             <h4>University Drive North</h4>
             <a href="http://www.sfu.ca/itservices/technical/webcams/webcams_library.html"><img class="webcamimg" src="http://www.sfu.ca/~netops/webcams/libcam.jpg" alt="University Drive North" /></a>
@@ -98,13 +82,9 @@
             <h4>Convocation Malll</h4>
             <a href="http://www.sfu.ca/itservices/technical/webcams/webcams_convo.html"><img class="webcamimg" src="http://www.sfu.ca/~netops/webcams/mallcam.jpg" alt="Convocation Mall" /></a>
         </div>
-
     </div>
-
     <div class="other-resources clearfix">
-
         <h3>Other Resources</h3>
-
         <div class="clearfix">
             <% for (i in links) {
                 var thislink = links[i];
@@ -120,10 +100,7 @@
             <% } %>
         </div>
     </div>
-
-
-
-</section> <!-- end of main three -->
+</section>
 
 
 <%- partial('footer') %>
