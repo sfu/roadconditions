@@ -120,6 +120,7 @@ dataclient.on('connect', function(e) {
 
 app.configure(function() {
     app.engine('ejs', engine);
+    app.use(express.static(path.join(__dirname, 'public')));
     app.use(express.compress());
     app.set('view engine', 'ejs');
     app.set('views', __dirname + '/views');
@@ -177,7 +178,6 @@ app.configure('development', function() {
         force: true,
         debug: true
     }));
-    app.use(express.static(path.join(__dirname, 'public')));
 });
 
 app.configure('production', function() {
@@ -189,7 +189,6 @@ app.configure('production', function() {
         compress: true,
         sourceMap: true
     }));
-    app.use(express.static(path.join(__dirname, 'public')));
 });
 
 // Authentication middleware
