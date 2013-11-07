@@ -155,15 +155,8 @@ app.configure(function() {
     app.use(express.methodOverride());
     app.enable('jsonp callback');
     app.enable('trust proxy');
-    app.use(function(req, res, next) {
-        res.locals.headResources = helpers.headResources;
-        res.locals.bodyScripts = helpers.bodyScripts;
-        next();
-    });
     app.locals({
         dateFormat: helpers.dateFormat(moment),
-        renderHeadTags: helpers.renderHeadTags,
-        addBodyScriptTags: helpers.addBodyScriptTags
     });
 });
 
