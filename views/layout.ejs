@@ -27,9 +27,14 @@
                                 </div>
                             </a>
                             <div class="site-title">
-                                <h2><a href="/index.html">Road Report</a></h2>
+                                <h2><a href="/index.html"><%- blocks.title || 'Road Report' %></a></h2>
                             </div>
                         </div>
+                    </section>
+                    <section class="actionable-header">
+                        <% if (blocks.hasOwnProperty('actionableHeader')) { %>
+                            <%- blocks.actionableHeader %>
+                        <% } %>
                     </section>
                 </header>
                 <div class="header-divider"></div>
