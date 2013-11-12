@@ -47,7 +47,7 @@ var app = (function(Spine, $, exports, data) {
 
     // update, render
     var ConditionsItem = Spine.Controller.sub({
-        className: 'conditionsitem',
+        className: 'conditionsitem clearfix',
 
         events: {
             'change .status': 'updateStatus',
@@ -83,7 +83,7 @@ var app = (function(Spine, $, exports, data) {
 
     // create
     var Conditions = Spine.Controller.sub({
-        el: $('#conditionsContainer'),
+        el: $('#conditions-container'),
 
         elements: {
             '#conditions': 'conditions'
@@ -106,7 +106,7 @@ var app = (function(Spine, $, exports, data) {
     ********************************************************/
 
     var TextItem = Spine.Model.sub();
-    TextItem.configure('TextItem', 'content');
+    TextItem.configure('TextItem', 'content', 'position');
     TextItem.extend({
         serialize: function() {
             var out = [];
@@ -120,7 +120,7 @@ var app = (function(Spine, $, exports, data) {
 
         hydrate: function(type) {
             for (var i = 0; i < data[type].length; i++) {
-                this.create({content: data[type][i]});
+                this.create({content: data[type][i], position: i+1});
             }
         }
     });
@@ -182,7 +182,7 @@ var app = (function(Spine, $, exports, data) {
     // Sidebars represents an overall controller for adding new SidebarsItems and bootstrapping form the cached data
     var Sidebars = Spine.Controller.sub({
 
-        el: $('#sidebarsContainer'),
+        el: $('#sidebars-container'),
 
         events: {
             'click #addnewsidebar': 'create'
@@ -232,7 +232,7 @@ var app = (function(Spine, $, exports, data) {
     });
 
     var Announcements = Spine.Controller.sub({
-        el: $('#announcementsContainer'),
+        el: $('#announcements-container'),
 
 
         elements: {
@@ -269,7 +269,7 @@ var app = (function(Spine, $, exports, data) {
 
         tag: 'p',
 
-        className: 'link group',
+        className: 'link group clearfix',
 
         init: function() {
             this.item.bind('destroy', this.proxy(this.remove));
@@ -420,7 +420,7 @@ var app = (function(Spine, $, exports, data) {
     });
 
     var Categories = Spine.Controller.sub({
-        el: $('#linksContainer'),
+        el: $('#links-container'),
 
         elements: {
             '#linkCategories' : 'linkCategories'
@@ -483,7 +483,7 @@ var app = (function(Spine, $, exports, data) {
                     msg += 'highlighted below. Please correct the problem and try again.';
                     msg = $('<div>').html(msg);
                     window.scrollTo(0, 1);
-                    $('#messageContainer').removeClass().addClass('error').empty().append(msg).fadeIn();
+                    $('#message-container').removeClass().addClass('error').empty().append(msg).fadeIn();
                 },
                 submitHandler: function(form) {
                     var data = {
@@ -511,13 +511,13 @@ var app = (function(Spine, $, exports, data) {
                         success: function(data, textStatus, jqXHR) {
                             $('#lastupdated span').text(moment(new Date(data.lastupdated)).format('[at] h:mm a [on] dddd, MMMM DD, YYYY'));
                             var msg = $('<div>').html('<strong>Success!</strong><br/>The Road and Traffic Report has been updated.');
-                            $('#messageContainer').removeClass().addClass('success').empty().append(msg).fadeIn().delay(4000).fadeOut();
+                            $('#message-container').removeClass().addClass('success').empty().append(msg).fadeIn().delay(4000).fadeOut();
                             window.scrollTo(0, 1);
                             window.isDirty = false;
                         },
                         error: function(jqXHR, textStatus, errorThrown) {
                             var msg = $('<div>').html('<strong>Oh dear, something has gone awry.</strong><br/>The server reported an error when trying to process the form. Please wait a moment and try again.');
-                            $('#messageContainer').removeClass().addClass('error').empty().append(msg).fadeIn();
+                            $('#message-container').removeClass().addClass('error').empty().append(msg).fadeIn();
                             window.scrollTo(0, 1);
                         },
                         dataType: 'json',
