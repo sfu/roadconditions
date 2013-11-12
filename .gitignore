@@ -2,7 +2,7 @@ node_modules
 data/conditions.json
 NOTES
 public/js/*-min.js
-public/css/*-min.css
+public/css/*
 *.log
 *.pid
 config/config*json
