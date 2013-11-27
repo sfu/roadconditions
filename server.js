@@ -284,7 +284,8 @@ app.post('/api/1/current', loggedin, function(req, res) {
     var data = req.body;
     var validate = conditionsSchema.validate(data);
     if (validate.isError()) {
-        res.send(validate.getError(), { 'Content-Type': 'application/json'}, 400);
+        res.set('Content-Type', 'application/json');
+        res.send(400, validate.getError());
     } else {
         data.lastupdated = new Date().getTime();
         conditions = data;
