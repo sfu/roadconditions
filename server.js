@@ -162,9 +162,9 @@ app.configure(function() {
 app.configure('development', function() {
     app.use(express.errorHandler({ dumpExceptions: true, showStack: true }));
     app.use(require('less-middleware')({
-        dest: __dirname + '/public/css',
-        src: __dirname + '/src/less',
-        prefix: '/css',
+        dest: '/css',
+        src: '/less',
+        root: __dirname + '/public',
         compress: false,
         sourceMap: true,
         force: true,
@@ -176,11 +176,11 @@ app.configure('development', function() {
 app.configure('production', function() {
     app.use(express.errorHandler());
     app.use(require('less-middleware')({
-        dest: __dirname + '/public/css',
-        src: __dirname + '/src/less',
-        prefix: '/css',
+        dest: '/css',
+        src: '/less',
+        root: __dirname + '/public',
         compress: true,
-        sourceMap: true
+        sourceMap: true,
     }));
     app.use(express.static(path.join(__dirname, 'public')));
 });
