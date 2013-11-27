@@ -30,7 +30,7 @@ var app = (function(Spine, $, exports, data) {
 
     var Condition = Spine.Model.sub();
 
-    Condition.configure('Condition', 'name', 'status', 'severity', 'statusSeverityMap');
+    Condition.configure('Condition', 'campus', 'name', 'status', 'severity', 'statusSeverityMap');
     Condition.extend({
         serialize: function() {
             var out = {};
