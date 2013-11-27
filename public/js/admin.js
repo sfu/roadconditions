@@ -103,7 +103,7 @@ var app = (function(Spine, $, exports, data) {
 
         addOne: function(condition) {
             var view = new ConditionsItem({item: condition});
-            this.conditions.append(view.render().el);
+            this[this.campus + 'Conditions'].append(view.render().el);
 
         }
     });
