@@ -125,8 +125,6 @@ dataclient.on('connect', function(e) {
             // for some reason, in dev, the above JSON.parse isn't actually doing anything. it's fine in production and I can't be arsed to figure out why, so this is here:
             if (typeof conditions === 'string') { logger.warn('conditions is still a string; re-parsing'); conditions = JSON.parse(conditions); }
         }
-        app.listen(config.port);
-        logger.info('starting roadconditions server version ' + pkg.version + ' on port ' + config.port + ' in ' + app.settings.env + ' mode, PID: ' + process.pid);
     });
 });
 
@@ -333,3 +331,8 @@ app.post('/api/1/current', loggedin, function(req, res) {
 // OH NO YOU DIDNT
 app.del('*', function(req, res) { res.send(405); });
 app.put('*', function(req, res) { res.send(405); });
+
+app.listen(config.port, function() {
+    logger.info('starting roadconditions server version ' + pkg.version + ' on port ' + config.port + ' in ' + app.settings.env + ' mode, PID: ' + process.pid);
+});
+
