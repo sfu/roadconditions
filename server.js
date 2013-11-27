@@ -143,7 +143,7 @@ app.configure(function() {
             prefix: 'roadconditions:sess:',
             pass: config.redis.password
         }),
-        secret: 'YJrJ2wfqWRfVsaBVVFDYDKtmjAjKAXZ7AZKDtoGzaTrZPDDp',
+        secret: config.session_secret,
         cookie: {
             expires: false,
             domain: '.sfu.ca'

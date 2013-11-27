@@ -22,6 +22,8 @@
         }
     }
 
+    "session_secret": "XXXXXXXXXXXX"
+
     "cas_service": null,
 
     "basepath": null,
