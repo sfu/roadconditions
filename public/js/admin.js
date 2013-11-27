@@ -98,7 +98,7 @@ var app = (function(Spine, $, exports, data) {
     var Conditions = Spine.Controller.sub({
         init: function() {
             Condition.bind('create', this.proxy(this.addOne));
-            Condition.hydrate();
+            Condition.hydrate(this.campus);
         },
 
         addOne: function(condition) {
