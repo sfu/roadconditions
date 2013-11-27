@@ -44,13 +44,14 @@ var app = (function(Spine, $, exports, data) {
             }
             return out;
         },
-        hydrate: function() {
+        hydrate: function(campus) {
             var conditionsMap = JSON.parse(document.getElementById('conditions_map').innerHTML);
-            for (var conditionName in data.conditions) {
+            for (var conditionName in data.conditions[campus]) {
                 this.create({
+                    campus: campus,
                     name: conditionName,
-                    status: data.conditions[conditionName].status,
-                    severity: data.conditions[conditionName].severity,
+                    status: data.conditions[campus][conditionName].status,
+                    severity: data.conditions[campus][conditionName].severity,
                     statusSeverityMap: conditionsMap[conditionName]
                 });
             }
