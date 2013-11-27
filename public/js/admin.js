@@ -33,11 +33,11 @@ var app = (function(Spine, $, exports, data) {
     Condition.configure('Condition', 'campus', 'name', 'status', 'severity', 'statusSeverityMap');
     Condition.extend({
         serialize: function() {
-            var out = {};
+            var out = {'burnaby': {}, 'surrey': {}, 'vancouver': {}};
             var conditions = this.all();
             for (var i = 0; i < conditions.length; i++) {
                 var condition = conditions[i].attributes();
-                out[condition.name] = {
+                out[condition.campus][condition.name] = {
                     status: condition.status,
                     severity: condition.severity
                 };
