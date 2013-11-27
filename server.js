@@ -266,7 +266,24 @@ app.get('/admin/info', loggedin, function(req, res) {
 app.get('/api/1/current/:key?', function(req, res) {
     var data = {}, status = 200;
     if (!req.param('key')) {
-        data = conditions;
+        data = JSON.parse(JSON.stringify(conditions));
+        data.conditions = data.conditions.burnaby;
+    } else {
+        var key = req.param('key');
+        if (conditions.hasOwnProperty(key)) {
+            if (key === 'conditions') {
+                data.conditions = conditions.conditions.burnaby;
+            } else {
+                data[key] = conditions[key];
+            }
+            data.lastupdated = conditions.lastupdated;
+        } else {
+            status = 404;
+            data = {error: 'not found', key: key};
+        }
+    }
+    res.json(data, status);
+});
     } else {
         var key = req.param('key');
         if (conditions.hasOwnProperty(key)) {
