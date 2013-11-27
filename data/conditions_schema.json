@@ -5,83 +5,162 @@
         "conditions": {
             "type": "object",
             "properties": {
-                "campus": {
+                "burnaby": {
                     "type": "object",
                     "properties": {
-                        "status": {
-                            "type": "string"
+                        "campus": {
+                            "type": "object",
+                            "properties": {
+                                "status": {
+                                    "type": "string"
+                                },
+                                "severity": {
+                                    "type": "string",
+                                    "enum": [
+                                        "normal",
+                                        "warning",
+                                        "alert"
+                                    ]
+                                }
+                            }
                         },
-                        "severity": {
-                            "type": "string",
-                            "enum": [
-                                "normal",
-                                "warning",
-                                "alert"
-                            ]
+                        "roads": {
+                            "type": "object",
+                            "properties": {
+                                "status": {
+                                    "type": "string"
+                                },
+                                "severity": {
+                                    "type": "string",
+                                    "enum": [
+                                        "normal",
+                                        "warning",
+                                        "alert"
+                                    ]
+                                }
+                            }
+                        },
+                        "adjacentroads": {
+                            "type": "object",
+                            "properties": {
+                                "status": {
+                                    "type": "string"
+                                },
+                                "severity": {
+                                    "type": "string",
+                                    "enum": [
+                                        "normal",
+                                        "warning",
+                                        "alert"
+                                    ]
+                                }
+                            }
+                        },
+                        "transit": {
+                            "type": "object",
+                            "properties": {
+                                "status": {
+                                    "type": "string"
+                                },
+                                "severity": {
+                                    "type": "string",
+                                    "enum": [
+                                        "normal",
+                                        "warning",
+                                        "alert"
+                                    ]
+                                }
+                            }
+                        },
+                        "classes_exams": {
+                            "type": "object",
+                            "properties": {
+                                "status": {
+                                    "type": "string"
+                                },
+                                "severity": {
+                                    "type": "string",
+                                    "enum": [
+                                        "normal",
+                                        "warning",
+                                        "alert"
+                                    ]
+                                }
+                            }
                         }
                     }
                 },
-                "roads": {
+                "surrey": {
                     "type": "object",
                     "properties": {
-                        "status": {
-                            "type": "string"
+                        "campus": {
+                            "type": "object",
+                            "properties": {
+                                "status": {
+                                    "type": "string"
+                                },
+                                "severity": {
+                                    "type": "string",
+                                    "enum": [
+                                        "normal",
+                                        "warning",
+                                        "alert"
+                                    ]
+                                }
+                            }
                         },
-                        "severity": {
-                            "type": "string",
-                            "enum": [
-                                "normal",
-                                "warning",
-                                "alert"
-                            ]
+                        "classes_exams": {
+                            "type": "object",
+                            "properties": {
+                                "status": {
+                                    "type": "string"
+                                },
+                                "severity": {
+                                    "type": "string",
+                                    "enum": [
+                                        "normal",
+                                        "warning",
+                                        "alert"
+                                    ]
+                                }
+                            }
                         }
                     }
                 },
-                "adjacentroads": {
+                "vancouver": {
                     "type": "object",
                     "properties": {
-                        "status": {
-                            "type": "string"
+                        "campus": {
+                            "type": "object",
+                            "properties": {
+                                "status": {
+                                    "type": "string"
+                                },
+                                "severity": {
+                                    "type": "string",
+                                    "enum": [
+                                        "normal",
+                                        "warning",
+                                        "alert"
+                                    ]
+                                }
+                            }
                         },
-                        "severity": {
-                            "type": "string",
-                            "enum": [
-                                "normal",
-                                "warning",
-                                "alert"
-                            ]
-                        }
-                    }
-                },
-                "transit": {
-                    "type": "object",
-                    "properties": {
-                        "status": {
-                            "type": "string"
-                        },
-                        "severity": {
-                            "type": "string",
-                            "enum": [
-                                "normal",
-                                "warning",
-                                "alert"
-                            ]
-                        }
-                    }
-                },
-                "classes_exams": {
-                    "type": "object",
-                    "properties": {
-                        "status": {
-                            "type": "string"
-                        },
-                        "severity": {
-                            "type": "string",
-                            "enum": [
-                                "normal",
-                                "warning",
-                                "alert"
-                            ]
+                        "classes_exams": {
+                            "type": "object",
+                            "properties": {
+                                "status": {
+                                    "type": "string"
+                                },
+                                "severity": {
+                                    "type": "string",
+                                    "enum": [
+                                        "normal",
+                                        "warning",
+                                        "alert"
+                                    ]
+                                }
+                            }
                         }
                     }
                 }
