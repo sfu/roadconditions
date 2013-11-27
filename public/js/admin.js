@@ -96,12 +96,6 @@ var app = (function(Spine, $, exports, data) {
 
     // create
     var Conditions = Spine.Controller.sub({
-        el: $('#conditions-container'),
-
-        elements: {
-            '#conditions': 'conditions'
-        },
-
         init: function() {
             Condition.bind('create', this.proxy(this.addOne));
             Condition.hydrate();
