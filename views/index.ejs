@@ -8,9 +8,9 @@
 
 <section class="main one">
     <div class="main-campus-status half first">
-        <div class="campus-status <%= conditions.campus.severity %>">
+        <div class="campus-status <%= conditions.burnaby.campus.severity %>">
             <div class="campus"><h3>Burnaby Campus</h3></div>
-            <h1><%=: conditions.campus.status | capitalize %></h1>
+            <h1><%=: conditions.burnaby.campus.status | capitalize %></h1>
         </div>
 
     </div>
@@ -18,13 +18,13 @@
         <div class="road-weather-conditions">
             <div class="road-conditions">
                 <div class="status-title first">
-                    <h3>Burnaby Roads: <span class="status-text <%= conditions.roads.severity %>"><%= conditions.roads.status %></span></h3>
+                    <h3>Burnaby Roads: <span class="status-text <%= conditions.burnaby.roads.severity %>"><%= conditions.burnaby.roads.status %></span></h3>
                 </div>
                 <div class="extra-weather-conditions last">
                     <ul>
-                        <li>Adjacent roads: <span class="<%= conditions.adjacentroads.severity %>"><%=: conditions.adjacentroads.status | capitalize %></span></li>
-                        <li>Classes and exams: <span class="<%= conditions.classes_exams.severity %>"><%=: conditions.classes_exams.status | capitalize %></span></li>
-                        <li>Translink Buses: <span class="<%= conditions.transit.severity %>"><%=: conditions.transit.status | capitalize %></span></li>
+                        <li>Adjacent roads: <span class="<%= conditions.burnaby.adjacentroads.severity %>"><%=: conditions.burnaby.adjacentroads.status | capitalize %></span></li>
+                        <li>Classes and exams: <span class="<%= conditions.burnaby.classes_exams.severity %>"><%=: conditions.burnaby.classes_exams.status | capitalize %></span></li>
+                        <li>Translink Buses: <span class="<%= conditions.burnaby.transit.severity %>"><%=: conditions.burnaby.transit.status | capitalize %></span></li>
                     </ul>
                 </div>
             </div>
@@ -34,18 +34,18 @@
     <div class="other-campus-conditions half first">
         <div class="status-container half first">
             <a href="http://www.surrey.sfu.ca/welcome" target="_blank">
-                <div class="campus-status normal other-campuses">
+                <div class="campus-status <%= conditions.surrey.campus.severity %> other-campuses">
                     <div class="campus"><h4>Surrey Campus</h4></div>
-                    <h3>Open</h3>
+                    <h3><%=: conditions.surrey.campus.status | capitalize %></h3>
                 </div>
             </a>
             <p>Classes and exams: <strong>On schedule</strong></p>
         </div>
         <div class="status-container half last">
             <a href="http://www.sfu.ca/vancouver/welcome.html" target="_blank">
-                <div class="campus-status normal other-campuses">
+                <div class="campus-status <%= conditions.vancouver.campus.severity %> other-campuses">
                     <div class="campus"><h4>Vancouver Campus</h4></div>
-                    <h3>Open</h3>
+                    <h3><%=: conditions.vancouver.campus.status | capitalize %></h3>
                 </div>
             </a>
             <p>Classes and exams: <strong>Cancelled (morning classes)</strong></p>

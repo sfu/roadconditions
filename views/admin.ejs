@@ -42,14 +42,24 @@
 
     <form id="updateconditions" name="updateconditions" action="api/1/current" method="POST">
 
-        <fieldset id="conditions-container">
+        <fieldset class="conditions-container" id="burnaby-conditions-container">
             <h3>Burnaby Conditions</h3>
-            <div id="conditions"></div>
+            <div class="conditions" id="burnaby-conditions"></div>
+        </fieldset>
+
+        <fieldset class="conditions-container" id="surrey-conditions-container">
+            <h3>Surrey Conditions</h3>
+            <div class="conditions" id="surrey-conditions"></div>
+        </fieldset>
+
+        <fieldset class="conditions-container" id="vancouver-conditions-container">
+            <h3>Vancouver Conditions</h3>
+            <div class="conditions" id="vancouver-conditions"></div>
         </fieldset>
 
         <fieldset id="announcements-container">
             <h3>Announcements</h3>
-            <div id="announcements"></div>
+            <div class="conditions" id="announcements"></div>
         </fieldset>
 
         <fieldset id="sidebars-container">
@@ -106,7 +116,7 @@
         ,   selected;
     %]
 
-    <label class="third" for="[%= name %]">[%= val %]</label><select class="status third" id="[%= name %]" name="[%= name %]">
+    <label class="third" for="[%= name %]">[%= val %]</label><select class="status third" id="[%= name %]" data-campus="[%= campus %]" name="[%= name %]">
         [% for (var ssmStatus in statusSeverityMap) { %]
             [% selected = ssmStatus === status ? 'selected="selected"' : ''; %]
             <option value="[%= ssmStatus %]" [%= selected %]>[%= ssmStatus.toSentenceCase() %]</option>
