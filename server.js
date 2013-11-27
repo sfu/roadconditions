@@ -54,9 +54,12 @@ writeConditions = function(data) {
     });
 };
 // Set up redis clients
-dataclient = redis.createClient(config.redis.port, config.redis.host);
-subclient = redis.createClient(config.redis.port, config.redis.host);
-pubclient = redis.createClient(config.redis.port, config.redis.host);
+var redisOptions = {
+    retry_max_delay: 2000,
+};
+dataclient = redis.createClient(config.redis.port, config.redis.host, redisOptions);
+subclient = redis.createClient(config.redis.port, config.redis.host, redisOptions);
+pubclient = redis.createClient(config.redis.port, config.redis.host, redisOptions);
 
 if (config.redis.password) {
     dataclient.auth(config.redis.password);
@@ -141,7 +144,8 @@ app.configure(function() {
         store: new RedisStore({
             host: config.redis.host,
             prefix: 'roadconditions:sess:',
-            pass: config.redis.password
+            pass: config.redis.password,
+            retry_max_delay: 2000
         }),
         secret: config.session_secret,
         cookie: {
