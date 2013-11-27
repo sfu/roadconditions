@@ -284,6 +284,12 @@ app.get('/api/1/current/:key?', function(req, res) {
     }
     res.json(data, status);
 });
+
+app.get('/api/2/current/:key?', function(req, res) {
+    var data = {}, status = 200;
+    if (!req.param('key')) {
+        res.json(conditions);
+        return;
     } else {
         var key = req.param('key');
         if (conditions.hasOwnProperty(key)) {
