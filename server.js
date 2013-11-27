@@ -91,7 +91,16 @@ process.on('SIGTERM', function() {
     process.exit(0);
 });
 
+subclient.on('connect', function() {
+    logger.info('REDIS SUBSCRIBER CLIENT CONNECTED');
+});
+
+pubclient.on('connect', function() {
+    logger.info('REDIS PUBLISH CLIENT CONNECTED');
+});
+
 dataclient.on('connect', function(e) {
+    logger.info('REDIS DATA CLIENT CONNECTED');
     subclient.subscribe('roadconditions:update');
     subclient.on('message', function(channel, message) {
         if (channel === 'roadconditions:update') {
