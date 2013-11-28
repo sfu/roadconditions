@@ -39,7 +39,7 @@
                     <h3><%=: conditions.surrey.campus.status | capitalize %></h3>
                 </div>
             </a>
-            <p>Classes and exams: <strong>On schedule</strong></p>
+            <p>Classes and exams: <strong class="<%= conditions.surrey.classes_exams.severity %>"><%= conditions.surrey.classes_exams.status %></strong></p>
         </div>
         <div class="status-container half last">
             <a href="http://www.sfu.ca/vancouver/welcome.html" target="_blank">
@@ -48,7 +48,7 @@
                     <h3><%=: conditions.vancouver.campus.status | capitalize %></h3>
                 </div>
             </a>
-            <p>Classes and exams: <strong>Cancelled (morning classes)</strong></p>
+            <p>Classes and exams: <strong class="<%= conditions.vancouver.classes_exams.severity %>"><%= conditions.vancouver.classes_exams.status %></strong></p>
         </div>
     </div>
 </section>
