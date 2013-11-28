@@ -107,7 +107,7 @@ ul {
     }
 
     .warning {
-        color: #A38922;
+        color: @warningColour;
     }
 
     .alert {
@@ -166,16 +166,16 @@ ul {
 }
 
 .main-campus-status .normal, .other-campus-conditions .normal {
-    background-color: @open;
+    background-color: @normalColour;
     color: #fff;
 }
 
 .main-campus-status .warning, .other-campus-conditions .warning {
-    background-color: @reOpened;
+    background-color: @warningColour;
 }
 
 .main-campus-status .alert, .other-campus-conditions .alert {
-    background-color: @closed;
+    background-color: @alertColour;
 }
 
 .other-campus-classes-exams {
@@ -187,11 +187,11 @@ ul {
 }
 
 .other-campus-classes-exams.warning {
-    color: @reOpened;
+    color: @warningColour;
 }
 
 .other-campus-classes-exams.alert {
-    color: @closed;
+    color: @alertColour;
 }
 .main-campus-info {
     padding-left: 5%;
@@ -281,8 +281,8 @@ ul {
 @media (max-width: 768px) {
 
     .main {
-        padding-left: 2.1929825%;; // to align with site title
-        padding-right: 2.1929825%;;
+        padding-left: 2.1929825%; // to align with site title
+        padding-right: 2.1929825%;
     }
 
     .status-title {
