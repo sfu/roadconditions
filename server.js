@@ -16,7 +16,7 @@ var fs = require('fs'),
     schemaPath = __dirname + '/data/conditions_schema.json',
     conditionsSchema = schema.Schema.create(JSON.parse(fs.readFileSync(schemaPath))),
     pkg = JSON.parse(fs.readFileSync(__dirname + '/package.json')),
-    serverid, app, cas, subclient, pubclient, graphite, config, redirectResolver;
+    serverid, app, cas, subclient, pubclient, graphite, config, redirectResolver, storageEngine, store;
 
 process.title = 'roadconditions';
 
@@ -30,9 +30,11 @@ serverid = config.serverid = os.hostname() + ':' + config.port;
 redirectResolver = new RedirectResolver(config);
 app = module.exports = express();
 
+storageEngine = config.storage.engine;
+store = new ConditionsStore[storageEngine](config.storage[storageEngine]);
 store.on('ready', function() {
     app.listen(config.port, function() {
-        logger.info('data store ready');
+        logger.info(storageEngine + ' ready');
         logger.info('starting roadconditions server version ' + pkg.version + ' on port ' + config.port + ' in ' + app.settings.env + ' mode, PID: ' + process.pid);
     });
 });
