@@ -8,7 +8,7 @@ var fs = require('fs'),
     RedisStore = require('connect-redis')(express),
     ConditionsStore = require('./lib/roadconditions-store'),
     redis = require('redis'),
-    engine = require('ejs-locals'),
+    viewEngine = require('ejs-locals'),
     winston = require('./lib/logger'),
     helpers = require('./lib/helpers'),
     RedirectResolver = require('./lib/redirectResolver'),
@@ -89,7 +89,7 @@ pubclient.on('connect', function() {
 });
 
 app.configure(function() {
-    app.engine('ejs', engine);
+    app.engine('ejs', viewEngine);
     app.use(express.compress());
     app.set('view engine', 'ejs');
     app.set('views', __dirname + '/views');
