@@ -37,22 +37,6 @@ if (config.graphite && config.graphite.enabled) {
 
 logger = winston.createLogger(config);
 
-writeConditions = function(data) {
-    dataclient.set('roadconditions:data', JSON.stringify(data), function(err, reply) {
-        if (err) {
-            logger.error('REDIS ERROR WRITING CONDITIONS: ' + err);
-        } else {
-            if (config.graphite && config.graphite.enabled) {
-                graphite.write({'stats.nodeapps.roadconditions.updates': 1}, function(err) {
-                    if (err) {
-                        logger.error('Error writing to graphite (stats.nodeapps.roadconditions.updates ' + err.toString());
-                    }
-                });
-            }
-            pubclient.publish('roadconditions:update', JSON.stringify({message: 'conditionsupdated', server: serverid }));
-        }
-    });
-};
 // Set up redis clients
 var redisOptions = {
     retry_max_delay: 2000,
