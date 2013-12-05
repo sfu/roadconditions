@@ -215,7 +215,7 @@ var loggedin = function(req, res, next) {
 
 // HTML Routes
 app.get('/', function(req, res) {
-    res.render('index', conditions);
+    res.render('index', store.get());
 });
 
 app.get('/isup', function(req, res) {
@@ -223,7 +223,7 @@ app.get('/isup', function(req, res) {
 });
 
 app.get('/admin', loggedin, function(req, res) {
-    var tmplData = {auth: req.session.auth, current: conditions};
+    var tmplData = {auth: req.session.auth, current: store.get()};
     if (process.env.NODE_ENV === 'development') {
         tmplData.devInfo = {
             node: process.version,
@@ -267,7 +267,7 @@ app.get('/admin/info', loggedin, function(req, res) {
             server: serverid,
             process_env: process.env,
             cwd: __dirname,
-            conditions: conditions
+            conditions: store.get()
         };
         res.send(data);
     }
@@ -275,43 +275,46 @@ app.get('/admin/info', loggedin, function(req, res) {
 
 // API Routes
 app.get('/api/1/current/:key?', function(req, res) {
-    var data = {}, status = 200;
-    if (!req.param('key')) {
-        data = JSON.parse(JSON.stringify(conditions));
-        data.conditions = data.conditions.burnaby;
+    var data = store.get(),
+        status = 200
+        ret = {}
+        key = req.param('key');
+
+     // maintain back-compat and only show burnaby
+    data.conditions = data.conditions.burnaby;
+
+    if (!key) {
+        res.json(data);
     } else {
-        var key = req.param('key');
-        if (conditions.hasOwnProperty(key)) {
-            if (key === 'conditions') {
-                data.conditions = conditions.conditions.burnaby;
-            } else {
-                data[key] = conditions[key];
-            }
-            data.lastupdated = conditions.lastupdated;
+        if (data.hasOwnProperty(key)) {
+            ret[key] = data[key];
+            ret['lastupdated'] = data.lastupdated;
         } else {
             status = 404;
-            data = {error: 'not found', key: key};
+            ret = {error: 'not found', key: key};
         }
+        res.json(ret, status);
     }
-    res.json(data, status);
 });
 
 app.get('/api/2/current/:key?', function(req, res) {
-    var data = {}, status = 200;
-    if (!req.param('key')) {
-        res.json(conditions);
-        return;
+    var data = store.get(),
+        ret = {},
+        status = 200,
+        key = req.param('key');
+
+    if (!key) {
+        res.json(data);
     } else {
-        var key = req.param('key');
-        if (conditions.hasOwnProperty(key)) {
-            data[key] = conditions[key];
-            data.lastupdated = conditions.lastupdated;
+        if (data.hasOwnProperty(key)) {
+            ret[key] = data[key];
+            ret.lastupdated = data.lastupdated;
         } else {
             status = 404;
             data = {error: 'not found', key: key};
         }
+        res.json(ret, status);
     }
-    res.json(data, status);
 });
 
 app.post('/api/1/current', loggedin, function(req, res) {
@@ -322,8 +325,7 @@ app.post('/api/1/current', loggedin, function(req, res) {
         res.send(400, validate.getError());
     } else {
         data.lastupdated = new Date().getTime();
-        conditions = data;
-        writeConditions(data);
+        store.set(data);
         res.send(data);
     }
 });
@@ -332,7 +334,4 @@ app.post('/api/1/current', loggedin, function(req, res) {
 app.del('*', function(req, res) { res.send(405); });
 app.put('*', function(req, res) { res.send(405); });
 
-app.listen(config.port, function() {
-    logger.info('starting roadconditions server version ' + pkg.version + ' on port ' + config.port + ' in ' + app.settings.env + ' mode, PID: ' + process.pid);
-});
 
