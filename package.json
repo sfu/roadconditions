@@ -15,6 +15,7 @@
   "private": true,
   "dependencies": {
     "cas-sfu": "1.0.x",
+    "clone": "0.1.x",
     "connect-redis": "1.4.x",
     "ejs": "0.8.x",
     "ejs-locals": "~1.0.2",
