@@ -88,35 +88,6 @@ pubclient.on('connect', function() {
     logger.info('REDIS PUBLISH CLIENT CONNECTED');
 });
 
-dataclient.on('connect', function(e) {
-    logger.info('REDIS DATA CLIENT CONNECTED');
-    subclient.subscribe('roadconditions:update');
-    subclient.on('message', function(channel, message) {
-        if (channel === 'roadconditions:update') {
-            message = JSON.parse(message);
-            if (message.server !== serverid || process.env.NODE_ENV !== 'production') {
-                dataclient.get('roadconditions:data', function(err, data) {
-                    logger.info('RECEIVED UPDATED DATA FROM ' + message.server);
-                    conditions = JSON.parse(data);
-                });
-            }
-        }
-    });
-    dataclient.get('roadconditions:data', function(err, data) {
-        if (err) { throw err; }
-        if (!data) {
-            logger.warn('no data in redis; using defaults');
-            conditions = JSON.parse(fs.readFileSync(defaultConditionsPath, 'UTF-8'));
-            conditions.lastupdated = Date.now();
-            dataclient.set('roadconditions:data', JSON.stringify(conditions));
-        } else {
-            conditions = JSON.parse(data);
-            // for some reason, in dev, the above JSON.parse isn't actually doing anything. it's fine in production and I can't be arsed to figure out why, so this is here:
-            if (typeof conditions === 'string') { logger.warn('conditions is still a string; re-parsing'); conditions = JSON.parse(conditions); }
-        }
-    });
-});
-
 app.configure(function() {
     app.engine('ejs', engine);
     app.use(express.compress());
