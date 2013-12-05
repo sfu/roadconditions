@@ -47,22 +47,16 @@ logger = winston.createLogger(config);
 var redisOptions = {
     retry_max_delay: 2000,
 };
-dataclient = redis.createClient(config.redis.port, config.redis.host, redisOptions);
 subclient = redis.createClient(config.redis.port, config.redis.host, redisOptions);
 pubclient = redis.createClient(config.redis.port, config.redis.host, redisOptions);
 
 if (config.redis.password) {
-    dataclient.auth(config.redis.password);
     subclient.auth(config.redis.password);
     pubclient.auth(config.redis.password);
 }
 
 
 // Error/exit handlers
-
-dataclient.on('error', function(err) {
-    logger.error('REDIS DATA CLIENT ERROR: ' + err);
-});
 
 subclient.on('error', function(err) {
     logger.error('REDIS SUBSCRIBER CLIENT ERROR: ' + err);
