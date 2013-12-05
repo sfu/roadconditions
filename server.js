@@ -31,6 +31,12 @@ serverid = config.serverid = os.hostname() + ':' + config.port;
 redirectResolver = new RedirectResolver(config);
 app = module.exports = express();
 
+store.on('ready', function() {
+    app.listen(config.port, function() {
+        logger.info('data store ready');
+        logger.info('starting roadconditions server version ' + pkg.version + ' on port ' + config.port + ' in ' + app.settings.env + ' mode, PID: ' + process.pid);
+    });
+});
 if (config.graphite && config.graphite.enabled) {
     graphite = require('graphite').createClient('plaintext://' + config.graphite.host + ':' + config.graphite.port || 2003);
 }
