@@ -80,14 +80,6 @@ process.on('SIGTERM', function() {
     process.exit(0);
 });
 
-subclient.on('connect', function() {
-    logger.info('REDIS SUBSCRIBER CLIENT CONNECTED');
-});
-
-pubclient.on('connect', function() {
-    logger.info('REDIS PUBLISH CLIENT CONNECTED');
-});
-
 app.configure(function() {
     app.engine('ejs', viewEngine);
     app.use(express.compress());
