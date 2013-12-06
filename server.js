@@ -7,8 +7,7 @@ var fs = require('fs'),
     cas = require('cas-sfu'),
     RedisStore = require('connect-redis')(express),
     ConditionsStore = require('./lib/roadconditions-store'),
-    redis = require('redis'),
-    engine = require('ejs-locals'),
+    viewEngine = require('ejs-locals'),
     winston = require('./lib/logger'),
     helpers = require('./lib/helpers'),
     RedirectResolver = require('./lib/redirectResolver'),
@@ -16,7 +15,7 @@ var fs = require('fs'),
     schemaPath = __dirname + '/data/conditions_schema.json',
     conditionsSchema = schema.Schema.create(JSON.parse(fs.readFileSync(schemaPath))),
     pkg = JSON.parse(fs.readFileSync(__dirname + '/package.json')),
-    serverid, app, cas, subclient, pubclient, graphite, config, redirectResolver, storageEngine, store;
+    serverid, app, cas, pubsub, graphite, config, redirectResolver, storageEngine, store;
 
 process.title = 'roadconditions';
 
@@ -32,12 +31,20 @@ app = module.exports = express();
 
 storageEngine = config.storage.engine;
 store = new ConditionsStore[storageEngine](config.storage[storageEngine]);
+
 store.on('ready', function() {
     app.listen(config.port, function() {
         logger.info(storageEngine + ' ready');
         logger.info('starting roadconditions server version ' + pkg.version + ' on port ' + config.port + ' in ' + app.settings.env + ' mode, PID: ' + process.pid);
     });
 });
+
+store.on('updated', function(data) {
+    if (config.redisPubSub && config.redisPubSub.enabled) {
+        pubsub.pub.publish(config.redisPubSub.channel, JSON.stringify({message: 'conditionsupdated', server: serverid }));
+    }
+});
+
 store.on('error', function(err) {
     logger.error('conditions store error:', err);
 });
@@ -48,29 +55,27 @@ if (config.graphite && config.graphite.enabled) {
 
 logger = winston.createLogger(config);
 
-// Set up redis clients
-var redisOptions = {
-    retry_max_delay: 2000,
-};
-subclient = redis.createClient(config.redis.port, config.redis.host, redisOptions);
-pubclient = redis.createClient(config.redis.port, config.redis.host, redisOptions);
-
-if (config.redis.password) {
-    subclient.auth(config.redis.password);
-    pubclient.auth(config.redis.password);
+// Redis PubSub
+if (config.redisPubSub && config.redisPubSub.enabled) {
+    pubsub = require('./lib/pubsub').init(config.redisPubSub);
+    pubsub.on('connect', function(client) {
+        logger.info('Redis pubsub ' + client + ' ready');
+    });
+    pubsub.on('error', function(client, err) {
+        logger.error('Redis pubsub ' + client + ' error:', err);
+    });
+    pubsub.sub.on('message', function(channel, message) {
+        if (channel === config.redisPubSub.channel) {
+            message = JSON.parse(message);
+            if (message.server !== serverid || process.env.NODE_ENV !== 'production') {
+                logger.info('Redis pubsub received message on ' + channel + ' from ' + message.server);
+                store.forceRefresh();
+            }
+        }
+    });
 }
 
-
 // Error/exit handlers
-
-subclient.on('error', function(err) {
-    logger.error('REDIS SUBSCRIBER CLIENT ERROR: ' + err);
-});
-
-pubclient.on('error', function(err) {
-    logger.error('REDIS PUBLISH CLIENT ERROR: ' + err);
-});
-
 app.on('error', function(err) {
     logger.error('EXPRESS ERROR: ' + err);
 });
@@ -80,16 +85,8 @@ process.on('SIGTERM', function() {
     process.exit(0);
 });
 
-subclient.on('connect', function() {
-    logger.info('REDIS SUBSCRIBER CLIENT CONNECTED');
-});
-
-pubclient.on('connect', function() {
-    logger.info('REDIS PUBLISH CLIENT CONNECTED');
-});
-
 app.configure(function() {
-    app.engine('ejs', engine);
+    app.engine('ejs', viewEngine);
     app.use(express.compress());
     app.set('view engine', 'ejs');
     app.set('views', __dirname + '/views');
