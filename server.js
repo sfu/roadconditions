@@ -15,6 +15,7 @@ var fs = require('fs'),
     schemaPath = __dirname + '/data/conditions_schema.json',
     conditionsSchema = schema.Schema.create(JSON.parse(fs.readFileSync(schemaPath))),
     pkg = JSON.parse(fs.readFileSync(__dirname + '/package.json')),
+    listening = false,
     serverid, app, cas, pubsub, graphite, config, redirectResolver, storageEngine, store;
 
 process.title = 'roadconditions';
@@ -33,10 +34,13 @@ storageEngine = config.storage.engine;
 store = new ConditionsStore[storageEngine](config.storage[storageEngine]);
 
 store.on('ready', function() {
-    app.listen(config.port, function() {
-        logger.info(storageEngine + ' ready');
-        logger.info('starting roadconditions server version ' + pkg.version + ' on port ' + config.port + ' in ' + app.settings.env + ' mode, PID: ' + process.pid);
-    });
+    if (!listening) {
+        app.listen(config.port, function() {
+            listening = true;
+            logger.info(storageEngine + ' ready');
+            logger.info('starting roadconditions server version ' + pkg.version + ' on port ' + config.port + ' in ' + app.settings.env + ' mode, PID: ' + process.pid);
+        });
+    }
 });
 
 store.on('updated', function(data) {
