@@ -15,7 +15,7 @@ var fs = require('fs'),
     schemaPath = __dirname + '/data/conditions_schema.json',
     conditionsSchema = schema.Schema.create(JSON.parse(fs.readFileSync(schemaPath))),
     pkg = JSON.parse(fs.readFileSync(__dirname + '/package.json')),
-    serverid, app, cas, subclient, pubclient, graphite, config, redirectResolver, storageEngine, store;
+    serverid, app, cas, pubsub, graphite, config, redirectResolver, storageEngine, store;
 
 process.title = 'roadconditions';
 
