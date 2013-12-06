@@ -43,6 +43,14 @@ store.on('updated', function(data) {
     if (config.redisPubSub && config.redisPubSub.enabled) {
         pubsub.pub.publish(config.redisPubSub.channel, JSON.stringify({message: 'conditionsupdated', server: serverid }));
     }
+
+    if (config.graphite && config.graphite.enabled) {
+        graphite.write({'stats.nodeapps.roadconditions.updates': 1}, function(err) {
+            if (err) {
+                logger.error('Error writing to graphite (stats.nodeapps.roadconditions.updates ' + err.toString());
+            }
+        });
+    }
 });
 
 store.on('error', function(err) {
