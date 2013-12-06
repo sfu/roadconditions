@@ -7,10 +7,36 @@
         "password": "xxxxx"
     },
 
-    "graphite": {
+    "storage": {
+        "engine": "RedisStore",
+        "FileStore": {
+            "filename": "data/conditions.json"
+        },
+        "RedisStore": {
+            "host": "redis-server",
+            "port": 6379,
+            "password": "xxxxx",
+            "clientOpts": {
+                "retry_max_delay": 2000
+            }
+        }
+    },
+
+    "redisPubSub": {
         "enabled": true,
-        "host": "graphite-server",
-        "port": 2003
+        "channel": "roadconditions:update",
+        "host": "redis-server",
+        "port": 6379,
+        "password": "xxxxx",
+        "clientOpts": {
+            "retry_max_delay": 2000
+        }
+    },
+
+    "graphite": {
+        "enabled": false,
+        "host": null,
+        "port": null
     },
 
     "logging": {
@@ -18,14 +44,11 @@
         "mail": { "enabled": false },
         "syslog": {
             "enabled": true,
-            "host": "syslog-server"
+            "host": "devnull.ucs.sfu.ca"
         }
-    }
+    },
 
-    "session_secret": "XXXXXXXXXXXX"
+    "session_secret": "xxxxx",
 
-    "cas_service": null,
-
-    "basepath": null,
-    "basehost": null
+    "cas_service": "http://localhost:8000/login"
 }
