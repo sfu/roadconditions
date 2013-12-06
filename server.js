@@ -55,16 +55,24 @@ if (config.graphite && config.graphite.enabled) {
 
 logger = winston.createLogger(config);
 
-// Set up redis clients
-var redisOptions = {
-    retry_max_delay: 2000,
-};
-subclient = redis.createClient(config.redis.port, config.redis.host, redisOptions);
-pubclient = redis.createClient(config.redis.port, config.redis.host, redisOptions);
-
-if (config.redis.password) {
-    subclient.auth(config.redis.password);
-    pubclient.auth(config.redis.password);
+// Redis PubSub
+if (config.redisPubSub && config.redisPubSub.enabled) {
+    pubsub = require('./lib/pubsub').init(config.redisPubSub);
+    pubsub.on('connect', function(client) {
+        logger.info('Redis pubsub ' + client + ' ready');
+    });
+    pubsub.on('error', function(client, err) {
+        logger.error('Redis pubsub ' + client + ' error:', err);
+    });
+    pubsub.sub.on('message', function(channel, message) {
+        if (channel === config.redisPubSub.channel) {
+            message = JSON.parse(message);
+            if (message.server !== serverid || process.env.NODE_ENV !== 'production') {
+                logger.info('Redis pubsub received message on ' + channel + ' from ' + message.server);
+                store.forceRefresh();
+            }
+        }
+    });
 }
 
 // Error/exit handlers
