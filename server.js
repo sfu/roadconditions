@@ -31,12 +31,20 @@ app = module.exports = express();
 
 storageEngine = config.storage.engine;
 store = new ConditionsStore[storageEngine](config.storage[storageEngine]);
+
 store.on('ready', function() {
     app.listen(config.port, function() {
         logger.info(storageEngine + ' ready');
         logger.info('starting roadconditions server version ' + pkg.version + ' on port ' + config.port + ' in ' + app.settings.env + ' mode, PID: ' + process.pid);
     });
 });
+
+store.on('updated', function(data) {
+    if (config.redisPubSub && config.redisPubSub.enabled) {
+        pubsub.pub.publish(config.redisPubSub.channel, JSON.stringify({message: 'conditionsupdated', server: serverid }));
+    }
+});
+
 store.on('error', function(err) {
     logger.error('conditions store error:', err);
 });
