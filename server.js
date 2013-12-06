@@ -59,17 +59,7 @@ if (config.redis.password) {
     pubclient.auth(config.redis.password);
 }
 
-
 // Error/exit handlers
-
-subclient.on('error', function(err) {
-    logger.error('REDIS SUBSCRIBER CLIENT ERROR: ' + err);
-});
-
-pubclient.on('error', function(err) {
-    logger.error('REDIS PUBLISH CLIENT ERROR: ' + err);
-});
-
 app.on('error', function(err) {
     logger.error('EXPRESS ERROR: ' + err);
 });
