@@ -1,6 +1,6 @@
 #!/bin/sh
 
-DATA=`/usr/bin/curl -s http://www.sfu.ca/security/sfuroadconditions/api/1/current`
+DATA=`/usr/bin/curl -s http://www.sfu.ca/security/sfuroadconditions/api/2/current`
 REDISPW='Lg9DJ}yVxVLeTFQr|u[6UDdBWA3pTq'
 REDISCLI=/usr/local/bin/redis-cli
 if [ "$1" = '' ] ; then
