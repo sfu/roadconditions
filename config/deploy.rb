@@ -5,7 +5,7 @@ require "capistrano/ext/multistage"
 set :application,   "roadconditions"
 set :repository,    "git@github.com:sfu/roadconditions.git"
 set :scm,           :git
-set :branch,        "master"
+set :branch,        "master" || ENV['branch']
 set :user,          "nodeuser"
 set :deploy_to,     "/var/nodeapps/roadconditions"
 set :use_sudo,      false
