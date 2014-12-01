@@ -169,7 +169,12 @@ app.configure('production', function() {
 var casauth = cas.getMiddleware({
     service: config.cas_service || 'http://' + serverid + '/login',
     allow: '!roadconditions-admins,!roadconditions-supervisors,!roadconditions-dispatchers',
-    userObject: 'auth'
+    userObject: 'auth',
+    casBasePath: '/cas',
+    loginPath: '/login',
+    logoutPath: '/logout',
+    validatePath: '/serviceValidate',
+    appLogoutPath: '/applogout'
 });
 
 var loggedin = function(req, res, next) {
