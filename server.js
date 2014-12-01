@@ -22,6 +22,7 @@ process.title = 'roadconditions';
 
 try {
     config = require(path.resolve(configFile));
+    config.port = config.port.toString();
 } catch (e) {
     throw new Error(e);
 }
