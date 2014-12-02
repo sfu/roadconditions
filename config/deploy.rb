@@ -3,7 +3,7 @@ set :default_stage, "staging"
 require "capistrano/ext/multistage"
 
 set :application,   "roadconditions"
-set :repository,    "git@github.com:sfu/roadconditions.git"
+set :repository,    "https://github.com/sfu/roadconditions.git"
 set :scm,           :git
 set :branch,        "master" || ENV['branch']
 set :user,          "nodeuser"
