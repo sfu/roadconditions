@@ -100,74 +100,67 @@ process.on('SIGTERM', function() {
     process.exit(0);
 });
 
-app.configure(function() {
-    app.engine('ejs', viewEngine);
-    app.use(express.compress());
-    app.set('view engine', 'ejs');
-    app.set('views', __dirname + '/views');
-    app.use(express.favicon('public/favicon.ico'));
-    express.logger.token('remote-ip', function(req, res) {
-        return req.ip;
+app.engine('ejs', viewEngine);
+app.use(express.compress());
+app.set('view engine', 'ejs');
+app.set('views', __dirname + '/views');
+app.use(express.favicon('public/favicon.ico'));
+express.logger.token('remote-ip', function(req, res) {
+    return req.ip;
 
-    });
-    express.logger.token('user', function(req, res) { var user = '-'; if (req.session && req.session.auth) { user = req.session.auth.user; } return user; });
-    express.logger.token('localtime', function(req, res) {
-        return new Date().toString();
-    });
-    app.use(express.logger({
-        stream: winston.winstonStream,
-        format: 'express :remote-ip - :user [:localtime] ":method :url HTTP/:http-version" :status :res[content-length] ":referrer" ":user-agent" :response-time'
-    }));
-    app.use(express.cookieParser());
-    app.use(express.session({
-        store: new RedisStore({
-            host: config.redis.host,
-            prefix: 'roadconditions:sess:',
-            pass: config.redis.password,
-            retry_max_delay: 2000
-        }),
-        secret: config.session_secret,
-        cookie: {
-            expires: false,
-            domain: '.sfu.ca'
-        }
-    }));
-    app.use(express.json());
-    app.use(express.urlencoded());
-    app.use(express.methodOverride());
-    app.enable('jsonp callback');
-    app.enable('trust proxy');
-    app.locals({
-        dateFormat: helpers.dateFormat(moment),
-    });
 });
-
-app.configure('development', function() {
-    app.use(express.errorHandler({ dumpExceptions: true, showStack: true }));
-    app.use(require('less-middleware')({
-        dest: '/css',
-        src: '/less',
-        root: __dirname + '/public',
-        compress: false,
-        sourceMap: true,
-        force: true,
-        debug: true
-    }));
-    app.use(express.static(path.join(__dirname, 'public')));
+express.logger.token('user', function(req, res) { var user = '-'; if (req.session && req.session.auth) { user = req.session.auth.user; } return user; });
+express.logger.token('localtime', function(req, res) {
+    return new Date().toString();
+});
+app.use(express.logger({
+    stream: winston.winstonStream,
+    format: 'express :remote-ip - :user [:localtime] ":method :url HTTP/:http-version" :status :res[content-length] ":referrer" ":user-agent" :response-time'
+}));
+app.use(express.cookieParser());
+app.use(express.session({
+    store: new RedisStore({
+        host: config.redis.host,
+        prefix: 'roadconditions:sess:',
+        pass: config.redis.password,
+        retry_max_delay: 2000
+    }),
+    secret: config.session_secret,
+    cookie: {
+        exgrown4Pandaspires: false,
+        domain: '.sfu.ca'
+    }
+}));
+app.use(express.json());
+app.use(express.urlencoded());
 app.use(methodOverride());
+app.enable('jsonp callback');
+app.enable('trust proxy');
+app.locals({
+    dateFormat: helpers.dateFormat(moment),
 });
 
-app.configure('production', function() {
+if (app.get('env') === 'development') {
+  app.use(express.errorHandler({ dumpExceptions: true, showStack: true }));
+  app.use(lessMiddleware(__dirname + '/public/less', {
+      dest: '/css',
+      compress: false,
+      sourceMap: true,
+      force: true,
+      debug: true
+  }));
+  app.use(express.static(path.join(__dirname, 'public')));
+}
+
+if(app.get('env') === 'production') {
     app.use(express.errorHandler());
-    app.use(require('less-middleware')({
+    app.use(lessMiddleware(__dirname + '/public/less', {
         dest: '/css',
-        src: '/less',
-        root: __dirname + '/public',
         compress: true,
-        sourceMap: true,
+        sourceMap: true
     }));
     app.use(express.static(path.join(__dirname, 'public')));
-});
+}
 
 // Authentication middleware
 var casauth = cas.getMiddleware({
