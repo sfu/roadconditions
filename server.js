@@ -18,7 +18,7 @@ var fs = require('fs'),
     conditionsSchema = schema.Schema.create(JSON.parse(fs.readFileSync(schemaPath))),
     pkg = JSON.parse(fs.readFileSync(__dirname + '/package.json')),
     listening = false,
-    serverid, app, cas, pubsub, graphite, config, redirectResolver, storageEngine, store;
+    serverid, app, cas, pubsub, config, redirectResolver, storageEngine, store;
 
 process.title = 'roadconditions';
 
@@ -50,23 +50,11 @@ store.on('updated', function(data) {
     if (config.redisPubSub && config.redisPubSub.enabled) {
         pubsub.pub.publish(config.redisPubSub.channel, JSON.stringify({message: 'conditionsupdated', server: serverid }));
     }
-
-    if (config.graphite && config.graphite.enabled) {
-        graphite.write({'stats.nodeapps.roadconditions.updates': 1}, function(err) {
-            if (err) {
-                logger.error('Error writing to graphite (stats.nodeapps.roadconditions.updates ' + err.toString());
-            }
-        });
-    }
 });
 
 store.on('error', function(err) {
     logger.error('conditions store error:', err);
 });
-
-if (config.graphite && config.graphite.enabled) {
-    graphite = require('graphite').createClient('plaintext://' + config.graphite.host + ':' + config.graphite.port || 2003);
-}
 
 logger = winston.createLogger(config);
 

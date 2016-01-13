@@ -33,12 +33,6 @@
         }
     },
 
-    "graphite": {
-        "enabled": false,
-        "host": null,
-        "port": null
-    },
-
     "logging": {
         "console": { "enabled": true },
         "mail": { "enabled": false },
