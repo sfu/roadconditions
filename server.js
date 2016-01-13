@@ -8,6 +8,7 @@ var fs = require('fs'),
     RedisStore = require('connect-redis')(express),
     ConditionsStore = require('./lib/roadconditions-store'),
     viewEngine = require('ejs-locals'),
+    methodOverride = require('method-override'),
     winston = require('./lib/logger'),
     helpers = require('./lib/helpers'),
     RedirectResolver = require('./lib/redirectResolver'),
@@ -152,6 +153,7 @@ app.configure('development', function() {
         debug: true
     }));
     app.use(express.static(path.join(__dirname, 'public')));
+app.use(methodOverride());
 });
 
 app.configure('production', function() {
