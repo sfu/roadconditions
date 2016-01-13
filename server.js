@@ -302,7 +302,7 @@ app.post('/api/1/current', loggedin, function(req, res) {
 });
 
 // OH NO YOU DIDNT
-app.del('*', function(req, res) { res.send(405); });
+app.delete('*', function(req, res) { res.send(405); });
 app.put('*', function(req, res) { res.send(405); });
 
 
