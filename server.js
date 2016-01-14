@@ -261,7 +261,7 @@ app.get('/api/1/current/:key?', function(req, res) {
             status = 404;
             ret = {error: 'not found', key: key};
         }
-        res.json(ret, status);
+        res.send(status).json(ret);
     }
 });
 
@@ -281,7 +281,7 @@ app.get('/api/2/current/:key?', function(req, res) {
             status = 404;
             data = {error: 'not found', key: key};
         }
-        res.json(ret, status);
+        res.send(status).json(ret);
     }
 });
 
