@@ -1,0 +1,72 @@
+#!/bin/bash
+
+# post-receive hook to deploy node app
+
+# bail if branch deleted
+while read OLDSHA NEWSHA REF ; do
+  if [[ "$NEWSHA" == "0000000000000000000000000000000000000000" ]]; then
+    echo "Branch deleted, nothing to do"
+    exit 0
+  fi
+done
+
+# vars
+GIT_DIR=/home/nodeuser/repos/roadconditions.git
+DEPLOY_BASE_PATH=/home/nodeuser/apps/roadconditions
+DATESTAMP=$(date +"%Y%m%d%H%M%S")
+RELEASE_PATH="$DEPLOY_BASE_PATH/releases/$DATESTAMP"
+CURRENT_PATH="$DEPLOY_BASE_PATH/current"
+SHARED_PATH="$DEPLOY_BASE_PATH/shared"
+LOG_PATH="$DEPLOY_BASE_PATH/shared/logs"
+PRESTART_URL="http://localhost:3000/isup"
+PIDFILE="$CURRENT_PATH/pid/passenger.pid"
+
+echo "GIT_DIR: $GIT_DIR"
+echo "DEPLOY_BASE_PATH: $DEPLOY_BASE_PATH"
+echo "DATESTAMP: $DATESTAMP"
+echo "RELEASE_PATH: $RELEASE_PATH"
+echo "CURRENT_PATH: $CURRENT_PATH"
+echo "SHARED_PATH: $SHARED_PATH"
+echo "PRESTART_URL: $PRESTART_URL"
+
+# create the release directory
+echo "Create the release directory"
+mkdir -p $RELEASE_PATH  || { echo "Error creating $RELEASE_PATH" ; exit 1; }
+
+# check out files to release directory
+echo "Check out files to release directory"
+git --work-tree=$RELEASE_PATH --git-dir=$GIT_DIR checkout -f || { echo "Error checking out files" ; exit 1; }
+
+# npm install
+echo "npm install"
+cd $RELEASE_PATH && npm install || { echo "Error running npm install" ; exit 1; }
+
+# copy config files
+echo "Symlink config files"
+ln -s $SHARED_PATH/config/config.json $RELEASE_PATH/config/config.json || { echo "Error symlinking config files" ; exit 1; }
+ln -s $SHARED_PATH/Passengerfile.json $RELEASE_PATH || { echo "Error symlinking Passengerfile"; exit 1; }
+
+# symlink logs & pid
+ln -s $SHARED_PATH/{logs,pid} $RELEASE_PATH || { echo "Error symlinking logs & pid" ; exit 1; }
+
+# move symlink
+echo "Move symlink"
+rm $CURRENT_PATH || { echo "Error removing current symlink" ; exit 1; }
+ln -s $RELEASE_PATH $CURRENT_PATH || { echo "Error making symlink" ; exit 1; }
+
+# start or restart
+if [ -e "$PIDFILE" ]; then
+  # pidfile exists, so app should be running; try to restart it
+  echo "App running; restarting app"
+  /usr/bin/passenger-config restart-app $DEPLOY_BASE_PATH
+else
+  # pidfile does not exist, so app is not running; start it
+  echo "App not running; starting app"
+  cd $CURRENT_PATH && /usr/bin/passenger start
+fi
+
+curl $PRESTART_URL || { echo "Error hitting $PRESTART_URL" ; exit 1; }
+
+# delete old releases
+echo "Cleaning up old releases"
+cd "$DEPLOY_BASE_PATH/releases" && (ls -t | head -n 5; ls) | sort | uniq -u | xargs rm -rf
