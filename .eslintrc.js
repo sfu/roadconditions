@@ -11,7 +11,8 @@ module.exports = {
   },
   rules: {
     'no-console': 0,
-    'one-var': ['error', 'never']
+    'one-var': ['error', 'never'],
+    'no-extra-semi': 0
   },
   plugins: [],
   settings: {}
