@@ -22,7 +22,6 @@ var fs = require('fs'),
   listening = false,
   serverid,
   app,
-  cas,
   pubsub,
   config,
   redirectResolver,
@@ -37,6 +36,8 @@ try {
 } catch (e) {
   throw new Error(e)
 }
+
+var logger = winston.createLogger(config)
 
 serverid = config.serverid = os.hostname() + ':' + config.port
 redirectResolver = new RedirectResolver(config)
@@ -64,7 +65,7 @@ store.on('ready', function() {
   }
 })
 
-store.on('updated', function(data) {
+store.on('updated', function() {
   if (config.redisPubSub && config.redisPubSub.enabled) {
     pubsub.pub.publish(
       config.redisPubSub.channel,
@@ -76,8 +77,6 @@ store.on('updated', function(data) {
 store.on('error', function(err) {
   logger.error('conditions store error:', err)
 })
-
-logger = winston.createLogger(config)
 
 // Redis PubSub
 if (config.redisPubSub && config.redisPubSub.enabled) {
@@ -125,17 +124,17 @@ app.use(express.compress())
 app.set('view engine', 'ejs')
 app.set('views', __dirname + '/views')
 app.use(express.favicon('public/favicon.ico'))
-express.logger.token('remote-ip', function(req, res) {
+express.logger.token('remote-ip', function(req) {
   return req.ip
 })
-express.logger.token('user', function(req, res) {
+express.logger.token('user', function(req) {
   var user = '-'
   if (req.session && req.session.auth) {
     user = req.session.auth.user
   }
   return user
 })
-express.logger.token('localtime', function(req, res) {
+express.logger.token('localtime', function() {
   return new Date().toString()
 })
 app.use(
@@ -299,9 +298,9 @@ app.get('/admin/info', loggedin, function(req, res) {
 // API Routes
 app.get('/api/1/current/:key?', function(req, res) {
   var data = store.get(),
-    status = 200
-  ret = {}
-  key = req.param('key')
+    status = 200,
+    ret = {},
+    key = req.param('key')
 
   // maintain back-compat and only show burnaby
   data.conditions = data.conditions.burnaby
