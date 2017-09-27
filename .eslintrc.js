@@ -10,7 +10,8 @@ module.exports = {
     jest: true
   },
   rules: {
-    'no-console': 0
+    'no-console': 0,
+    'one-var': ['error', 'never']
   },
   plugins: [],
   settings: {}

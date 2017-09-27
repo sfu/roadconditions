@@ -1,32 +1,32 @@
-var fs = require('fs'),
-  os = require('os'),
-  path = require('path'),
-  express = require('express'),
-  moment = require('./lib/moment'),
-  schema = require('schema')('conditions'),
-  cas = require('cas-sfu'),
-  lessMiddleware = require('less-middleware'),
-  RedisStore = require('connect-redis')(express.session),
-  ConditionsStore = require('./lib/roadconditions-store'),
-  viewEngine = require('ejs-locals'),
-  methodOverride = require('method-override'),
-  winston = require('./lib/logger'),
-  helpers = require('./lib/helpers'),
-  RedirectResolver = require('./lib/redirectResolver'),
-  configFile = process.env.CONFIGFILE || __dirname + '/config/config.json',
-  schemaPath = __dirname + '/data/conditions_schema.json',
-  conditionsSchema = schema.Schema.create(
-    JSON.parse(fs.readFileSync(schemaPath))
-  ),
-  pkg = JSON.parse(fs.readFileSync(__dirname + '/package.json')),
-  listening = false,
-  serverid,
-  app,
-  pubsub,
-  config,
-  redirectResolver,
-  storageEngine,
-  store
+var fs = require('fs')
+var os = require('os')
+var path = require('path')
+var express = require('express')
+var moment = require('./lib/moment')
+var schema = require('schema')('conditions')
+var cas = require('cas-sfu')
+var lessMiddleware = require('less-middleware')
+var RedisStore = require('connect-redis')(express.session)
+var ConditionsStore = require('./lib/roadconditions-store')
+var viewEngine = require('ejs-locals')
+var methodOverride = require('method-override')
+var winston = require('./lib/logger')
+var helpers = require('./lib/helpers')
+var RedirectResolver = require('./lib/redirectResolver')
+var configFile = process.env.CONFIGFILE || __dirname + '/config/config.json'
+var schemaPath = __dirname + '/data/conditions_schema.json'
+var conditionsSchema = schema.Schema.create(
+  JSON.parse(fs.readFileSync(schemaPath))
+)
+var pkg = JSON.parse(fs.readFileSync(__dirname + '/package.json'))
+var listening = false
+var serverid
+var app
+var pubsub
+var config
+var redirectResolver
+var storageEngine
+var store
 
 process.title = 'roadconditions'
 
@@ -297,10 +297,10 @@ app.get('/admin/info', loggedin, function(req, res) {
 
 // API Routes
 app.get('/api/1/current/:key?', function(req, res) {
-  var data = store.get(),
-    status = 200,
-    ret = {},
-    key = req.param('key')
+  var data = store.get()
+  var status = 200
+  var ret = {}
+  var key = req.param('key')
 
   // maintain back-compat and only show burnaby
   data.conditions = data.conditions.burnaby
@@ -320,10 +320,10 @@ app.get('/api/1/current/:key?', function(req, res) {
 })
 
 app.get('/api/2/current/:key?', function(req, res) {
-  var data = store.get(),
-    ret = {},
-    status = 200,
-    key = req.param('key')
+  var data = store.get()
+  var ret = {}
+  var status = 200
+  var key = req.param('key')
 
   if (!key) {
     res.json(data)
