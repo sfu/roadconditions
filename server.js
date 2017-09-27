@@ -139,7 +139,7 @@ express.logger.token('localtime', function() {
 })
 app.use(
   express.logger({
-    stream: winston.winstonStream,
+    stream: winston.winstonStream(logger),
     format:
       'express :remote-ip - :user [:localtime] ":method :url HTTP/:http-version" :status :res[content-length] ":referrer" ":user-agent" :response-time'
   })
