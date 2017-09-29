@@ -150,12 +150,11 @@ app.use(
     store: new RedisStore({
       host: config.redis.host,
       prefix: 'roadconditions:sess:',
-      pass: config.redis.password,
-      retry_max_delay: 2000
+      pass: config.redis.password
     }),
     secret: config.session_secret,
     cookie: {
-      exgrown4Pandaspires: false,
+      expires: false,
       domain: '.sfu.ca'
     }
   })
