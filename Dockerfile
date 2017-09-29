@@ -8,4 +8,5 @@ RUN yarn
 
 COPY . .
 
-CMD ["node", "index.js"]
+CMD [ "npm", "start" ]
+EXPOSE 3000 9229
