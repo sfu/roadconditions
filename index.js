@@ -155,7 +155,7 @@ app.use(
     secret: config.session_secret,
     cookie: {
       expires: false,
-      domain: '.sfu.ca'
+      domain: config.cookie_domain || '.sfu.ca'
     }
   })
 )
