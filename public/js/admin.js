@@ -595,18 +595,6 @@ window.exports = {}
         campus: 'burnaby'
       })
 
-      new Conditions({
-        el: $('#surrey-conditions-container'),
-        elements: { '#surrey-conditions': 'surreyConditions' },
-        campus: 'surrey'
-      })
-
-      new Conditions({
-        el: $('#vancouver-conditions-container'),
-        elements: { '#vancouver-conditions': 'vancouverConditions' },
-        campus: 'vancouver'
-      })
-
       new Announcements({ attr: 'announcements' })
       new Sidebars({ attr: 'sidebars' })
       new Categories()

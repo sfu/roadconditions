@@ -55,16 +55,6 @@
                             <div class="conditions" id="burnaby-conditions"></div>
                         </fieldset>
 
-                        <fieldset class="conditions-container" id="surrey-conditions-container">
-                            <h3>Surrey Conditions</h3>
-                            <div class="conditions" id="surrey-conditions"></div>
-                        </fieldset>
-
-                        <fieldset class="conditions-container" id="vancouver-conditions-container">
-                            <h3>Vancouver Conditions</h3>
-                            <div class="conditions" id="vancouver-conditions"></div>
-                        </fieldset>
-
                         <fieldset id="announcements-container">
                             <h3>Announcements</h3>
                             <div class="conditions" id="announcements"></div>
@@ -104,12 +94,10 @@
 
         <script type="application/json" id="conditions_json">
             <%- JSON.stringify(current) %>
-
         </script>
 
         <script type="application/json" id="conditions_map">
             {"campus":{"open":"normal","closed":"alert","delayed opening":"warning"},"roads":{"dry":"normal","partially clear":"warning","closed - see below":"alert","snow-covered":"alert","snow (beware of possible ice)":"alert","light snow":"warning","icy":"alert","wet":"warning","wet (beware of possible ice)":"warning"},"adjacentroads":{"not applicable":"normal","closed":"alert","use caution":"warning","use extreme caution":"alert"},"transit":{"on schedule":"normal","delayed":"warning","not running":"alert"},"classes_exams":{"on schedule":"normal","cancelled (morning classes)":"alert","cancelled (afternoon classes)":"alert","cancelled (evening classes)":"alert","cancelled (all classes)":"alert","cancelled until further notice":"alert"}}
-
         </script>
 
         <script type="text/template" id="conditionItemTmpl">
