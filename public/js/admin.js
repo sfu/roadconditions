@@ -2,14 +2,6 @@
 
 window.exports = {}
 ;(function(Spine, $, exports, data) {
-  //   var stripwhitespace = function() {
-  //     $('textarea').each(function() {
-  //       var html = this.innerHTML
-  //       var nbspregex = /<p>&nbsp;<\/p>\n/g
-  //       this.innerHTML = html.replace(nbspregex, '')
-  //     })
-  //   }
-
   /********************************************************
         CONDITIONS
     ********************************************************/
