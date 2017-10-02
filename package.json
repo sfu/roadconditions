@@ -9,7 +9,7 @@
     "type": "git",
     "url": "https://github.com/sfu/roadconditions"
   },
-  "main": "server.js",
+  "main": "index.js",
   "private": true,
   "dependencies": {
     "cas-sfu": "https://github.com/sfu/node-cas-sfu.git",
