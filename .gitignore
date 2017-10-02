@@ -10,3 +10,4 @@ config/config*json
 public/css/roadconditions.css
 public/css/roadconditions-admin.css
 *.css.map
+.vscode/*
