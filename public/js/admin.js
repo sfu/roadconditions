@@ -1,5 +1,6 @@
 /*global Spine, EJS, tinyMCE, moment*/
 
+window.exports = {}
 ;(function(Spine, $, exports, data) {
   //   var stripwhitespace = function() {
   //     $('textarea').each(function() {
