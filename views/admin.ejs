@@ -1,5 +1,5 @@
 <% layout('layout') %>
-<%  stylesheet('css/roadconditions-admin.css');
+    <%  stylesheet('css/roadconditions-admin.css');
     if (auth.maillist === 'roadconditions-dispatchers') stylesheet('css/admin-dispatcher.css');
 
     var headScripts = [
@@ -18,70 +18,78 @@
 %>
 
 
-<section id="lastupdated" class="main update">
-    <p>Last updated <span><%= dateFormat(current.lastupdated, false) %></span></p>
-</section>
+        <section id="lastupdated" class="main update">
+            <p>Last updated <span><%= dateFormat(current.lastupdated, false) %></span></p>
+        </section>
 
 
-<section class="main">
+        <section class="main">
 
-    <% if (process.env.NODE_ENV === 'development') { %>
-    <section id="dev-info">
-        <h2>Development Mode</h2>
-        <ul>
-            <li>Node Version: <%= devInfo.node %></li>
-            <li>App Version: <%= devInfo.version %></li>
-            <li>Server: <%= devInfo.server %></li>
-            <li>Redis host: <%= devInfo.redishost %></li>
-        </ul>
-    </section>
-    <% } %>
-
-
-    <section id="message-container"></section>
-
-    <form id="updateconditions" name="updateconditions" action="api/1/current" method="POST">
-
-        <fieldset class="conditions-container" id="burnaby-conditions-container">
-            <h3>Burnaby Conditions</h3>
-            <div class="conditions" id="burnaby-conditions"></div>
-        </fieldset>
-
-        <fieldset class="conditions-container" id="surrey-conditions-container">
-            <h3>Surrey Conditions</h3>
-            <div class="conditions" id="surrey-conditions"></div>
-        </fieldset>
-
-        <fieldset class="conditions-container" id="vancouver-conditions-container">
-            <h3>Vancouver Conditions</h3>
-            <div class="conditions" id="vancouver-conditions"></div>
-        </fieldset>
-
-        <fieldset id="announcements-container">
-            <h3>Announcements</h3>
-            <div class="conditions" id="announcements"></div>
-        </fieldset>
-
-        <fieldset id="sidebars-container">
-            <h3>Sidebars</h3>
-            <div class="clearfix" id="sidebars"></div>
-            <button class="plus" id="addnewsidebar">Add New Sidebar</button>
-        </fieldset>
+            <% if (process.env.NODE_ENV === 'development') { %>
+                <section id="dev-info">
+                    <h2>Development Mode</h2>
+                    <ul>
+                        <li>Node Version:
+                            <%= devInfo.node %>
+                        </li>
+                        <li>App Version:
+                            <%= devInfo.version %>
+                        </li>
+                        <li>Server:
+                            <%= devInfo.server %>
+                        </li>
+                        <li>Redis host:
+                            <%= devInfo.redishost %>
+                        </li>
+                    </ul>
+                </section>
+                <% } %>
 
 
-        <fieldset id="links-container">
-            <h3>Links</h3>
-            <div id="linkCategories"></div>
-            <button class="plus" id="addnewlinkcategory">Add New Category</button>
-        </fieldset>
+                    <section id="message-container"></section>
 
-        <div id="submit-container">
-            <input type="submit" value="Submit"/>
-        </div>
-    </form>
-</section>
+                    <form id="updateconditions" name="updateconditions" action="api/1/current" method="POST">
 
-<footer></footer>
+                        <fieldset class="conditions-container" id="burnaby-conditions-container">
+                            <h3>Burnaby Conditions</h3>
+                            <div class="conditions" id="burnaby-conditions"></div>
+                        </fieldset>
+
+                        <fieldset class="conditions-container" id="surrey-conditions-container">
+                            <h3>Surrey Conditions</h3>
+                            <div class="conditions" id="surrey-conditions"></div>
+                        </fieldset>
+
+                        <fieldset class="conditions-container" id="vancouver-conditions-container">
+                            <h3>Vancouver Conditions</h3>
+                            <div class="conditions" id="vancouver-conditions"></div>
+                        </fieldset>
+
+                        <fieldset id="announcements-container">
+                            <h3>Announcements</h3>
+                            <div class="conditions" id="announcements"></div>
+                        </fieldset>
+
+                        <fieldset id="sidebars-container">
+                            <h3>Sidebars</h3>
+                            <div class="clearfix" id="sidebars"></div>
+                            <button class="plus" id="addnewsidebar">Add New Sidebar</button>
+                        </fieldset>
+
+
+                        <fieldset id="links-container">
+                            <h3>Links</h3>
+                            <div id="linkCategories"></div>
+                            <button class="plus" id="addnewlinkcategory">Add New Category</button>
+                        </fieldset>
+
+                        <div id="submit-container">
+                            <input type="submit" value="Submit" />
+                        </div>
+                    </form>
+        </section>
+
+        <footer></footer>
 
 
 
@@ -94,78 +102,74 @@
 
 
 
-<script type="application/json" id="conditions_json">
-    <%- JSON.stringify(current) %>
-</script>
+        <script type="application/json" id="conditions_json">
+            <%- JSON.stringify(current) %>
 
-<script type="application/json" id="conditions_map">
-    {"campus":{"open":"normal","closed":"alert","delayed opening":"warning"},"roads":{"dry":"normal","partially clear":"warning","closed - see below":"alert","snow-covered":"alert","snow (beware of possible ice)":"alert","light snow":"warning","icy":"alert","wet":"warning","wet (beware of possible ice)":"warning"},"adjacentroads":{"not applicable":"normal","closed":"alert","use caution":"warning","use extreme caution":"alert"},"transit":{"on schedule":"normal","delayed":"warning","not running":"alert"},"classes_exams":{"on schedule":"normal","cancelled (morning classes)":"alert","cancelled (afternoon classes)":"alert","cancelled (evening classes)":"alert","cancelled (all classes)":"alert","cancelled until further notice":"alert"}}
-</script>
+        </script>
 
-<script type="text/template" id="conditionItemTmpl">
-    [%
-        var severities = ['normal', 'warning', 'alert']
-        ,   conditions_map = {
-            campus: 'Campus',
-            roads: 'Roads',
-            adjacentroads: 'Adjacent Roads',
-            transit: 'Transit',
-            classes_exams: 'Classes and Exams'
-        }
-        ,   val = conditions_map.hasOwnProperty(name) ? conditions_map[name] : name.toSentenceCase()
-        ,   selected;
-    %]
+        <script type="application/json" id="conditions_map">
+            {"campus":{"open":"normal","closed":"alert","delayed opening":"warning"},"roads":{"dry":"normal","partially clear":"warning","closed - see below":"alert","snow-covered":"alert","snow (beware of possible ice)":"alert","light snow":"warning","icy":"alert","wet":"warning","wet (beware of possible ice)":"warning"},"adjacentroads":{"not applicable":"normal","closed":"alert","use caution":"warning","use extreme caution":"alert"},"transit":{"on schedule":"normal","delayed":"warning","not running":"alert"},"classes_exams":{"on schedule":"normal","cancelled (morning classes)":"alert","cancelled (afternoon classes)":"alert","cancelled (evening classes)":"alert","cancelled (all classes)":"alert","cancelled until further notice":"alert"}}
 
-    <label class="third" for="[%= name %]">[%= val %]</label><select class="status third" id="[%= name %]" data-campus="[%= campus %]" name="[%= name %]">
+        </script>
+
+        <script type="text/template" id="conditionItemTmpl">
+            [% var severities = ['normal', 'warning', 'alert'] , conditions_map = { campus: 'Campus', roads: 'Roads', adjacentroads:
+            'Adjacent Roads', transit: 'Transit', classes_exams: 'Classes and Exams' } , val = conditions_map.hasOwnProperty(name)
+            ? conditions_map[name] : name.toSentenceCase() , selected; %]
+
+            <label class="third" for="[%= name %]">[%= val %]</label><select class="status third" id="[%= name %]" data-campus="[%= campus %]"
+                name="[%= name %]">
         [% for (var ssmStatus in statusSeverityMap) { %]
             [% selected = ssmStatus === status ? 'selected="selected"' : ''; %]
             <option value="[%= ssmStatus %]" [%= selected %]>[%= ssmStatus.toSentenceCase() %]</option>
         [% } %]
     </select>
-    <label class="status_label" for="[%= name %]_status">Status:</label>
-    <select class="severity third" data-statusfor="[%= name %]" id="[%= name %]_status" name="[%= name %]_status">
+            <label class="status_label" for="[%= name %]_status">Status:</label>
+            <select class="severity third" data-statusfor="[%= name %]" id="[%= name %]_status" name="[%= name %]_status">
         [% for (var i = 0; i < severities.length; i++) { %]
             [%  selected = severities[i] === severity ? 'selected="selected"' : ''; %]
             <option value="[%= severities[i] %]" [%= selected %]>[%= severities[i].toSentenceCase() %]</option>
         [% } %]
     </select>
-</script>
+        </script>
 
-<script type="text/template" id="announcementTmpl">
-   <label for="announcement-[%= id %]">Main Announcement [%= id %]</label>
-       <textarea id="announcement-[%= id %]" name="announcement-[%= id %]">[%= content %]</textarea>
-</script>
+        <script type="text/template" id="announcementTmpl">
+            <label for="announcement-[%= id %]">Main Announcement [%= id %]</label>
+            <textarea id="announcement-[%= id %]" name="announcement-[%= id %]">[%= content %]</textarea>
+        </script>
 
-<script type="text/template" id="sidebarTmpl">
-    <label for="sidebar-[%= id %]">Sidebar Item [%= position %]</label>
-    <textarea id="sidebar-[%= id %]" name="sidebar-[%= id %]">[%= content %]</textarea>
-    <button class="minus deletesidebaritem">Remove Item</button>
-</script>
+        <script type="text/template" id="sidebarTmpl">
+            <label for="sidebar-[%= id %]">Sidebar Item [%= position %]</label>
+            <textarea id="sidebar-[%= id %]" name="sidebar-[%= id %]">[%= content %]</textarea>
+            <button class="minus deletesidebaritem">Remove Item</button>
+        </script>
 
-<script type="text/template" id="linkCategoryTmpl">
-    <div class="category">
-        <label for="category-[%= id %]">Category Name</label>
-        <input class="linkCategoryName required" id="category-[%= id %]" name="category-[%= id %]" value="[%= name %]" placeholder="Category Name"/>
-    </div>
+        <script type="text/template" id="linkCategoryTmpl">
+            <div class="category">
+                <label for="category-[%= id %]">Category Name</label>
+                <input class="linkCategoryName required" id="category-[%= id %]" name="category-[%= id %]" value="[%= name %]" placeholder="Category Name"
+                />
+            </div>
 
-    <div id="linkcategory-[%= id %]" class="links">
-    </div>
-    <div class="linksCategoryButtonContainer">
-        <button class="plus addlink">Add new link</button>
-        <button class="minus deletecategory">Delete category</button>
-    </div>
-</script>
+            <div id="linkcategory-[%= id %]" class="links">
+            </div>
+            <div class="linksCategoryButtonContainer">
+                <button class="plus addlink">Add new link</button>
+                <button class="minus deletecategory">Delete category</button>
+            </div>
+        </script>
 
-<script type="text/template" id="linkItemTmpl">
-    <div class="linkTitleContainer">
-        <label for="text-[%= id %]">Text</label>
-        <input name="text-[%= id %]" id="text-[%= id %]" value="[%= text %]" class="linktext required" placeholder="Link Text"/>
-    </div>
-    <div class="linkURLContainer">
-        <label for="url-[%= id %]">URL</label>
-        <input type="url" name="url-[%= id %]" id="url-[%= id %]" name="category-[%= id %]" value="[%= url %]" class="linkurl required" placeholder="Link URL" />
-    </div>
-    <div class="linkDeleteButtonContainer">
-        <button class="minus deletelink">Delete link</button>
-    </div>
-</script>
+        <script type="text/template" id="linkItemTmpl">
+            <div class="linkTitleContainer">
+                <label for="text-[%= id %]">Text</label>
+                <input name="text-[%= id %]" id="text-[%= id %]" value="[%= text %]" class="linktext required" placeholder="Link Text" />
+            </div>
+            <div class="linkURLContainer">
+                <label for="url-[%= id %]">URL</label>
+                <input type="url" name="url-[%= id %]" id="url-[%= id %]" name="category-[%= id %]" value="[%= url %]" class="linkurl required"
+                    placeholder="Link URL" />
+            </div>
+            <div class="linkDeleteButtonContainer">
+                <button class="minus deletelink">Delete link</button>
+            </div>
+        </script>
