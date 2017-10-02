@@ -1,48 +1,51 @@
 <!DOCTYPE html>
 
 <html>
-    <head>
-        <meta http-equiv="X-UA-Compatible" content="IE=Edge, chrome=1">
-        <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
-        <title>Road Report - Simon Fraser University</title>
-        <%- stylesheets %>
-        <!--[if lt IE 9]>
-            <script type="text/javascript" src="js/vendor/html5shiv.js"></script>
-            <script type="text/javascript" src="js/vendor/respond.js"></script>
-        <![endif]-->
-        <% if (blocks.hasOwnProperty('headScripts')) { %>
-            <%- blocks.headScripts %>
+
+<head>
+  <meta http-equiv="X-UA-Compatible" content="IE=Edge, chrome=1">
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+  <title>Road Report - Simon Fraser University</title>
+  <%- stylesheets %>
+    <% if (blocks.hasOwnProperty('headScripts')) { %>
+      <%- blocks.headScripts %>
         <% } %>
-    </head>
-    <body>
-        <div id="container">
-            <div id="page">
-                <header>
-                    <section class="heading">
-                        <div class="brand-title">
-                            <a href="http://www.sfu.ca">
-                                <div class="branding">
-                                    <h1>Simon Fraser University<br/>Engaging the World</h1>
-                                </div>
-                            </a>
-                            <div class="site-title">
-                                <h2><a href="/"><%- blocks.title || 'Road Report' %></a></h2>
-                            </div>
-                        </div>
-                    </section>
-                    <section class="actionable-header">
-                        <% if (blocks.hasOwnProperty('actionableHeader')) { %>
-                            <%- blocks.actionableHeader %>
-                        <% } %>
-                    </section>
-                </header>
-                <div class="header-divider"></div>
-                <div id="page-content">
-                    <%- body %>
-                </div>
+</head>
+
+<body>
+  <div id="container">
+    <div id="page">
+      <header>
+        <section class="heading">
+          <div class="brand-title">
+            <a href="http://www.sfu.ca">
+              <div class="branding">
+                <h1>Simon Fraser University<br/>Engaging the World</h1>
+              </div>
+            </a>
+            <div class="site-title">
+              <h2>
+                <a href="/">
+                  <%- blocks.title || 'Road Report' %>
+                </a>
+              </h2>
             </div>
-        </div>
-        <%- scripts %>
-    </body>
+          </div>
+        </section>
+        <section class="actionable-header">
+          <% if (blocks.hasOwnProperty('actionableHeader')) { %>
+            <%- blocks.actionableHeader %>
+              <% } %>
+        </section>
+      </header>
+      <div class="header-divider"></div>
+      <div id="page-content">
+        <%- body %>
+      </div>
+    </div>
+  </div>
+  <%- scripts %>
+</body>
+
 </html>
