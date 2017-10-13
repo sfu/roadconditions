@@ -2,120 +2,7 @@
   <% script('js/refreshcameras.js') %>
     <% stylesheet('css/roadconditions.css') %>
 
-      <section class="main update">
-        <p title="Report updated <%= dateFormat(lastupdated, false) %>">Report updated <strong><%= dateFormat(lastupdated, true) %></strong>. This report will be updated as conditions change.
-        </p>
-      </section>
 
-      <section class="main one">
-        <div class="main-campus-status half first">
-          <div class="campus-status <%= conditions.burnaby.campus.severity %>">
-            <div class="campus">
-              <h3>Burnaby Campus</h3>
-            </div>
-            <h1>
-              <%=: conditions.burnaby.campus.status | capitalize %>
-            </h1>
-          </div>
-
-        </div>
-        <div class="main-campus-info half last">
-          <div class="road-weather-conditions">
-            <div class="road-conditions">
-              <div class="status-title first">
-                <h3>Burnaby Roads: <span class="status-text <%= conditions.burnaby.roads.severity %>"><%= conditions.burnaby.roads.status %></span></h3>
-              </div>
-              <div class="extra-weather-conditions last">
-                <ul>
-                  <li>Adjacent roads: <span class="<%= conditions.burnaby.adjacentroads.severity %>"><%=: conditions.burnaby.adjacentroads.status | capitalize %></span></li>
-                  <li>Classes and exams: <span class="<%= conditions.burnaby.classes_exams.severity %>"><%=: conditions.burnaby.classes_exams.status | capitalize %></span></li>
-                  <li>Translink Buses: <span class="<%= conditions.burnaby.transit.severity %>"><%=: conditions.burnaby.transit.status | capitalize %></span></li>
-                </ul>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div class="other-campus-conditions half first">
-          <div class="status-container half first">
-            <a href="http://www.surrey.sfu.ca/welcome.html" target="_blank">
-                <div class="campus-status <%= conditions.surrey.campus.severity %> other-campuses">
-                    <div class="campus"><h4>Surrey Campus</h4></div>
-                    <h3><%=: conditions.surrey.campus.status | capitalize %></h3>
-                </div>
-            </a>
-            <p>Classes and exams: <span class="other-campus-classes-exams <%= conditions.surrey.classes_exams.severity %>"><strong><%=: conditions.surrey.classes_exams.status | capitalize %></strong></span></p>
-          </div>
-          <div class="status-container half last">
-            <a href="http://www.sfu.ca/vancouver/welcome.html" target="_blank">
-                <div class="campus-status <%= conditions.vancouver.campus.severity %> other-campuses">
-                    <div class="campus"><h4>Vancouver Campus</h4></div>
-                    <h3><%=: conditions.vancouver.campus.status | capitalize %></h3>
-                </div>
-            </a>
-            <p>Classes and exams: <span class="other-campus-classes-exams <%= conditions.vancouver.classes_exams.severity %>"><strong><%=: conditions.vancouver.classes_exams.status | capitalize %></strong></span></p>
-          </div>
-        </div>
-      </section>
-
-      <section class="main commentary">
-        <section class="announcements">
-          <h3>Announcements</h3>
-          <% for (item in announcements) { %>
-            <div>
-              <%- announcements[item] %>
-            </div>
-            <% } %>
-        </section>
-        <section class="sidebar">
-          <% for (item in sidebars) { %>
-            <div>
-              <%- sidebars[item] %>
-            </div>
-            <% } %>
-        </section>
-      </section>
-
-      <section class="main three clearfix">
-        <div class="clearfix">
-          <h3>Burnaby Webcams</h3>
-          <div class="webcam">
-            <h4>University Drive North</h4>
-            <a href="http://www.sfu.ca/itservices/technical/webcams/webcams_library.html"><img class="webcamimg" src="http://ns-webcams.its.sfu.ca/public/images/udn-current.jpg" alt="University Drive North" /></a>
-          </div>
-          <div class="webcam">
-            <h4>Gaglardi Intersection</h4>
-            <a href="http://www.sfu.ca/itservices/technical/webcams/webcams_gaglardi.html"><img class="webcamimg" src="http://ns-webcams.its.sfu.ca/public/images/gaglardi-current.jpg" alt="Gaglardi intersection" /></a>
-          </div>
-          <div class="webcam">
-            <h4>AQ North</h4>
-            <a href="http://www.sfu.ca/itservices/technical/webcams/webcams_aqnorth.html"><img class="webcamimg" src="http://ns-webcams.its.sfu.ca/public/images/aqn-current.jpg" alt="Convocation Mall" /></a>
-          </div>
-        </div>
-        <div class="other-resources clearfix">
-          <h3>Other Resources</h3>
-          <div class="clearfix">
-            <% for (i in links) {
-                var thislink = links[i];
-            %>
-              <div class="resource quarter">
-                <h4>
-                  <%= thislink.category %>
-                </h4>
-                <ul>
-                  <% for (i in thislink.links) {%>
-                    <li>
-                      <a href="<%= thislink.links[i].url %>">
-                        <%= thislink.links[i].text %>
-                      </a>
-                    </li>
-                    <% } %>
-                </ul>
-              </div>
-              <% } %>
-          </div>
-        </div>
-      </section>
 
 
       <%- partial('footer') %>
@@ -133,4 +20,5 @@
             ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
             var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
           })();
+
         </script>
