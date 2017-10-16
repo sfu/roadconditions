@@ -1,9 +1,10 @@
 {
   "name": "roadconditions",
-  "description":
-    "Road Conditions application for SFU Safety & Risk Services (Security)",
+  "description": "Road Conditions application for SFU Safety & Risk Services (Security)",
   "author": "Graham Ballantyne <grahamb@sfu.ca>",
-  "contributors": ["Eryn Holbrook <eryn@sfu.ca>"],
+  "contributors": [
+    "Eryn Holbrook <eryn@sfu.ca>"
+  ],
   "version": "2.1.0",
   "repository": {
     "type": "git",
@@ -15,12 +16,16 @@
     "cas-sfu": "https://github.com/sfu/node-cas-sfu.git",
     "clone": "^1.0.2",
     "connect-redis": "^3.0.2",
+    "date-fns": "^1.29.0",
     "ejs": "^2.3.4",
     "ejs-locals": "^1.0.2",
     "express": "^3.21.2",
     "less-middleware": "^2.0.1",
     "method-override": "^2.3.5",
     "moment": "^2.11.1",
+    "prop-types": "^15.6.0",
+    "react": "^16.0.0",
+    "react-dom": "^16.0.0",
     "redis": "^2.4.2",
     "schema": "^0.2.1",
     "winston": "^2.1.1",
@@ -28,10 +33,16 @@
     "winston-syslog": "^1.1.2"
   },
   "devDependencies": {
+    "babel-core": "^6.26.0",
     "babel-eslint": "^8.0.1",
+    "babel-loader": "^7.1.2",
+    "babel-preset-env": "^1.6.0",
+    "babel-preset-react": "^6.24.1",
     "eslint": "^4.7.2",
+    "eslint-plugin-react": "^7.4.0",
     "nodemon": "^1.12.1",
-    "prettier": "^1.7.1"
+    "prettier": "^1.7.1",
+    "webpack": "^3.7.1"
   },
   "prettier": {
     "singleQuote": true,

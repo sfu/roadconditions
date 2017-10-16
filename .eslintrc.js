@@ -1,7 +1,11 @@
 module.exports = {
   parser: 'babel-eslint',
-  parserOptions: {},
-  extends: ['eslint:recommended'],
+  parserOptions: {
+    ecmaFeatures: {
+      jsx: true
+    }
+  },
+  extends: ['eslint:recommended', 'plugin:react/recommended'],
   globals: {},
   env: {
     browser: true,
@@ -15,6 +19,6 @@ module.exports = {
     'one-var': ['error', 'never'],
     'no-extra-semi': 0
   },
-  plugins: [],
+  plugins: ['react'],
   settings: {}
 }
