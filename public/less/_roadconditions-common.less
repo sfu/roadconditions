@@ -7,96 +7,104 @@
 @alertColour: #922313;
 @altTextColour: #fff;
 
+@sfuRed: #a6192e;
+@sfuBlack: #54585a;
+@sfuBlue: #007096;
+@sfuGold: #c1a01e;
 
 .clearfix:after {
-     visibility: hidden;
-     display: block;
-     font-size: 0;
-     content: " ";
-     clear: both;
-     height: 0;
-     }
-.clearfix { display: inline-block; }
+  visibility: hidden;
+  display: block;
+  font-size: 0;
+  content: ' ';
+  clear: both;
+  height: 0;
+}
+.clearfix {
+  display: inline-block;
+}
 /* start commented backslash hack \*/
-* html .clearfix { height: 1%; }
-.clearfix { display: block; }
+* html .clearfix {
+  height: 1%;
+}
+.clearfix {
+  display: block;
+}
 /* close commented backslash hack */
 
-
 .one {
-    padding-top: 2em;
+  padding-top: 2em;
 }
 
 .two {
-    background-color: @sfuBlack;
-    color: #fff;
+  background-color: @sfuBlack;
+  color: #fff;
 
-    a {
-        color: @sfuGold;
-        text-decoration: none;
-    }
+  a {
+    color: @sfuGold;
+    text-decoration: none;
+  }
 }
 
 .quater {
-    float:left;
-    width: 25%;
-    padding: 0 1%;
+  float: left;
+  width: 25%;
+  padding: 0 1%;
 }
 
 .third {
-    float:left;
-    width:33.3333%;
-    // padding: 0 1%;
+  float: left;
+  width: 33.3333%;
+  // padding: 0 1%;
 }
 
 .two-thirds {
-    float:left;
-    width:66.6666%;
-    padding: 0 1%;
+  float: left;
+  width: 66.6666%;
+  padding: 0 1%;
 }
 
 .half {
-    float: left;
-    width: 50%;
-    padding: 0 1%;
+  float: left;
+  width: 50%;
+  padding: 0 1%;
 }
 
 .first {
-    padding-left: 0;
-    padding-right: 2%;
+  padding-left: 0;
+  padding-right: 2%;
 }
 
 .last {
-    padding-right: 0;
-    padding-left: 2%;
+  padding-right: 0;
+  padding-left: 2%;
 }
 
 .brand-font-medium (@size: 1em, @leading: 1.3125em) {
-    font-size: @size;
-    line-height: @leading;
-    font-family: "DINWebMedium", sans-serif;
-    font-weight: normal;
+  font-size: @size;
+  line-height: @leading;
+  font-family: 'DINWebMedium', sans-serif;
+  font-weight: normal;
 }
 
 h3 {
-    .brand-font-medium (1.3125em/1.1em);
-    margin-bottom: 1em;
-    margin-top: 1em;
+  .brand-font-medium (1.3125em/1.1em);
+  margin-bottom: 1em;
+  margin-top: 1em;
 }
 
 h4 {
-    .brand-font-medium (.8em, 1.125em);
-    color: #888;
-    text-transform: uppercase;
-    font-weight: normal;
-    margin-top: 1em;
-    padding-bottom: .6em;
-    letter-spacing: .1em;
+  .brand-font-medium (0.8em, 1.125em);
+  color: #888;
+  text-transform: uppercase;
+  font-weight: normal;
+  margin-top: 1em;
+  padding-bottom: 0.6em;
+  letter-spacing: 0.1em;
 }
 
 .update {
-    background-color: #000;
-    color: #fff;
-    padding: 0.1em 0;
-    padding-left: 100px;
+  background-color: #000;
+  color: #fff;
+  padding: 0.1em 1em;
 }

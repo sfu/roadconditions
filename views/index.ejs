@@ -1,24 +1,138 @@
 <% layout('layout') %>
-  <% script('js/refreshcameras.js') %>
-    <% stylesheet('css/roadconditions.css') %>
+  <% stylesheet('css/roadconditions.css') %>
+
+    <section id="lastupdated" class="update">
+      <p>Report updated today at 12:24 pm. This report will be updated as conditions change.
+      </p>
+    </section>
 
 
 
 
-      <%- partial('footer') %>
+    <div class="main">
 
-        <script type="text/javascript">
-          var _gaq = _gaq || [];
-          // ICAT GA Account
-          _gaq.push(['_setAccount', 'UA-33032885-1']);
-          _gaq.push(['_trackPageview']);
-          // SRS GA Account
-          _gaq.push(['_setAccount', 'UA-31612222-1']);
-          _gaq.push(['_trackPageview']);
-          (function () {
-            var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
-            ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-            var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
-          })();
+      <section class="goElsewhere">
+        <div>
+          <p>For campus and class status changes, visit <a href="https://www.sfu.ca">www.sfu.ca</a> and follow <a href="https://twitter.com/sfu">@SFU on Twitter</a>.</p>
+          <p>For the latest transit updates, visit <a href="https://www.translink.ca">translink.ca</a> and follow <a href="https://twitter.com/translink">@TransLink on Twitter</a>.</p>
+        </div>
+      </section>
 
-        </script>
+
+      <section class="block">
+        <h1>Burnaby Campus</h1>
+        <h2>Roads: <span class="roadStatus">Partially snow-covered</span></h2>
+        <div class="announcements">
+          <div>
+            <p>It is currently 8&deg;C on campus with cloudy skies and&nbsp; fog. Roadways, parking lots, and walkways are Wet.
+              Driving conditions and visibility are good.</p>
+            <p>Be aware that it is bear season. If you see a bear on the SFU Burnaby Campus, please remain calm, keep yourself,
+              children, and pets away from the bear, and contact Campus Security at 778-782-4500.</p>
+            <p>Please watch for pedestrians, wildlife, road closures, and areas that are currently under construction while
+              traveling around campus.</p>
+          </div>
+        </div>
+        <div class="extlinks">
+          <a href="#">Weather Conditions</a>
+          <a href="#">Traffic Notices</a>
+        </div>
+      </section>
+
+      <section class="block">
+        <h1>Surrey Campus</h1>
+        <div class="extlinks">
+          <a href="#">Weather Conditions</a>
+          <a href="#">Traffic Notices</a>
+          <a href="#">Traffic Cameras</a>
+        </div>
+      </section>
+
+      <section class="block">
+        <h1>Vancouver Campus</h1>
+        <div class="announcements">
+          <div>
+            <p>
+              Lorem ipsum, dolor sit amet consectetur adipisicing elit. Quod, libero totam natus mollitia temporibus ipsum soluta ipsam
+              saepe quia quasi rem quos dolorum ut a nihil quidem animi earum facilis!
+            </p>
+          </div>
+        </div>
+        <div class="extlinks">
+          <a href="#">Weather Conditions</a>
+          <a href="#">Traffic Notices</a>
+          <a href="#">Traffic Cameras</a>
+        </div>
+      </section>
+
+      <section class="block">
+        <h1>Burnaby Webcams</h1>
+        <div class="webcams">
+          <div class="webcam">
+            <h4>University Drive North</h4>
+            <a href="http://www.sfu.ca/itservices/technical/webcams/webcams_library.html"><img class="webcamimg" src="http://ns-webcams.its.sfu.ca/public/images/udn-current.jpg" alt="University Drive North" /></a>
+          </div>
+          <div class="webcam">
+            <h4>Gaglardi Intersection</h4>
+            <a href="http://www.sfu.ca/itservices/technical/webcams/webcams_gaglardi.html"><img class="webcamimg" src="http://ns-webcams.its.sfu.ca/public/images/gaglardi-current.jpg" alt="Gaglardi intersection" /></a>
+          </div>
+          <div class="webcam">
+            <h4>AQ North</h4>
+            <a href="http://www.sfu.ca/itservices/technical/webcams/webcams_aqnorth.html"><img class="webcamimg" src="http://ns-webcams.its.sfu.ca/public/images/aqn-current.jpg" alt="Convocation Mall" /></a>
+          </div>
+          <div class="webcam">
+            <h4>AQ South West</h4>
+            <a href="http://www.sfu.ca/itservices/technical/webcams/webcams_aqsw.html"><img class="webcamimg" src="http://ns-webcams.its.sfu.ca/public/images/aqsw-current.jpg" alt="AQ South West" /></a>
+          </div>
+        </div>
+      </section>
+
+      <section class="block">
+        <h1>Resources</h1>
+        <div class="resources">
+          <div class="resource radio">
+            <h2>Traffic Updates by Radio</h2>
+            <p>Constant traffic updates can be heard on radio station <a href="http://www.am730.ca/">AM730</a>. Traffic updates
+              also run every 10 minutes on <a href="http://www.news1130.com/">AM1130</a> and <a href="https://globalnews.ca/radio/cknw/?gref=cknw">AM980</a>.</p>
+          </div>
+          <div class="resource phone">
+            <h2>SFU Burnaby Road & Traffic Updates by Phone</h2>
+            <p>The SFU Burnaby Road and Traffic report is also available at: 604-444-4929 and will be updated whenever conditions
+              change.
+            </p>
+          </div>
+          <div class="resource weather">
+            <h2>Weather Forecasts</h2>
+            <p>
+              <a href="http://weather.gc.ca/city/pages/bc-74_metric_e.html">Environment Canada</a>
+            </p>
+            <p>
+              <a href="https://www.theweathernetwork.com/ca">Weather Network</a>
+            </p>
+          </div>
+          <div class="resource wildlife">
+            <h2>Wildlife Safety</h2>
+            <p>
+              <a href="https://www.sfu.ca/srs/security/personal-security/sfu-programs/personal-safety-guide/wildlife-safety.html">Wildlife Safety on Burnaby Campus</a>
+            </p>
+          </div>
+        </div>
+      </section>
+
+    </div>
+
+    <%- partial('footer') %>
+
+      <script type="text/javascript">
+        var _gaq = _gaq || [];
+        // ICAT GA Account
+        _gaq.push(['_setAccount', 'UA-33032885-1']);
+        _gaq.push(['_trackPageview']);
+        // SRS GA Account
+        _gaq.push(['_setAccount', 'UA-31612222-1']);
+        _gaq.push(['_trackPageview']);
+        (function () {
+          var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+          ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+          var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+        })();
+      </script>
