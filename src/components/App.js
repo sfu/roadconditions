@@ -3,6 +3,7 @@ import axios from 'axios'
 import deepmerge from 'deepmerge'
 
 import LastUpdated from 'components/LastUpdated'
+import Message from 'components/Message'
 import Campus from 'components/Campus'
 import RoadStatus from 'components/RoadStatus'
 import Announcements from 'components/Announcements'
@@ -13,7 +14,8 @@ export default class App extends Component {
     this.state = {
       data: {},
       fetching: true,
-      dirty: false
+      dirty: false,
+      message: {}
     }
 
     this.handleChange = this.handleChange.bind(this)
