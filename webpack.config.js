@@ -1,9 +1,9 @@
-const path = require('path')
+const { resolve } = require('path')
 
 module.exports = {
-  entry: path.resolve('./src'),
+  entry: resolve('./src'),
   output: {
-    path: path.resolve('./public/js/admin'),
+    path: resolve('./public/js/admin'),
     filename: 'admin.bundle.js'
   },
   module: {
@@ -16,6 +16,8 @@ module.exports = {
     ]
   },
   resolve: {
-    extensions: ['.js', '.jsx']
-  }
+    extensions: ['*', '.js', '.jsx'],
+    modules: [resolve(__dirname, 'src'), resolve(__dirname, 'node_modules')]
+  },
+  devtool: 'eval'
 }

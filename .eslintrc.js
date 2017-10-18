@@ -5,14 +5,18 @@ module.exports = {
       jsx: true
     }
   },
-  extends: ['eslint:recommended', 'plugin:react/recommended'],
+  extends: [
+    'eslint:recommended',
+    'plugin:react/recommended',
+    'plugin:import/errors',
+    'plugin:import/warnings'
+  ],
   globals: {},
   env: {
     browser: true,
     es6: true,
     node: true,
-    jest: true,
-    jquery: true
+    jest: true
   },
   rules: {
     'no-console': 0,
@@ -20,5 +24,8 @@ module.exports = {
     'no-extra-semi': 0
   },
   plugins: ['react'],
-  settings: {}
+  settings: {
+    'import/resolver': 'webpack',
+    'import/extensions': ['.js', '.jsx']
+  }
 }
