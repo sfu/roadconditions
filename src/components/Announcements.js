@@ -25,7 +25,7 @@ const Announcements = ({ data, campus, changeHandler }) => {
         onKeyup={updateState}
         content={announcements}
         config={{
-          height: 350,
+          height: 200,
           menubar: false,
           statusbar: false,
           plugins: 'paste, hr, contextmenu, link',
