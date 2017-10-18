@@ -5,6 +5,7 @@ import deepmerge from 'deepmerge'
 import LastUpdated from 'components/LastUpdated'
 import Campus from 'components/Campus'
 import RoadStatus from 'components/RoadStatus'
+import Announcements from 'components/Announcements'
 
 export default class App extends Component {
   constructor(props) {
@@ -47,8 +48,13 @@ export default class App extends Component {
         <div>
           <LastUpdated at={data.lastUpdated} />
           <form>
-            <Campus campus="burnaby" data={data.campuses.burnaby}>
-              <RoadStatus changeHandler={this.handleChange} />
+            <Campus
+              campus="burnaby"
+              data={data.campuses.burnaby}
+              changeHandler={this.handleChange}
+            >
+              <RoadStatus />
+              <Announcements />
             </Campus>
             <Campus campus="vancouver" data={data.campuses.vancouver} />
             <Campus campus="surrey" data={data.campuses.surrey} />
