@@ -47,35 +47,51 @@ export default class App extends Component {
       return (
         <div>
           <LastUpdated at={data.lastUpdated} />
-          <form>
-            <Campus
-              campus="burnaby"
-              data={data.campuses.burnaby}
-              changeHandler={this.handleChange}
-            >
-              <RoadStatus />
-              <Announcements />
-            </Campus>
+          <div className="main">
+            {this.state.message.text ? (
+              <Message message={this.state.message} />
+            ) : null}
+            <form>
+              <Campus
+                campus="burnaby"
+                data={data.campuses.burnaby}
+                changeHandler={this.handleChange}
+              >
+                <RoadStatus />
+                <Announcements />
+              </Campus>
 
-            <Campus
-              campus="vancouver"
-              data={data.campuses.vancouver}
-              changeHandler={this.handleChange}
-            >
-              <Announcements />
-            </Campus>
-
-            <Campus
-              campus="surrey"
-              data={data.campuses.surrey}
-              changeHandler={this.handleChange}
-            >
-              <Announcements />
-            </Campus>
-            <button onClick={this.handleSubmit} type="submit">
-              Submit
-            </button>
-          </form>
+              <div
+                style={{
+                  display: 'grid',
+                  gridTemplateColumns: 'repeat(2, 1fr)',
+                  gridColumnGap: '2em'
+                }}
+              >
+                <Campus
+                  campus="vancouver"
+                  data={data.campuses.vancouver}
+                  changeHandler={this.handleChange}
+                >
+                  <Announcements />
+                </Campus>
+                <Campus
+                  campus="surrey"
+                  data={data.campuses.surrey}
+                  changeHandler={this.handleChange}
+                >
+                  <Announcements />
+                </Campus>
+              </div>
+              <div id="submit-container">
+                <input
+                  onClick={this.handleSubmit}
+                  type="submit"
+                  value="Submit"
+                />
+              </div>
+            </form>
+          </div>
         </div>
       )
     }
