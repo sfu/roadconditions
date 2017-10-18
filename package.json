@@ -1,10 +1,9 @@
 {
   "name": "roadconditions",
-  "description": "Road Conditions application for SFU Safety & Risk Services (Security)",
+  "description":
+    "Road Conditions application for SFU Safety & Risk Services (Security)",
   "author": "Graham Ballantyne <grahamb@sfu.ca>",
-  "contributors": [
-    "Eryn Holbrook <eryn@sfu.ca>"
-  ],
+  "contributors": ["Eryn Holbrook <eryn@sfu.ca>"],
   "version": "2.1.0",
   "repository": {
     "type": "git",
@@ -39,6 +38,7 @@
     "babel-core": "^6.26.0",
     "babel-eslint": "^8.0.1",
     "babel-loader": "^7.1.2",
+    "babel-plugin-transform-object-rest-spread": "^6.26.0",
     "babel-preset-env": "^1.6.0",
     "babel-preset-react": "^6.24.1",
     "eslint": "^4.7.2",
