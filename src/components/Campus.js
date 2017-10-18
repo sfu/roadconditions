@@ -2,15 +2,12 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import titleize from 'lib/titleize'
 
-const Campus = ({ campus, data, children }) => {
+const Campus = props => {
   return (
     <div className="conditions-container">
-      <h3>{titleize(campus)} Campus</h3>
-      {React.Children.map(children, child =>
-        React.cloneElement(child, {
-          data,
-          campus
-        })
+      <h3>{titleize(props.campus)} Campus</h3>
+      {React.Children.map(props.children, child =>
+        React.cloneElement(child, { ...props })
       )}
     </div>
   )
@@ -18,7 +15,6 @@ const Campus = ({ campus, data, children }) => {
 
 Campus.propTypes = {
   campus: PropTypes.string.isRequired,
-  data: PropTypes.object.isRequired,
   children: PropTypes.any
 }
 
