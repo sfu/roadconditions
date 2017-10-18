@@ -41,7 +41,9 @@ const Announcements = ({ data, campus, changeHandler }) => {
 }
 
 Announcements.propTypes = {
-  data: PropTypes.object
+  data: PropTypes.object,
+  campus: PropTypes.string,
+  changeHandler: PropTypes.func
 }
 
 export default Announcements
