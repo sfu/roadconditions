@@ -56,8 +56,25 @@ export default class App extends Component {
               <RoadStatus />
               <Announcements />
             </Campus>
-            <Campus campus="vancouver" data={data.campuses.vancouver} />
-            <Campus campus="surrey" data={data.campuses.surrey} />
+
+            <Campus
+              campus="vancouver"
+              data={data.campuses.vancouver}
+              changeHandler={this.handleChange}
+            >
+              <Announcements />
+            </Campus>
+
+            <Campus
+              campus="surrey"
+              data={data.campuses.surrey}
+              changeHandler={this.handleChange}
+            >
+              <Announcements />
+            </Campus>
+            <button onClick={this.handleSubmit} type="submit">
+              Submit
+            </button>
           </form>
         </div>
       )
