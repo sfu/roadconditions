@@ -19,6 +19,7 @@ export default class App extends Component {
     }
 
     this.handleChange = this.handleChange.bind(this)
+    this.handleSubmit = this.handleSubmit.bind(this)
   }
 
   componentDidMount() {
@@ -39,6 +40,47 @@ export default class App extends Component {
     const newState = deepmerge(this.state, update)
     newState.dirty = true
     this.setState(newState)
+  }
+
+  handleSubmit(e) {
+    e.preventDefault()
+    const newState = {
+      ...this.state.data,
+      lastUpdated: Date.now()
+    }
+    axios
+      .post('/api/3/current', newState)
+      .then(response => {
+        window.scrollTo(0, 1)
+        this.setState(
+          {
+            ...this.state,
+            data: response.data,
+            message: {
+              status: 'success',
+              text: 'The SFU Road Conditions report has been updated.'
+            }
+          },
+          () => {
+            window.setTimeout(() => {
+              this.setState({
+                ...this.state,
+                message: {}
+              })
+            }, 6000)
+          }
+        )
+      })
+      .catch(() => {
+        this.setState({
+          ...this.state,
+          message: {
+            status: 'error',
+            text:
+              'The server reported an error when trying to process the form. Please wait a moment and try again.'
+          }
+        })
+      })
   }
 
   render() {
