@@ -2,12 +2,27 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import TinyMCE from 'react-tinymce'
 
-const Announcements = ({ data }) => {
+const Announcements = ({ data, campus, changeHandler }) => {
+  const updateState = (e, editor) => {
+    const announcements = editor.getContent()
+    if (data.announcements === announcements) return
+    changeHandler({
+      data: {
+        campuses: {
+          [campus]: {
+            announcements
+          }
+        }
+      }
+    })
+  }
   const { announcements } = data
   return (
     <fieldset>
       <label>Announcements</label>
       <TinyMCE
+        onChange={updateState}
+        onKeyup={updateState}
         content={announcements}
         config={{
           height: 350,
