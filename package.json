@@ -54,6 +54,7 @@
     "semi": false
   },
   "scripts": {
-    "start": "nodemon -L --inspect=0.0.0.0:9229 -i src index.js"
+    "start": "nodemon -L --inspect=0.0.0.0:9229 -i src index.js",
+    "webpack": "webpack --watch"
   }
 }
