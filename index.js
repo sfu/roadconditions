@@ -351,6 +351,10 @@ app.post('/api/1/current', loggedin, function(req, res) {
   }
 })
 
+app.get('/api/3/current', (req, res) => {
+  res.send(store.get())
+})
+
 // OH NO YOU DIDNT
 app.delete('*', function(req, res) {
   res.send(405)
