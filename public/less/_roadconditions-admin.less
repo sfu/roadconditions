@@ -1,220 +1,217 @@
 @defaultBorderRadius: 3px 3px 3px 3px;
 
-fieldset {
-    border: none;
-    padding: 0;
-    margin: 18px 0 0 0;
+.conditions-container {
+  border: none;
+  padding: 0;
+  margin: 18px 0 0 0;
 
-    h3 {
-        margin-top: 0;
-    }
+  h3 {
+    margin-top: 0;
+  }
 }
 
 legend {
-    color: #000;
-    width: 100%;
+  color: #000;
+  width: 100%;
 }
 
 label {
-    font-weight: bold;
+  font-weight: bold;
 }
 
 .announcementsitem textarea {
-    max-width: 100%
+  max-width: 100%;
 }
 
 textarea {
-    max-width: 100%;
+  max-width: 100%;
 }
 
 .error {
-    background-color: #EFBFC3;
+  background-color: #efbfc3;
 }
 
 .success {
-    background-color: #BFEFC3;
+  background-color: #bfefc3;
+}
+.main {
+  padding-left: 100px;
+  padding-right: 6%;
+  padding-top: 1em;
+  float: left;
+  width: 100%;
+  padding-bottom: 1.5em;
 }
 
 #dev-info {
-    background-color: #EBA9AD;
-    border: 1px solid #B5111B;
-    border-radius: @defaultBorderRadius;
-    padding: 10px;
+  background-color: #eba9ad;
+  border: 1px solid #b5111b;
+  border-radius: @defaultBorderRadius;
+  padding: 10px;
 
-    ul li {
-        background: none;
-        padding-left: 0;
-    }
+  ul li {
+    background: none;
+    padding-left: 0;
+  }
 }
 
 #dev-info h2 {
-    color: black;
-    margin: 5px 0;
+  color: black;
+  margin: 5px 0;
 }
 
 #message-container {
-    display: none;
-    padding: 15px;
-    margin-top: 20px;
+  padding: 15px;
+  margin-top: 20px;
 }
 
 #message-container.error {
-    border: 1px solid #B5111B;
+  border: 1px solid #b5111b;
 }
 
 #message-container.success {
-    border: 1px solid #00630C;
+  border: 1px solid #00630c;
 }
 
-.conditions-container, .category-group {
-    margin: 1em 0;
-    border: 1px solid #D2E1E6;
-    border-radius: @defaultBorderRadius;
-    padding: 0.8em;
-    background-color: #E9EFF1;
+.conditions-container,
+.category-group {
+  margin: 1em 0;
+  border: 1px solid #d2e1e6;
+  border-radius: @defaultBorderRadius;
+  padding: 0.8em;
+  background-color: #e9eff1;
 }
 
-.conditions label[class*="status_"] {
-    display: none;
+.conditions label[class*='status_'] {
+  display: none;
 }
 
 .conditionsitem {
-    label {
-        width: 20%;
-        padding-left: 1%;
-    }
-
-    select {
-        width: 35%;
-        margin-right: 2%;
-        -webkit-border-radius: 0px;
-        border: 1px solid #3d3935;
-        -webkit-appearance: none;
-        -moz-appearance: none;
-        background: #ffffff url('../images/arrow.png') no-repeat 96% 50%;
-        text-indent: 0.01px;
-        text-overflow: "";
-        border: 1px solid #bdb9b4;
-        color: #58534d;
-        padding: 5px 10px;
-    }
+  select {
+    border-radius: 0px;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    background: #ffffff url('../images/arrow.png') no-repeat 96% 50%;
+    text-indent: 0.01px;
+    border: 1px solid #bdb9b4;
+    color: #58534d;
+    padding: 5px 10px;
+  }
 }
 
 .sidebaritem {
-    margin-bottom: 25px;
-    float: left;
-    width: 49%;
+  margin-bottom: 25px;
+  float: left;
+  width: 49%;
 
-    &:nth-of-type(odd) {
-        margin-right: 2%;
-    }
+  &:nth-of-type(odd) {
+    margin-right: 2%;
+  }
 }
 
-#announcements label, {
-    display: none;
+#announcements label {
+  display: none;
 }
 
-button, input[type="submit"] {
-    .brand-font-light;
-    font-size: .8em;
-    text-transform: none;
-    padding: 6px;
-    background: #898F81;
-    border: 1px solid #D2E1E6;
-    color:#fff;
-    text-decoration:none;
-    cursor: pointer;
-    margin: 5px 5px 10px 0;
-    line-height: 1em;
+button,
+input[type='submit'] {
+  .brand-font-light;
+  font-size: 0.8em;
+  text-transform: none;
+  padding: 6px;
+  background: #898f81;
+  border: 1px solid #d2e1e6;
+  color: #fff;
+  text-decoration: none;
+  cursor: pointer;
+  margin: 5px 5px 10px 0;
+  line-height: 1em;
 
-    &:hover {
-      background-color: #a9aFa1;
-    }
-
+  &:hover {
+    background-color: #a9afa1;
+  }
 }
 
 fieldset.category-group {
-    margin-bottom: 18px;
-    padding-left: 10px;
-    padding-bottom: 15px;
+  margin-bottom: 18px;
+  padding-left: 10px;
+  padding-bottom: 15px;
 
-    &:nth-of-type(odd) {
-        margin-right: 2%;
-    }
+  &:nth-of-type(odd) {
+    margin-right: 2%;
+  }
 }
 
 .links {
-    margin-top: 20px;
+  margin-top: 20px;
 
-    div {
-        float: left;
-    }
+  div {
+    float: left;
+  }
 }
 
 p.link {
-    margin: 0;
-    padding: 0;
+  margin: 0;
+  padding: 0;
 }
 
 fieldset.category-group button {
-    margin-top: 12px;
-    margin-right: 8px;
+  margin-top: 12px;
+  margin-right: 8px;
 }
 
 .linkTitleContainer {
-    width: 40%;
-    margin-right: 10px;
+  width: 40%;
+  margin-right: 10px;
 }
 
 .linkURLContainer {
-    width: 50%;
+  width: 50%;
 }
 
 .linkDeleteButtonContainer {
-    margin-top: 24px;
-    margin-left: 10px;
+  margin-top: 24px;
+  margin-left: 10px;
 }
 
 .linksCategoryButtonContainer {
-    margin-top: 10px;
+  margin-top: 10px;
 }
 
 #submit-container {
-    margin-top: 20px;
-    margin-bottom: 20px;
-    padding-top: 20px;
-    border-top: 10px solid #eee;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  padding-top: 20px;
+  border-top: 10px solid #eee;
 
-    input[type='submit'] {
-        width: 150px;
-        margin-right: auto;
-        margin-left: auto;
-        padding: 10px;
-        text-transform: uppercase;
-        font-weight: bold;
-    }
+  input[type='submit'] {
+    width: 150px;
+    margin-right: auto;
+    margin-left: auto;
+    padding: 10px;
+    text-transform: uppercase;
+    font-weight: bold;
+  }
 }
 
 footer {
-    height: 50px;
+  height: 50px;
 }
 
+.actionable-header {
+  font-size: 0.7em;
+  float: right;
+  padding-left: 1.4619883%;
+  padding-right: 7%;
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  padding-bottom: 22px;
 
-.actionable-header{
-    font-size: .7em;
-    float: right;
-    padding-left: 1.4619883%;
-    padding-right: 7%;
-    position: absolute;
-    bottom: 0;
-    right: 0;
-    padding-bottom: 22px;
-
-    a {
-        .brand-font-bold;
-        color: black;
-        text-transform: uppercase;
-        margin-left: 20px;
-    }
+  a {
+    .brand-font-bold;
+    color: black;
+    text-transform: uppercase;
+    margin-left: 20px;
+  }
 }
-
