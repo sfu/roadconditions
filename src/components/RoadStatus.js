@@ -1,6 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { NORMAL, WARNING, ALERT } from 'constants/severity'
+import titleize from 'lib/titleize'
 
 const STATUS_SEVERITY_MAP = {
   dry: NORMAL,
@@ -14,14 +15,14 @@ const STATUS_SEVERITY_MAP = {
 const roadStatusOptions = s =>
   s.map((x, i) => (
     <option key={`status_${i}`} value={x}>
-      {x}
+      {titleize(x)}
     </option>
   ))
 
 const roadSeverityOptions = s =>
   s.map((x, i) => (
     <option key={`severity_${i}`} value={x}>
-      {x}
+      {titleize(x)}
     </option>
   ))
 
@@ -64,25 +65,33 @@ const RoadStatus = ({ data, campus, changeHandler }) => {
   const { roads } = data
   return (
     <fieldset>
-      <label>Roads</label>
-
-      <select
-        value={roads.status}
-        onChange={e => {
-          onChangeRoadStatus(e.target.value, campus, changeHandler)
+      <div
+        className="conditionsitem"
+        style={{
+          display: 'grid',
+          gridTemplateColumns: 'repeat(3, auto)'
         }}
       >
-        {roadStatusOptions(Object.keys(STATUS_SEVERITY_MAP))}
-      </select>
+        <label>Roads</label>
 
-      <select
-        value={roads.severity}
-        onChange={e => {
-          onChangeRoadSeverity(e.target.value, campus, changeHandler)
-        }}
-      >
-        {roadSeverityOptions([NORMAL, WARNING, ALERT])}
-      </select>
+        <select
+          value={roads.status}
+          onChange={e => {
+            onChangeRoadStatus(e.target.value, campus, changeHandler)
+          }}
+        >
+          {roadStatusOptions(Object.keys(STATUS_SEVERITY_MAP))}
+        </select>
+
+        <select
+          value={roads.severity}
+          onChange={e => {
+            onChangeRoadSeverity(e.target.value, campus, changeHandler)
+          }}
+        >
+          {roadSeverityOptions([NORMAL, WARNING, ALERT])}
+        </select>
+      </div>
     </fieldset>
   )
 }
