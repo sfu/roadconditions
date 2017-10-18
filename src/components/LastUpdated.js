@@ -4,7 +4,7 @@ import format from 'date-fns/format'
 
 const LastUpdated = ({ at }) => {
   return (
-    <section id="lastupdated" className="main update">
+    <section id="lastupdated" className="update">
       <p>Last updated {format(at, '[at] h:mm a [on] dddd, MMMM DD, YYYY')}</p>
     </section>
   )
