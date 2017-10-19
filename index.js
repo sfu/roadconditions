@@ -355,6 +355,18 @@ app.get('/api/3/current', (req, res) => {
   res.send(store.get())
 })
 
+app.post('/api/3/current', (req, res) => {
+  const data = req.body
+  const validate = conditionsSchema.validate(data)
+  if (validate.isError()) {
+    res.set('Content-Type', 'application/json')
+    res.send(400, validate.getError())
+  } else {
+    store.set(data)
+    res.send(data)
+  }
+})
+
 // OH NO YOU DIDNT
 app.delete('*', function(req, res) {
   res.send(405)
