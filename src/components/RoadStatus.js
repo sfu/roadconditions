@@ -69,13 +69,17 @@ const RoadStatus = ({ data, campus, changeHandler }) => {
         className="conditionsitem"
         style={{
           display: 'grid',
-          gridTemplateColumns: 'repeat(3, 1fr)',
+          gridTemplateColumns: `repeat(${window.ENV.authMaillist ===
+          'roadconditions-dispatchers'
+            ? 2
+            : 3}, 1fr)`,
           gridColumnGap: '1em'
         }}
       >
         <label>Roads</label>
 
         <select
+          className="status"
           value={roads.status}
           onChange={e => {
             onChangeRoadStatus(e.target.value, campus, changeHandler)
@@ -84,14 +88,17 @@ const RoadStatus = ({ data, campus, changeHandler }) => {
           {roadStatusOptions(Object.keys(STATUS_SEVERITY_MAP))}
         </select>
 
-        <select
-          value={roads.severity}
-          onChange={e => {
-            onChangeRoadSeverity(e.target.value, campus, changeHandler)
-          }}
-        >
-          {roadSeverityOptions([NORMAL, WARNING, ALERT])}
-        </select>
+        {window.ENV.authMaillist !== 'roadconditions-dispatchers' ? (
+          <select
+            className="severity"
+            value={roads.severity}
+            onChange={e => {
+              onChangeRoadSeverity(e.target.value, campus, changeHandler)
+            }}
+          >
+            {roadSeverityOptions([NORMAL, WARNING, ALERT])}
+          </select>
+        ) : null}
       </div>
     </fieldset>
   )
