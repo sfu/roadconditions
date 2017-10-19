@@ -57,6 +57,7 @@ export default class App extends Component {
           {
             ...this.state,
             data: response.data,
+            dirty: false,
             message: {
               status: 'success',
               text: 'The SFU Road Conditions report has been updated.'
@@ -78,7 +79,7 @@ export default class App extends Component {
           message: {
             status: 'error',
             text:
-              'The server reported an error when trying to process the form. Please wait a moment and try again.'
+              'The server reported an error when trying to save your changes. Please wait a moment and try again.'
           }
         })
       })
