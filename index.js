@@ -332,7 +332,7 @@ app.get('/api/3/current', (req, res) => {
   res.send(store.get())
 })
 
-app.post('/api/3/current', (req, res) => {
+app.post('/api/3/current', loggedin, (req, res) => {
   const data = req.body
   const validate = conditionsSchema.validate(data)
   if (validate.isError()) {
