@@ -295,26 +295,17 @@ app.get('/admin/info', loggedin, function(req, res) {
 
 // API Routes
 app.get('/api/1/current/:key?', function(req, res) {
-  var data = store.get()
-  var status = 200
-  var ret = {}
-  var key = req.param('key')
+  res.status(410).send({
+    error:
+      'The /api/1/current API is deprecated and has been removed. Please update to the new v3 API.'
+  })
+})
 
-  // maintain back-compat and only show burnaby
-  data.conditions = data.conditions.burnaby
-
-  if (!key) {
-    res.json(data)
-  } else {
-    if (data.hasOwnProperty(key)) {
-      ret[key] = data[key]
-      ret['lastupdated'] = data.lastupdated
-    } else {
-      status = 404
-      ret = { error: 'not found', key: key }
-    }
-    res.send(status).json(ret)
-  }
+app.post('/api/1/current', loggedin, function(req, res) {
+  res.status(410).send({
+    error:
+      'The /api/1/current API is deprecated and has been removed. Please update to the new v3 API.'
+  })
 })
 
 app.get('/api/2/current/:key?', function(req, res) {
@@ -334,19 +325,6 @@ app.get('/api/2/current/:key?', function(req, res) {
       data = { error: 'not found', key: key }
     }
     res.send(status).json(ret)
-  }
-})
-
-app.post('/api/1/current', loggedin, function(req, res) {
-  var data = req.body
-  var validate = conditionsSchema.validate(data)
-  if (validate.isError()) {
-    res.set('Content-Type', 'application/json')
-    res.send(400, validate.getError())
-  } else {
-    data.lastupdated = new Date().getTime()
-    store.set(data)
-    res.send(data)
   }
 })
 
