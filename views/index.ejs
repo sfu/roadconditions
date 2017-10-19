@@ -2,12 +2,10 @@
   <% stylesheet('css/roadconditions.css') %>
 
     <section id="lastupdated" class="update">
-      <p>Report updated today at 12:24 pm. This report will be updated as conditions change.
+      <p title="Report updated <%= dateFormat(lastUpdated, false) %>">
+        Report updated <strong><%= dateFormat(lastUpdated, true) %></strong>. This report will be updated as conditions change.
       </p>
     </section>
-
-
-
 
     <div class="main">
 
@@ -18,32 +16,31 @@
         </div>
       </section>
 
-
       <section class="block">
         <h1>Burnaby Campus</h1>
-        <h2>Roads: <span class="roadStatus">Partially snow-covered</span></h2>
+        <h2>Roads: <span class="roadStatus status-text <%= campuses.burnaby.roads.severity %>"><%- campuses.burnaby.roads.status %></span></h2>
         <div class="announcements">
           <div>
-            <p>It is currently 8&deg;C on campus with cloudy skies and&nbsp; fog. Roadways, parking lots, and walkways are Wet.
-              Driving conditions and visibility are good.</p>
-            <p>Be aware that it is bear season. If you see a bear on the SFU Burnaby Campus, please remain calm, keep yourself,
-              children, and pets away from the bear, and contact Campus Security at 778-782-4500.</p>
-            <p>Please watch for pedestrians, wildlife, road closures, and areas that are currently under construction while
-              traveling around campus.</p>
+            <%- campuses.burnaby.announcements %>
           </div>
         </div>
         <div class="extlinks">
-          <a href="#">Weather Conditions</a>
-          <a href="#">Traffic Notices</a>
+          <a href="https://www.mountain-forecast.com/peaks/Burnaby-Mountain/metar">Weather Conditions</a>
+          <a href="https://www.sfu.ca/srs/security/traffic-safety/traffic-notices.html">Traffic Notices</a>
         </div>
       </section>
 
       <section class="block">
         <h1>Surrey Campus</h1>
+        <div class="announcements">
+          <div>
+            <%- campuses.surrey.announcements %>
+          </div>
+        </div>
         <div class="extlinks">
-          <a href="#">Weather Conditions</a>
-          <a href="#">Traffic Notices</a>
-          <a href="#">Traffic Cameras</a>
+          <a href="https://www.theweathernetwork.com/ca/hourly-weather-forecast/british-columbia/surrey">Weather Conditions</a>
+          <a href="https://globalnews.ca/bc/traffic/">Traffic Conditions</a>
+          <a href="http://surrey.ca/city-services/762.aspx">Traffic Cameras</a>
         </div>
       </section>
 
@@ -51,16 +48,13 @@
         <h1>Vancouver Campus</h1>
         <div class="announcements">
           <div>
-            <p>
-              Lorem ipsum, dolor sit amet consectetur adipisicing elit. Quod, libero totam natus mollitia temporibus ipsum soluta ipsam
-              saepe quia quasi rem quos dolorum ut a nihil quidem animi earum facilis!
-            </p>
+            <%- campuses.vancouver.announcements %>
           </div>
         </div>
         <div class="extlinks">
-          <a href="#">Weather Conditions</a>
-          <a href="#">Traffic Notices</a>
-          <a href="#">Traffic Cameras</a>
+          <a href="https://www.theweathernetwork.com/ca/hourly-weather-forecast/british-columbia/vancouver">Weather Conditions</a>
+          <a href="https://globalnews.ca/bc/traffic/">Traffic Conditions</a>
+          <a href="http://trafficcams.vancouver.ca/GranvilleDunsmuir.htm">Traffic Cameras</a>
         </div>
       </section>
 
