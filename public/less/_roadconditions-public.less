@@ -2,6 +2,20 @@
 
 // clf overrides
 
+.roadStatus {
+  font-family: 'DINWebBold';
+  font-weight: bold;
+  &.alert {
+    color: @alertColour;
+  }
+  &.warning {
+    color: @warningColour;
+  }
+  &.normal {
+    color: @normalColour;
+  }
+}
+
 ul {
   li {
     background: none;
