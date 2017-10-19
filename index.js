@@ -308,24 +308,64 @@ app.post('/api/1/current', loggedin, function(req, res) {
   })
 })
 
-app.get('/api/2/current/:key?', function(req, res) {
-  var data = store.get()
-  var ret = {}
-  var status = 200
-  var key = req.param('key')
+app.get('/api/2/current', function(req, res) {
+  const CAMPUS_INFO =
+    'For campus and class status changes, visit http://www.sfu.ca and follow @SFU on Twitter (https://twitter.com/sfu).'
+  const TRANSIT_INFO =
+    'For the latest transit updates, visit https://translink.ca and follow @TransLink on Twitter (https://twitter.com/translink).'
 
-  if (!key) {
-    res.json(data)
-  } else {
-    if (data.hasOwnProperty(key)) {
-      ret[key] = data[key]
-      ret.lastupdated = data.lastupdated
-    } else {
-      status = 404
-      data = { error: 'not found', key: key }
-    }
-    res.send(status).json(ret)
+  const v3Data = store.get()
+  const v2Data = {
+    message:
+      'The v2 API has been deprecated. Please update to the v3 API (`/api/3/current`) as soon as possible.',
+    conditions: {
+      burnaby: {
+        campus: {
+          status: CAMPUS_INFO,
+          severity: 'n/a'
+        },
+        roads: v3Data.campuses.burnaby.roads,
+        adjacentroads: {
+          status: 'not applicable',
+          severity: 'n/a'
+        },
+        transit: {
+          status: TRANSIT_INFO,
+          severity: 'n/a'
+        },
+        classes_exams: {
+          status: CAMPUS_INFO,
+          severity: 'n/a'
+        }
+      },
+      surrey: {
+        campus: {
+          status: CAMPUS_INFO,
+          severity: 'n/a'
+        },
+        classes_exams: {
+          status: CAMPUS_INFO,
+          severity: 'n/a'
+        }
+      },
+      vancouver: {
+        campus: {
+          status: CAMPUS_INFO,
+          severity: 'n/a'
+        },
+        classes_exams: {
+          status: CAMPUS_INFO,
+          severity: 'n/a'
+        }
+      }
+    },
+    announcements: [v3Data.campuses.burnaby.announcements],
+    sidebars: [],
+    links: [],
+    lastupdated: v3Data.lastUpdated
   }
+
+  res.send(v2Data)
 })
 
 app.get('/api/3/current', (req, res) => {
