@@ -69,7 +69,8 @@ const RoadStatus = ({ data, campus, changeHandler }) => {
         className="conditionsitem"
         style={{
           display: 'grid',
-          gridTemplateColumns: 'repeat(3, auto)'
+          gridTemplateColumns: 'repeat(3, 1fr)',
+          gridColumnGap: '1em'
         }}
       >
         <label>Roads</label>
