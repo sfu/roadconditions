@@ -7,11 +7,9 @@ class BeforeUnload extends React.Component {
     this.handleBeforeUnload = this.handleBeforeUnload.bind(this)
   }
   componentDidMount() {
-    console.log('CDM')
     window.addEventListener('beforeunload', this.handleBeforeUnload)
   }
   componentWillUnmount() {
-    console.log('CWUM')
     window.removeEvnetListener('beforeunload', this.handleBeforeUnload)
   }
 
