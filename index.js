@@ -2,7 +2,6 @@ var fs = require('fs')
 var os = require('os')
 var path = require('path')
 var express = require('express')
-var moment = require('./lib/moment')
 var schema = require('schema')('conditions')
 var cas = require('cas-sfu')
 var lessMiddleware = require('less-middleware')
@@ -165,7 +164,7 @@ app.use(methodOverride())
 app.enable('jsonp callback')
 app.enable('trust proxy')
 app.locals({
-  dateFormat: helpers.dateFormat(moment)
+  dateFormat: helpers.dateFormat()
 })
 
 if (app.get('env') === 'development') {

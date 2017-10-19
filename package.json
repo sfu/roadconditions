@@ -23,7 +23,6 @@
     "express": "^3.21.2",
     "less-middleware": "^2.0.1",
     "method-override": "^2.3.5",
-    "moment": "^2.11.1",
     "prop-types": "^15.6.0",
     "react": "^16.0.0",
     "react-dom": "^16.0.0",
