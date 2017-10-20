@@ -55,6 +55,7 @@
   },
   "scripts": {
     "start": "nodemon -L --inspect=0.0.0.0:9229 -i src index.js",
-    "webpack": "webpack --watch"
+    "webpack": "webpack --watch",
+    "clean": "rm public/css/* && rm -rf public/js/admin && rm manifest.json"
   }
 }
