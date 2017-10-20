@@ -31,7 +31,8 @@ module.exports = (env = {}) => {
       modules: [resolve(__dirname, 'src'), resolve(__dirname, 'node_modules')]
     },
     devtool: env.prod ? 'source-map' : 'eval',
-    plugins: [
+    plugins: removeEmpty([
+      ifProd(new MinifyPlugin()),
       new ManifestPlugin({
         fileName: resolve(__dirname, 'manifest.json'),
         basePath: '/js/admin/',
@@ -42,6 +43,6 @@ module.exports = (env = {}) => {
           NODE_ENV: env.prod ? '"production"' : '"development"'
         }
       })
-    ]
+    ])
   }
 }
