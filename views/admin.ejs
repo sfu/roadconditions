@@ -3,7 +3,7 @@
 <% stylesheet('css/roadconditions-admin.css');
     block('title', 'Road Report &ndash; Admin')
     block('actionableHeader', '<a title="View Current Conditions Page" href="./">View Current Conditions Page</a> <a title="Logout" href="./logout">Logout</a>');
-    script(`${webpackManifest['/js/admin/admin.js']}`);
+    script(`${webpackManifest['/js/admin/admin.js']}`.substr(1));
 %>
         <div id="app"></div>
         <script>window.ENV={
