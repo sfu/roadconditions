@@ -1,12 +1,15 @@
 const { resolve } = require('path')
 const webpack = require('webpack')
+const ManifestPlugin = require('webpack-manifest-plugin')
 
 module.exports = (env = {}) => {
   return {
-    entry: resolve('./src'),
+    entry: {
+      admin: resolve('./src')
+    },
     output: {
       path: resolve('./public/js/admin'),
-      filename: 'admin.bundle.js'
+      filename: env.prod ? 'admin.bundle.[chunkhash].js' : 'admin.bundle.js'
     },
     module: {
       rules: [
@@ -21,8 +24,13 @@ module.exports = (env = {}) => {
       extensions: ['*', '.js', '.jsx'],
       modules: [resolve(__dirname, 'src'), resolve(__dirname, 'node_modules')]
     },
-    devtool: 'eval',
+    devtool: env.prod ? 'source-map' : 'eval',
     plugins: [
+      new ManifestPlugin({
+        fileName: resolve(__dirname, 'manifest.json'),
+        basePath: '/js/admin/',
+        writeToFileEmit: true
+      }),
       new webpack.DefinePlugin({
         'process.env': {
           NODE_ENV: env.prod ? '"production"' : '"development"'
