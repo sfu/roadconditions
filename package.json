@@ -37,6 +37,7 @@
     "babel-core": "^6.26.0",
     "babel-eslint": "^8.0.1",
     "babel-loader": "^7.1.2",
+    "babel-minify-webpack-plugin": "^0.2.0",
     "babel-plugin-transform-object-rest-spread": "^6.26.0",
     "babel-preset-env": "^1.6.0",
     "babel-preset-react": "^6.24.1",
@@ -56,6 +57,7 @@
   "scripts": {
     "start": "nodemon -L --inspect=0.0.0.0:9229 -i src index.js",
     "webpack": "webpack --watch",
+    "webpack:prod": "NODE_ENV=production webpack --env.prod",
     "clean": "rm public/css/* && rm -rf public/js/admin && rm manifest.json"
   }
 }

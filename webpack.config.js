@@ -1,8 +1,14 @@
 const { resolve } = require('path')
 const webpack = require('webpack')
 const ManifestPlugin = require('webpack-manifest-plugin')
+const MinifyPlugin = require('babel-minify-webpack-plugin')
 
 module.exports = (env = {}) => {
+  const addItem = (add, item) => (add ? item : undefined)
+  const ifProd = item => addItem(env.prod, item)
+  const ifDev = item => addItem(!env.prod, item)
+  const removeEmpty = array => array.filter(i => !!i)
+
   return {
     entry: {
       admin: resolve('./src')
