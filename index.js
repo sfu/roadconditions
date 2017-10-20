@@ -27,6 +27,9 @@ var redirectResolver
 var storageEngine
 var store
 
+const webpackManifest = JSON.parse(
+  fs.readFileSync(path.resolve(__dirname, 'manifest.json'), 'UTF-8')
+)
 process.title = 'roadconditions'
 
 try {
@@ -234,7 +237,11 @@ app.get('/isup', function(req, res) {
 })
 
 app.get('/admin', loggedin, function(req, res) {
-  var tmplData = { auth: req.session.auth, current: store.get() }
+  var tmplData = {
+    auth: req.session.auth,
+    current: store.get(),
+    webpackManifest
+  }
   if (process.env.NODE_ENV === 'development') {
     tmplData.devInfo = {
       node: process.version,
