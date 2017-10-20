@@ -204,41 +204,6 @@ if (DEVELOPMENT) {
 app.use(lessMiddleware('/less', lessMiddlewareConfig))
 app.use(express.static(path.join(__dirname, 'public')))
 
-// if (app.get('env') === 'development') {
-//   app.use(express.errorHandler({ dumpExceptions: true, showStack: true }))
-//   app.use(
-//     lessMiddleware('/less', {
-//       pathRoot: __dirname + '/public',
-//       dest: 'css',
-//       compress: false,
-//       sourceMap: true,
-//       force: true,
-//       debug: true,
-//       render: {
-//         compress: false
-//       }
-//     })
-//   )
-//   app.use(express.static(path.join(__dirname, 'public')))
-// }
-
-// if (app.get('env') === 'production') {
-//   app.use(express.errorHandler())
-//   app.use(
-//     lessMiddleware('/less', {
-//       pathRoot: __dirname + '/public',
-//       dest: 'css',
-//       compress: true,
-//       sourceMap: true,
-//       once: true,
-//       render: {
-//         compress: true
-//       }
-//     })
-//   )
-//   app.use(express.static(path.join(__dirname, 'public')))
-// }
-
 // Authentication middleware
 var casauth = cas.getMiddleware({
   service: config.cas_service || 'http://' + serverid + '/login',
