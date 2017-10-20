@@ -25,12 +25,9 @@ export default class App extends Component {
 
   componentDidMount() {
     axios
-      .get('/api/3/current')
+      .get(`${process.env.BASE_PATH}/api/3/current`)
       .then(response => {
-        this.setState({
-          fetching: false,
-          data: response.data
-        })
+        this.setState({ fetching: false, data: response.data })
       })
       .catch(error => {
         console.error(error)
@@ -50,7 +47,7 @@ export default class App extends Component {
       lastUpdated: Date.now()
     }
     axios
-      .post('/api/3/current', newState)
+      .post(`${process.env.BASE_PATH}/api/3/current`, newState)
       .then(response => {
         window.scrollTo(0, 1)
         this.setState(

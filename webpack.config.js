@@ -2,6 +2,7 @@ const { resolve } = require('path')
 const webpack = require('webpack')
 const ManifestPlugin = require('webpack-manifest-plugin')
 const MinifyPlugin = require('babel-minify-webpack-plugin')
+const appConfig = require('./config/config.json')
 
 module.exports = (env = {}) => {
   const addItem = (add, item) => (add ? item : undefined)
@@ -40,7 +41,8 @@ module.exports = (env = {}) => {
       }),
       new webpack.DefinePlugin({
         'process.env': {
-          NODE_ENV: env.prod ? '"production"' : '"development"'
+          NODE_ENV: env.prod ? '"production"' : '"development"',
+          BASE_PATH: JSON.stringify(appConfig.basepath)
         }
       })
     ])
